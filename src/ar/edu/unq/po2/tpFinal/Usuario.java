@@ -7,8 +7,10 @@ public class Usuario {
 
 	private String correoElectronico;
 	
-	public Usuario(String nombreCompleto, int numeroDeTelefono) {
-		
+	public Usuario(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
+		setNombreCompleto(nombreCompleto);
+		setNumeroDeTelefono(numeroDeTelefono);
+		setCorreoElectronico(correoElectronico);
 	}
 	
 	public void setNombreCompleto(String nombreCompleto) {
