@@ -28,7 +28,7 @@ public class Inmueble {
 
 	public void agregarCalificacion(int puntuacion) {
 	    if (puntuacion >= 1 && puntuacion <= 5) {
-	        calificaciones.add(puntuacion);
+	        this.calificaciones.add(puntuacion);
 	    } else {
 	        throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
 	    }

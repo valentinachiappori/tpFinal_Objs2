@@ -6,6 +6,7 @@ import java.util.List;
 public class Propietario extends Usuario {
 	
 	private List<Inmueble> inmuebles;
+	private List<Integer> calificaciones;
 	
 	public Propietario(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
 		super(nombreCompleto, numeroDeTelefono, correoElectronico);
@@ -29,5 +30,12 @@ public class Propietario extends Usuario {
         inmuebles.add(i);
     }
 
-	
+	public void agregarCalificacion(int puntuacion) {
+	    if (puntuacion >= 1 && puntuacion <= 5) {
+	        this.calificaciones.add(puntuacion);
+	    } else {
+	        throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
+	    }
+	}  // podriamos hacer que la calificacion se de con Enums asi nos evitamos que salga de ese rango
+
 }
