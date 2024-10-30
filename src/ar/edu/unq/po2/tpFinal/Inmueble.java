@@ -6,8 +6,8 @@ import java.util.List;
 public class Inmueble {
     private String tipo;
 	private int superficie;
-	private String pais; // esto le ponemos lo del dueño o que?
-	private String Ciudad; // idem pais
+	private String pais; // 
+	private String Ciudad; // 
 	private List<String> servicios;
 	private int capacidad;
 	private List<String> fotos;
