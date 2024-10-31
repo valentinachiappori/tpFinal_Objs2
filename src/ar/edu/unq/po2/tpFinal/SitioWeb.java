@@ -17,8 +17,8 @@ public class SitioWeb {
 	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, int cantHuespedes,
 			Double precioMin, Double precioMax) {
 		List<Inmueble> inmueblesFiltrados = inmuebles.stream()
-		.filter(i -> i.getCiudad() == ciudad)
-		.filter(i->i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
+		.filter(i -> i.getCiudad().equals(ciudad))
+		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
 		.collect(Collectors.toList());
 		//nos faltan los nullsssssssss
 		return inmueblesFiltrados;

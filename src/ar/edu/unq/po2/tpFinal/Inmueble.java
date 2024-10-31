@@ -10,7 +10,7 @@ public class Inmueble {
 	private int superficie;
 	private String pais; // 
 	private String ciudad; // 
-	private List<String> servicios;
+	private List<String> servicios; //ver esto
 	private int capacidad;
 	private List<String> fotos; //que no sean mas de 5 
 	private LocalTime checkIn;
@@ -20,9 +20,9 @@ public class Inmueble {
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosPublicados;
 	private List<Integer> calificaciones;
+	private List<Reserva> reservas;
 
 	
-
 	public Inmueble(String tipo, int superficie, String pais, String ciudad, List<String> servicios, int capacidad
 			, LocalTime checkIn, LocalTime checkOut, List<String> metodosDePago,
 			List<PeriodoConPrecio> periodosPublicados) {
@@ -38,6 +38,7 @@ public class Inmueble {
 		this.checkOut = checkOut;
 		this.metodosDePago = metodosDePago;
 		this.periodosPublicados = periodosPublicados;
+		this.reservas = new ArrayList<Reserva>();
 		
 		
 		this.calificaciones = new ArrayList<Integer>();
@@ -46,7 +47,7 @@ public class Inmueble {
 	public void agregarFoto(String foto) {
 		if (fotos.size() < 5) {
 			fotos.add(foto);
-		} //que hacemos si hay 5, le avisa? pisa la ultima?
+		} //tirar error
 	}
 
 	public void agregarCalificacion(int puntuacion) {
@@ -63,9 +64,8 @@ public class Inmueble {
 
 	public boolean estaDisponibleEnPeriodo(LocalDate fechaEntrada, LocalDate fechaSalida) {
 		
-		//como hacemos para saber las fechas q fueron alquiladasssssss
-		
-		return ;
+		return reservas.stream().noneMatch(r -> r.getFechaEntrada().isBefore(fechaSalida) && 
+				r.getFechaSalida().isAfter(fechaEntrada));
 	}
 
 }

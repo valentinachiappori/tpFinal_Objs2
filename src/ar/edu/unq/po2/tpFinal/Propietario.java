@@ -21,7 +21,7 @@ public class Propietario extends Usuario {
 		return inmuebles;
 	}
 
-	public void setInmuebles(List<Inmueble> inmuebles) {
+	public void setInmuebles(List<Inmueble> inmuebles) { //no se si lo usamos
 		this.inmuebles = inmuebles;
 	}
 	
