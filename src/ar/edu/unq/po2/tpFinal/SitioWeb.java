@@ -20,7 +20,7 @@ public class SitioWeb {
 		.filter(i -> i.getCiudad().equals(ciudad))
 		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
 		.collect(Collectors.toList());
-		//nos faltan los nullsssssssss
+		//nos faltan los nullsssssssss aaa
 		return inmueblesFiltrados;
 	}
 	
