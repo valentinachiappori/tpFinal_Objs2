@@ -68,6 +68,29 @@ public class Inmueble {
 				r.getFechaSalida().isAfter(fechaEntrada));
 	}
 
+	public int getCapacidad() {
+		return capacidad;
+	}
+
+	public Double calcularPrecioDia(LocalDate fecha) {
+		for (PeriodoConPrecio periodo : periodosPublicados) {
+			if (periodo.incluidaEnPeriodo(fecha)) {
+				return periodo.getPrecioPorDia();
+			}
+		}
+		throw new IllegalArgumentException("Fecha inválida");
+	}
+	
+	public Double calcularPrecioReserva(LocalDate fechaEntrada, LocalDate fechaSalida) {
+		Double precioTotal = 0d;
+		LocalDate fechaActual = fechaEntrada;
+		while (fechaActual != fechaSalida) {
+			precioTotal += calcularPrecioDia(fechaActual);
+			fechaActual.plusDays(1);
+		}
+		return precioTotal;
+	}
+	
 }
 
 

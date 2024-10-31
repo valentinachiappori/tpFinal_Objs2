@@ -8,7 +8,6 @@ public class Inquilino extends Usuario {
 
 	public Inquilino(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
 		super(nombreCompleto, numeroDeTelefono, correoElectronico);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void agregarReserva(Reserva reserva) {
@@ -30,4 +29,8 @@ public class Inquilino extends Usuario {
 	    }
 	}  // podriamos hacer que la calificacion se de con Enums asi nos evitamos que salga de ese rango
 
+	public Inmueble visualizarInmueble(Inmueble inmueble) {
+		return inmueble;
+	}
+	
 }

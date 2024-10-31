@@ -14,13 +14,16 @@ public class SitioWeb {
 	
 	//getters y setters
 	
-	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, int cantHuespedes,
+	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, Integer cantHuespedes,
 			Double precioMin, Double precioMax) {
 		List<Inmueble> inmueblesFiltrados = inmuebles.stream()
 		.filter(i -> i.getCiudad().equals(ciudad))
 		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
+		.filter(i -> cantHuespedes == null || i.getCapacidad() >= cantHuespedes)
+		.filter(i -> precioMin == null || i.calcularPrecioReserva(fechaEntrada, fechaSalida) >= precioMin)
+		.filter(i -> precioMax == null || i.calcularPrecioReserva(fechaEntrada, fechaSalida) <= cantHuespedes)
 		.toList();
-		//nos faltan los nullsssssssss aaa
+		
 		return inmueblesFiltrados;
 	}
 	
