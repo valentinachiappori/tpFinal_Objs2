@@ -23,6 +23,14 @@ public class Inquilino extends Usuario {
 		return reservas.stream().filter(r -> r.getFechaEntrada().isAfter(LocalDate.now())).toList();
 	}
 	
+	public List<Reserva> getReservasEnCiudad(String ciudad){
+		return reservas.stream().filter(r -> r.getInmueble().getCiudad().equals(ciudad)).toList();
+	}
+	
+	public List<String> getCiudadesConReserva(){
+		return reservas.stream().map(r -> r.getInmueble().getCiudad()).toList();
+	}
+	
 	// el public de este metodo esta raro
 	public void setMisReservas (List<Reserva>  misReservas) {
 		this.reservas = misReservas;
@@ -40,6 +48,10 @@ public class Inquilino extends Usuario {
 		inmueble.getPropietario().recibirOferta(new Reserva(fechaInicio, fechaFin, inmueble));
 	}
 	
+	public void cancelarReserva(Reserva reserva) {
+		//implementacion
+		//eliminarla del sistema y avisarle por mail al dueño
+	}
 	
 	
 }
