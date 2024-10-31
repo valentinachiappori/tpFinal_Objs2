@@ -5,10 +5,12 @@ import java.time.LocalDate;
 public class Reserva {
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
+	private Inmueble inmueble;
 	
-	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida) {
+	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble) {
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
+		this.inmueble = inmueble;
 	}
 
 	public LocalDate getFechaEntrada() {
@@ -19,5 +21,8 @@ public class Reserva {
 		return fechaSalida;
 	}
 
+	public Inmueble getInmueble() {
+		return inmueble;
+	}
 	
 }

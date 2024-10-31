@@ -10,6 +10,7 @@ public class Inmueble {
 	private int superficie;
 	private String pais; // 
 	private String ciudad; // 
+	private Propietario propietario;
 	private List<String> servicios; //ver esto
 	private int capacidad;
 	private List<String> fotos; //que no sean mas de 5 
@@ -23,7 +24,7 @@ public class Inmueble {
 	private List<Reserva> reservas;
 
 	
-	public Inmueble(String tipo, int superficie, String pais, String ciudad, List<String> servicios, int capacidad
+	public Inmueble(String tipo, int superficie, String pais, String ciudad, Propietario propietario, List<String> servicios, int capacidad
 			, LocalTime checkIn, LocalTime checkOut, List<String> metodosDePago,
 			List<PeriodoConPrecio> periodosPublicados) {
 		super();
@@ -31,6 +32,7 @@ public class Inmueble {
 		this.superficie = superficie;
 		this.pais = pais;
 		this.ciudad = ciudad;
+		this.propietario = propietario;
 		this.servicios = servicios;
 		this.capacidad = capacidad;
 		this.fotos = new ArrayList<String>();
@@ -71,6 +73,10 @@ public class Inmueble {
 	public int getCapacidad() {
 		return capacidad;
 	}
+	
+	public Propietario getPropietario() {
+		return propietario;
+	}
 
 	public Double calcularPrecioDia(LocalDate fecha) {
 		for (PeriodoConPrecio periodo : periodosPublicados) {
@@ -81,7 +87,7 @@ public class Inmueble {
 		throw new IllegalArgumentException("Fecha inválida");
 	}
 	
-	public Double calcularPrecioReserva(LocalDate fechaEntrada, LocalDate fechaSalida) {
+	public Double calcularPrecioEstadia(LocalDate fechaEntrada, LocalDate fechaSalida) {
 		Double precioTotal = 0d;
 		LocalDate fechaActual = fechaEntrada;
 		while (fechaActual != fechaSalida) {

@@ -1,12 +1,14 @@
 package ar.edu.unq.po2.tpFinal;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Propietario extends Usuario {
 	
 	private List<Inmueble> inmuebles;
-	private List<Integer> calificaciones;
+	private List<Puntaje> calificaciones;
+	private List<Reserva> posiblesReservas;
 	
 	public Propietario(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
 		super(nombreCompleto, numeroDeTelefono, correoElectronico);
@@ -29,12 +31,13 @@ public class Propietario extends Usuario {
         inmuebles.add(i);
     }
 
-	public void agregarCalificacion(int puntuacion) {
-	    if (puntuacion >= 1 && puntuacion <= 5) {
-	        this.calificaciones.add(puntuacion);
-	    } else {
-	        throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
-	    }
-	}  // podriamos hacer que la calificacion se de con Enums asi nos evitamos que salga de ese rango
+	public void agregarCalificacion(Puntaje puntuacion) {
+	    this.calificaciones.add(puntuacion);
+	}
+
+	public void recibirOferta(Reserva reserva) {
+		
+		
+	}
 
 }

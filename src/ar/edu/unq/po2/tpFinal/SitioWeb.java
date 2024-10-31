@@ -20,8 +20,8 @@ public class SitioWeb {
 		.filter(i -> i.getCiudad().equals(ciudad))
 		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
 		.filter(i -> cantHuespedes == null || i.getCapacidad() >= cantHuespedes)
-		.filter(i -> precioMin == null || i.calcularPrecioReserva(fechaEntrada, fechaSalida) >= precioMin)
-		.filter(i -> precioMax == null || i.calcularPrecioReserva(fechaEntrada, fechaSalida) <= cantHuespedes)
+		.filter(i -> precioMin == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) >= precioMin)
+		.filter(i -> precioMax == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) <= cantHuespedes)
 		.toList();
 		
 		return inmueblesFiltrados;
