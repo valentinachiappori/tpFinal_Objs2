@@ -10,8 +10,7 @@ public class Propietario extends Usuario {
 	
 	public Propietario(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
 		super(nombreCompleto, numeroDeTelefono, correoElectronico);
-		// TODO Auto-generated constructor stub
-		setInmuebles(new ArrayList<Inmueble>());
+		this.inmuebles = new ArrayList<Inmueble>();
 	}
 	
 	public void ponerEnAlquilerUnImbueble(Inmueble i) {
