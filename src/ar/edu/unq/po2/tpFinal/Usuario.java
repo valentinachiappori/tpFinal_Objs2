@@ -16,6 +16,7 @@ public class Usuario {
 		this.numeroDeTelefono = numeroDeTelefono;
 		this.correoElectronico = correoElectronico;
 		this.calificaciones = new ArrayList<Puntaje>();
+		
 	}
 	   
 	public void setNombreCompleto(String nombreCompleto) {
