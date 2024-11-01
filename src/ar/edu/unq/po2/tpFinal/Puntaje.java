@@ -12,6 +12,7 @@ public enum Puntaje {
 
 	public int getNivel() {
 		return nivel;
+		
 	}
 	
 }

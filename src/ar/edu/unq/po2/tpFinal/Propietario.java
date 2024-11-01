@@ -38,9 +38,20 @@ public class Propietario extends Usuario {
 
 	public void recibirOferta(Reserva reserva) {
 		
+		this.reservas.add(reserva);
+	}
+	
+	public void evaluarPosibleConcretacionDeReserva(Reserva reserva) {
+		
+		System.out.println("Información del Propietario:"+
+	       "Nombre: " + reserva.getPropietario().getNombreCompleto() +
+	        "Contacto: " + reserva.getPropietario().getCorreoElectronico());
 		
 	}
 	
+	public void aceptarUnaReserva(Reserva reserva) {
+		reserva.esAceptada();
+	}
 	public int cantVecesQueFueAlquiladoElInmueble(Inmueble inmueble) {
 		return inmueble.getReservas().size(); //solo hay q contar las finalizadas?
 	}
