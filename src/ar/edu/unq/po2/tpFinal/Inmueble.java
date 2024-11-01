@@ -96,6 +96,10 @@ public class Inmueble {
 		}
 		return precioTotal;
 	}
+
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
 	
 }
 

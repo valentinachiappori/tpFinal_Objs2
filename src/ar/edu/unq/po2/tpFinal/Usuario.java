@@ -9,13 +9,13 @@ public class Usuario {
 	private String nombreCompleto;
 	private String correoElectronico;
 	private int numeroDeTelefono;
-	private List<Integer> calificaciones;
+	private List<Puntaje> calificaciones;
 
 	public Usuario(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
 		this.nombreCompleto = nombreCompleto;
 		this.numeroDeTelefono = numeroDeTelefono;
 		this.correoElectronico = correoElectronico;
-		this.calificaciones = new ArrayList<Integer>();
+		this.calificaciones = new ArrayList<Puntaje>();
 	}
 	   
 	public void setNombreCompleto(String nombreCompleto) {
@@ -47,12 +47,8 @@ public class Usuario {
 	}
 	
 	
-	public void agregarCalificacion(int puntuacion) {
-	    if (puntuacion >= 1 && puntuacion <= 5) {
+	public void agregarCalificacion(Puntaje puntuacion) {
 	        this.calificaciones.add(puntuacion);
-	    } else {
-	        throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
-	    }
 	}  // podriamos hacer que la calificacion se de con Enums asi nos evitamos que salga de ese rango
 
 }
