@@ -7,14 +7,14 @@ public class Reserva {
 	private LocalDate fechaSalida;
 	private Inmueble inmueble;
 	private Inquilino inquilino;
-	private EstadoReserva estadoReserva; 
+	private String estadoReserva; 
 	
 	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble, Inquilino inquilino) {
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
 		this.inmueble = inmueble;
 		this.inquilino = inquilino;
-		this.estadoReserva = new Pendiente();
+		this.estadoReserva = "Pendiente";
 	}
 
 	public LocalDate getFechaEntrada() {
@@ -38,9 +38,12 @@ public class Reserva {
 		return this.inmueble.getPropietario();
 	}
 
-	public void esAceptada() {
-		this.estadoReserva = new Aceptada();
+	public void cambiarEstadoAAceptada() {
+		this.estadoReserva = "Aceptada";
 	}
 
+	public void cambiarEstadoACancelada() {
+		this.estadoReserva = "Cancelada";
+	}
 
 }
