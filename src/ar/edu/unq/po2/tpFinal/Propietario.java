@@ -38,7 +38,7 @@ public class Propietario extends Usuario {
 
 	public void recibirOferta(Reserva reserva) {
 		
-		this.reservas.add(reserva);
+		this.posiblesReservas.add(reserva);
 	}
 	
 	public void evaluarPosibleConcretacionDeReserva(Reserva reserva) {
@@ -46,11 +46,22 @@ public class Propietario extends Usuario {
 		System.out.println("Información del Propietario:"+
 	       "Nombre: " + reserva.getPropietario().getNombreCompleto() +
 	        "Contacto: " + reserva.getPropietario().getCorreoElectronico());
-		
 	}
 	
 	public void aceptarUnaReserva(Reserva reserva) {
-		reserva.esAceptada();
+		reserva.cambiarEstadoAAceptada();
+		this.posiblesReservas.remove(reserva);
+		this.reservas.add(reserva);
+	}
+	
+	public void rechazarReserva(Reserva reserva) {
+		reserva.cambiarEstadoACancelada();
+		this.posiblesReservas.remove(reserva);
+	}
+	
+	public void cancelarReserva(Reserva reserva) {
+		reserva.cambiarEstadoACancelada();
+		this.reservas.remove(reserva);
 	}
 	public int cantVecesQueFueAlquiladoElInmueble(Inmueble inmueble) {
 		return inmueble.getReservas().size(); //solo hay q contar las finalizadas?
