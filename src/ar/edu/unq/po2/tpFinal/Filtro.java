@@ -6,5 +6,6 @@ public interface Filtro{
 	public boolean cumpleElInmubleMiCriterio(Inmueble inmueble) ;
 	
 	 <T> T getDato();
+
 	
 }

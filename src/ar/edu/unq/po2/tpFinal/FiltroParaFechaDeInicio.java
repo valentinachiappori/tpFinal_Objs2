@@ -8,7 +8,7 @@ public class FiltroParaFechaDeInicio implements Filtro{
 	private LocalDate dato;
 
 	public  FiltroParaFechaDeInicio(LocalDate fechaInicio) {
-		this.setDato(fechaInicio);
+		this.dato =(fechaInicio);
 	}
 	
 	@Override
@@ -22,10 +22,6 @@ public class FiltroParaFechaDeInicio implements Filtro{
 	public <T> T getDato() {
 		// TODO Auto-generated method stub
 		return (T) this.dato;
-	}
-
-	public void setDato(LocalDate dato) {
-		this.dato = dato;
 	}
 
 }
