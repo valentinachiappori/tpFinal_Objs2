@@ -101,6 +101,12 @@ public class Inmueble {
 		return reservas;
 	}
 	
+	/*
+	public boolean cumplenConLosFiltros(List<Filtro> filtros) {
+		// TODO Auto-generated method stub
+		return filtros.stream().allMatch(f -> f.cumpleElInmubleMiCriterio(this));
+	}
+	*/
 }
 
 
