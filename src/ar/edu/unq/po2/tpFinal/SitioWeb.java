@@ -76,6 +76,7 @@ public class SitioWeb {
 		reserva.getInmueble().getPoliticaDeCancelacion().ejecutar(reserva);
 	}
 	
+	
 	private void ejecutarReservaCondicional(Reserva reserva) {
 		if (!reserva.getInmueble().getReservasEnCola().isEmpty()) {
 			reserva.getPropietario().recibirOferta(reserva.getInmueble().getReservasEnCola().getFirst());
