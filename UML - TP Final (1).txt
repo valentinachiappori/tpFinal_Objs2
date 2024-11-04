@@ -5,21 +5,21 @@
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="zkfFHV4jXpPFQw0GAbJ--0" value="Usuario" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-390" y="-880" width="453" height="180" as="geometry">
+          <mxGeometry x="-400" y="-940" width="450" height="350" as="geometry">
             <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="zkfFHV4jXpPFQw0GAbJ--1" value="- sitio: SitioWeb &#xa;- nombreCompleto: String&#xa;- correoElectronico: String&#xa;- numeroTelefono: int    &#xa;- fechaLogin: LocalDate&#xa;- calificaciones: List&lt;Puntaje&gt;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="zkfFHV4jXpPFQw0GAbJ--0" vertex="1">
-          <mxGeometry y="26" width="453" height="94" as="geometry" />
+        <mxCell id="zkfFHV4jXpPFQw0GAbJ--1" value="- sitio: SitioWeb &#xa;- nombreCompleto: String&#xa;- correoElectronico: String&#xa;- numeroTelefono: int    &#xa;- fechaLogin: LocalDate&#xa;- calificaciones: List&lt;Puntaje&gt;&#xa;- reservas: List&lt;reservas&gt;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="zkfFHV4jXpPFQw0GAbJ--0" vertex="1">
+          <mxGeometry y="26" width="450" height="124" as="geometry" />
         </mxCell>
         <mxCell id="zkfFHV4jXpPFQw0GAbJ--4" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="zkfFHV4jXpPFQw0GAbJ--0" vertex="1">
-          <mxGeometry y="120" width="453" height="8" as="geometry" />
+          <mxGeometry y="150" width="450" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="zkfFHV4jXpPFQw0GAbJ--5" value="+ buscarInmuebles(Ciudad, Fecha , Fecha,Int, Double,Double): List&lt;Inmueble&gt;&#xa;+ &#xa;&#xa;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="zkfFHV4jXpPFQw0GAbJ--0" vertex="1">
-          <mxGeometry y="128" width="453" height="40" as="geometry" />
+        <mxCell id="zkfFHV4jXpPFQw0GAbJ--5" value="+ buscarInmuebles(Ciudad, Fecha , Fecha,Int, Double,Double): List&lt;Inmueble&gt;&#xa;+ agregarCalificacion(Puntaje): void&#xa;+ (abs) esPropietario: boolean&#xa;+ (abs) esInquilino: boolean&#xa;+ setCorreoElectronico(String): void&#xa;+ setNombreoCompleto(String): void&#xa;+ setNumeroDeTelefono(int):void&#xa;+ getNombreCompleto(): String&#xa;+ getNumeroDeTelofono(): String&#xa;+ getSitioWeb(). SitioWeb&#xa;+ getCorreoElectronico(): String&#xa;+ getMisReservas(): List&lt;Reservas&gt;&#xa;&#xa;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="zkfFHV4jXpPFQw0GAbJ--0" vertex="1">
+          <mxGeometry y="158" width="450" height="192" as="geometry" />
         </mxCell>
         <mxCell id="zkfFHV4jXpPFQw0GAbJ--6" value="Inquilino" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-670" y="-610" width="410" height="340" as="geometry">
+          <mxGeometry x="-670" y="-490" width="410" height="340" as="geometry">
             <mxRectangle x="130" y="380" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -33,7 +33,7 @@
           <mxGeometry y="122" width="410" height="218" as="geometry" />
         </mxCell>
         <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-15" value="Propietario&#xa;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-160" y="-610" width="380" height="260" as="geometry">
+          <mxGeometry x="-190" y="-484" width="380" height="260" as="geometry">
             <mxRectangle x="130" y="380" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -63,7 +63,7 @@
         <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-26" value="getSuperficie&#xa;getPais&#xa;...&#xa;SetSuperficie&#xa;SetPais&#xa;...&#xa;&#xa;getComentariosDeUsuarios():List&lt;String&gt;&#xa;reservar()&#xa;getInfoDueño():String&#xa;getPuntajeDueño(): double&#xa;getPuntajePromedioDueño(): double&#xa;&#xa;+ agregarFoto(String): void&#xa;+ getReservas(): List&lt;Reserva&gt;&#xa;+ estaDisponibleEnPeriodo(LocalDate, LocalDate): boolean &#xa;+ calcularPrecioDia(LocalDate): Double &#xa;+ calcularPrecioEstadia(LocalDate, LocalDate): Double  " style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="6DMxvoGDxHoR4Lb7ZoXl-22" vertex="1">
           <mxGeometry y="278" width="420" height="262" as="geometry" />
         </mxCell>
-        <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="6DMxvoGDxHoR4Lb7ZoXl-27" edge="1">
+        <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.002;entryY=0.79;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="6DMxvoGDxHoR4Lb7ZoXl-27" edge="1" target="zkfFHV4jXpPFQw0GAbJ--1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="63" y="-815" as="targetPoint" />
           </mxGeometry>
@@ -73,14 +73,14 @@
             <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="TF3ZakS4_Q3tyRvPh33l-4" value="&lt;div&gt;- usuarios:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;List &amp;lt;Usuario&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- inmuebles:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;List&amp;lt;Inmuebles&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- tiposDeInmuebles:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;List &amp;lt;Strings&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- servicios :&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;Set&amp;lt;Serivicio&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- imailSender:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;IMailSender&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
-          <mxGeometry y="26" width="470" height="90" as="geometry" />
+        <mxCell id="TF3ZakS4_Q3tyRvPh33l-4" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- inmuebles:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;List&amp;lt;Inmuebles&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- tiposDeInmuebles:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;List &amp;lt;Strings&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- servicios :&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;Set&amp;lt;Serivicio&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- imailSender:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;IMailSender&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
+          <mxGeometry y="26" width="470" height="70" as="geometry" />
         </mxCell>
         <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-31" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
-          <mxGeometry y="116" width="470" height="36" as="geometry" />
+          <mxGeometry y="96" width="470" height="36" as="geometry" />
         </mxCell>
         <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-32" value="+ filtrarInmuebles(String, LocalDate, LocalDate, int, Double, Double): List&lt;Inmuebles&gt;&#xa;+ ranking()&#xa;+ darDeAltaCategoria(Categoria): void&#xa;+ darDeAltaInmueble(Inmueble): void&#xa;+ verificarSiEsPropietarioRegistrado(Usuario): boolean&#xa;+ esUsuarioRegistrado(Usuario): boolean&#xa;+ esPropietario(Usuario):boolean&#xa;+ enviarMailConfirmacio(String,Reserva):void&#xa;+ cancelarReserva(Reserva):void&#xa;+ enviarMailConReserva:(String,Reserva): reserva&#xa;+ topTenInquilinosConMasAlquileres: List&lt;Usuario&gt;&#xa;+ getInquilinos(): List&lt;Usuario&gt; &#xa;+ inmueblesLibres(): List&lt;Inmuebles&gt;&#xa;+ tasaDeOcupacion() float" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
-          <mxGeometry y="152" width="470" height="218" as="geometry" />
+          <mxGeometry y="132" width="470" height="218" as="geometry" />
         </mxCell>
         <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-43" value="Reserva" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-420" y="-150" width="320" height="180" as="geometry">
@@ -114,23 +114,25 @@
         <mxCell id="I23S-4FGrFgMX26nz_Qd-3" value="+ incluidaEnPeriodo(LocalDate): boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="I23S-4FGrFgMX26nz_Qd-0" vertex="1">
           <mxGeometry y="116" width="230" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="I23S-4FGrFgMX26nz_Qd-23" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="zkfFHV4jXpPFQw0GAbJ--6" edge="1">
+        <mxCell id="I23S-4FGrFgMX26nz_Qd-23" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.418;entryY=1.075;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="zkfFHV4jXpPFQw0GAbJ--6" edge="1" target="zkfFHV4jXpPFQw0GAbJ--5">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="-330" y="-710" as="sourcePoint" />
             <mxPoint x="-210" y="-700" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-465" y="-660" />
-              <mxPoint x="-210" y="-660" />
+              <mxPoint x="-465" y="-540" />
+              <mxPoint x="-400" y="-540" />
+              <mxPoint x="-212" y="-540" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="I23S-4FGrFgMX26nz_Qd-25" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1">
+        <mxCell id="I23S-4FGrFgMX26nz_Qd-25" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.422;entryY=1.075;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1" target="zkfFHV4jXpPFQw0GAbJ--5">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="50" y="-613" as="sourcePoint" />
+            <mxPoint x="50" y="-490" as="sourcePoint" />
             <mxPoint x="-210" y="-700" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="50" y="-660" />
-              <mxPoint x="-210" y="-660" />
+              <mxPoint x="50" y="-540" />
+              <mxPoint x="-120" y="-540" />
+              <mxPoint x="-210" y="-540" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -177,6 +179,12 @@
         </mxCell>
         <mxCell id="a-KpNrZojqPwiynZEBG5-14" value="+ popUp(String, String, int): void&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="a-KpNrZojqPwiynZEBG5-13" vertex="1">
           <mxGeometry y="40" width="200" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="9Nvrj7wnqfDIEmuj9vkj-5" value="usuarios" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="85" y="-842" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9Nvrj7wnqfDIEmuj9vkj-6" value="*" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="55" y="-852" width="30" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
