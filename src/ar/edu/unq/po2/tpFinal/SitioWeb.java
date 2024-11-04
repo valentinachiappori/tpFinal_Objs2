@@ -106,7 +106,8 @@ public class SitioWeb {
 		int totalInmuebles = inmuebles.size();
 		return inmueblesAlquilados / totalInmuebles;
 	}
-
+	
+	
 	public void notify(String cambio,Inmueble inmueble) {
 		for (Interesado interesado : interesados) {
 			interesado.update(cambio, inmueble);
