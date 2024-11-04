@@ -128,6 +128,13 @@ public class Inmueble {
 	public List<Reserva> getReservasEnCola() {
 		return this.reservasEnCola;
 	}
+
+	public void modificarPrecioPeriodo(PeriodoConPrecio periodo, Double precioNuevo) {
+		if (periodo.getPrecioPorDia() > precioNuevo) {
+			this.getPropietario().getSitioWeb().notify("Baja de precio", this);
+		}
+		
+	}
 	
 	
 	/*

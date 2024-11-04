@@ -11,6 +11,7 @@ public class SitioWeb {
 	private List<String> tiposDeInmueble;
 	private Set<Servicio> servicios;
 	private MailSender mailSender;
+	private List<Interesado> interesados;
 	
 	//constructor
 	public SitioWeb( Set<Servicio> servicios, MailSender mailSender) {
@@ -19,6 +20,7 @@ public class SitioWeb {
 		this.tiposDeInmueble = new ArrayList<String>();
 		this.servicios = servicios;
 		this.mailSender = mailSender;
+		this.interesados = new ArrayList<Interesado>();
 	}
 	
 	//getters y setters
@@ -105,6 +107,20 @@ public class SitioWeb {
 		return inmueblesAlquilados / totalInmuebles;
 	}
 
+	public void notify(String cambio,Inmueble inmueble) {
+		for (Interesado interesado : interesados) {
+			interesado.update(cambio, inmueble);
+		}
+	}
+	
+	public void agregarInteresado(Interesado interesado) {
+		interesados.add(interesado);
+	}
+	
+	public void removerInteresado(Interesado interesado) {
+		interesados.remove(interesado);
+	}
+	
 	/*
 	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, int cantHuespedes,
 			Double precioMin, Double precioMax){

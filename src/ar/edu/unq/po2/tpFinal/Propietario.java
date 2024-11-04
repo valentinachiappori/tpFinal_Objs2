@@ -93,4 +93,9 @@ public class Propietario extends Usuario {
 		return false;
 	}
 	
+	public void modificarPrecio(Double precioNuevo, Inmueble inmueble, PeriodoConPrecio periodo) {
+		inmueble.modificarPrecioPeriodo(periodo, precioNuevo);
+		
+	}
+	
 }
