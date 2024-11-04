@@ -7,15 +7,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
-
 public class SitioWeb {
-	private Administrador administrador;
 	private List<Usuario> usuarios;
 	private List<Inmueble> inmuebles;
 	private List<String> tiposDeInmueble;
 	private Set<Servicio> servicios;
+	private MailSender mailSender;
+	
 	//constructor
+	public SitioWeb( Set<Servicio> servicios, MailSender mailSender) {
+		this.usuarios = new ArrayList<Usuario>();
+		this.inmuebles = new ArrayList<Inmueble>();
+		this.tiposDeInmueble = new ArrayList<String>();
+		this.servicios = servicios;
+		this.mailSender = mailSender;
+	}
+	
 	
 	//getters y setters
 	
@@ -23,7 +30,7 @@ public class SitioWeb {
 	public void darDeAltaTipoInmueble(String tipoDeInmueble) {
 		this.tiposDeInmueble.add(tipoDeInmueble);
 	}
-	
+
 	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, Integer cantHuespedes,
 			Double precioMin, Double precioMax) {
 		if (ciudad.equals(null)||fechaEntrada.equals(null)|| fechaSalida.equals(null)) {
@@ -58,18 +65,19 @@ public class SitioWeb {
 		return usuario.esPropietario();
 	}
 
-	public void enviarMailConfirmacion(String correoElectronico) {
-		//manda maiiiiiiiil
+	public void enviarMailConfirmacion(Reserva reserva) {
+		this.mailSender.sendMail(reserva.getInquilino().getCorreoElectronico(),"Reserva confirmada", "Tu reserva" + reserva.toString() + "ha sido confirmada por su propietario");
 	}
 
 	public void cancelarReserva(Reserva reserva) {
 		reserva.getPropietario().cancelarReserva(reserva);
-		//envia mail de cancelacion a propietario
+		this.mailSender.sendMail(reserva.getPropietario().getCorreoElectronico(),"Reserva cancelada", "Tu reserva " + reserva.toString() + "ha sido cancelada por el inquilino");
 		reserva.getInmueble().eliminarReserva(reserva);
+		reserva.getInmueble().getPoliticaDeCancelacion().ejecutar(reserva);
 	}
 	
-	public void enviarMailConReserva(String correoElectronico/*no se*/) {
-		
+	public void enviarMailConReserva(Reserva reserva) {
+		this.mailSender.sendMail(reserva.getInquilino().getCorreoElectronico(),"Reserva", reserva.toString());
 	}
 	
 	public List<Usuario> getInquilinos(){
