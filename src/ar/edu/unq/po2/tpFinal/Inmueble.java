@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Inmueble {
     private String tipo;
@@ -11,7 +12,7 @@ public class Inmueble {
 	private String pais; // 
 	private String ciudad; // 
 	private Propietario propietario;
-	private List<Servicio> servicios; //ver esto
+	private Set<Servicio> servicios; //ver esto
 	private int capacidad;
 	private List<String> fotos; //que no sean mas de 5 
 	private LocalTime checkIn;
@@ -24,7 +25,7 @@ public class Inmueble {
 	private List<Reserva> reservas;
 
 	
-	public Inmueble(String tipo, int superficie, String pais, String ciudad, Propietario propietario, List<String> servicios, int capacidad
+	public Inmueble(String tipo, int superficie, String pais, String ciudad, Propietario propietario, Set<Servicio> servicios, int capacidad
 			, LocalTime checkIn, LocalTime checkOut, List<String> metodosDePago,
 			List<PeriodoConPrecio> periodosPublicados) {
 		super();
@@ -104,6 +105,17 @@ public class Inmueble {
 	public String getTipoInmueble() {
 		return tipo;
 	}
+
+	public void eliminarReserva(Reserva reserva) {
+		this.reservas.remove(reserva);
+	}
+
+	public boolean estaDisponibleHoy() {
+		LocalDate hoy = LocalDate.now();
+		return reservas.stream().noneMatch(r -> !hoy.isBefore(r.getFechaEntrada()) && 
+				!hoy.isAfter(r.getFechaSalida()));
+	}
+	
 	
 	/*
 	public boolean cumplenConLosFiltros(List<Filtro> filtros) {

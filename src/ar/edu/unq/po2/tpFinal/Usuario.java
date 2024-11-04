@@ -10,12 +10,14 @@ public abstract class Usuario {
 	private String correoElectronico;
 	private int numeroDeTelefono;
 	private List<Puntaje> calificaciones;
+	private List<Reserva> reservas;
 
 	public Usuario(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
 		this.nombreCompleto = nombreCompleto;
 		this.numeroDeTelefono = numeroDeTelefono;
 		this.correoElectronico = correoElectronico;
 		this.calificaciones = new ArrayList<Puntaje>();
+		this.reservas = new ArrayList<Reserva>();
 		
 	}
 	   
@@ -29,6 +31,10 @@ public abstract class Usuario {
 
 	public int getNumeroDeTelefono() {
 		return numeroDeTelefono;
+	}
+	
+	public List<Reserva> getMisReservas(){
+		return reservas;
 	}
 
 	public void setNumeroDeTelefono(int numeroDeTelefono) {
@@ -57,5 +63,7 @@ public abstract class Usuario {
 	}  // podriamos hacer que la calificacion se de con Enums asi nos evitamos que salga de ese rango
 
 	public abstract boolean esPropietario();
+
+	public abstract boolean esInquilino();
 
 }

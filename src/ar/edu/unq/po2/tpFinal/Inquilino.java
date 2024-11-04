@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Inquilino extends Usuario {
-	private List<Reserva> reservas;
 	private List<Puntaje> calificaciones;
 
 	public Inquilino(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
@@ -12,29 +11,21 @@ public class Inquilino extends Usuario {
 	}
 
 	public void agregarReserva(Reserva reserva) {
-	        reservas.add(reserva);
-	}	
-	
-	public List<Reserva> getMisReservas() {
-		return reservas;
+	        this.getMisReservas().add(reserva);
 	}
 	
 	public List<Reserva> getReservasFuturas(){
-		return reservas.stream().filter(r -> r.getFechaEntrada().isAfter(LocalDate.now())).toList();
+		return this.getMisReservas().stream().filter(r -> r.getFechaEntrada().isAfter(LocalDate.now())).toList();
 	}
 	
 	public List<Reserva> getReservasEnCiudad(String ciudad){
-		return reservas.stream().filter(r -> r.getInmueble().getCiudad().equals(ciudad)).toList();
+		return this.getMisReservas().stream().filter(r -> r.getInmueble().getCiudad().equals(ciudad)).toList();
 	}
 	
 	public List<String> getCiudadesConReserva(){
-		return reservas.stream().map(r -> r.getInmueble().getCiudad()).toList();
+		return this.getMisReservas().stream().map(r -> r.getInmueble().getCiudad()).toList();
 	}
-	
-	// el public de este metodo esta raro
-	public void setMisReservas (List<Reserva>  misReservas) {
-		this.reservas = misReservas;
-	}
+
 	
 	public void agregarCalificacion(Puntaje puntuacion) {
 	        calificaciones.add(puntuacion);
@@ -49,9 +40,21 @@ public class Inquilino extends Usuario {
 	}
 	
 	public void cancelarReserva(Reserva reserva) {
-		//implementacion
-		//eliminarla del sistema y avisarle por mail al dueño
+		this.getMisReservas().remove(reserva);
+		this.getSitioWeb().cancelarReserva(reserva);
 	}
 	
+	public void rankearInmueble(Inmueble inmueble, Puntaje puntaje) {
+		
+	}
+
+	@Override
+	public boolean esPropietario() {
+		return false;
+	}
 	
+	@Override
+	public boolean esInquilino() {
+		return true;
+	}
 }

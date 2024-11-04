@@ -57,9 +57,40 @@ public class SitioWeb {
 	private boolean esPropietario(Usuario usuario) {
 		return usuario.esPropietario();
 	}
+
+	public void enviarMailConfirmacion(String correoElectronico) {
+		//manda maiiiiiiiil
+	}
+
+	public void cancelarReserva(Reserva reserva) {
+		reserva.getPropietario().cancelarReserva(reserva);
+		//envia mail de cancelacion a propietario
+		reserva.getInmueble().eliminarReserva(reserva);
+	}
 	
+	public void enviarMailConReserva(String correoElectronico/*no se*/) {
+		
+	}
 	
+	public List<Usuario> getInquilinos(){
+		return this.usuarios.stream().filter(u -> u.esInquilino()).toList();
+	}
 	
+	public List<Usuario> topTenInquilinosConMasAlquileres(){
+		return this.getInquilinos().stream().sorted((i1, i2) -> 
+		Integer.compare(i2.getMisReservas().size(), i1.getMisReservas().size())).limit(10).toList();
+	}
+	
+	public List<Inmueble> inmueblesLibres(){
+		return inmuebles.stream().filter(i -> i.estaDisponibleHoy()).toList();
+	}
+	
+	public float tasaDeOcupacion() {
+		int inmueblesAlquilados = inmuebles.stream().filter(i -> !i.estaDisponibleHoy()).toList().size();  
+		int totalInmuebles = inmuebles.size();
+		return inmueblesAlquilados / totalInmuebles;
+	}
+
 	/*
 	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, int cantHuespedes,
 			Double precioMin, Double precioMax){

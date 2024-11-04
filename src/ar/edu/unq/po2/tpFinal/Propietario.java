@@ -9,7 +9,6 @@ public class Propietario extends Usuario {
 	private List<Inmueble> inmuebles;
 	private List<Puntaje> calificaciones;
 	private List<Reserva> posiblesReservas; //ver
-	private List<Reserva> reservas;
 	
 	public Propietario(String nombreCompleto, int numeroDeTelefono, String correoElectronico) {
 		super(nombreCompleto, numeroDeTelefono, correoElectronico);
@@ -37,11 +36,10 @@ public class Propietario extends Usuario {
 	}
 
 	public void recibirOferta(Reserva reserva) {
-		
 		this.posiblesReservas.add(reserva);
 	}
 	
-	public void evaluarPosibleConcretacionDeReserva(Reserva reserva) {
+	public void evaluarPosibleConcrecionDeReserva(Reserva reserva) {
 		
 		System.out.println("Información del Propietario:"+
 	       "Nombre: " + reserva.getPropietario().getNombreCompleto() +
@@ -51,7 +49,8 @@ public class Propietario extends Usuario {
 	public void aceptarUnaReserva(Reserva reserva) {
 		reserva.cambiarEstadoAAceptada();
 		this.posiblesReservas.remove(reserva);
-		this.reservas.add(reserva);
+		this.getMisReservas().add(reserva);
+		this.getSitioWeb().enviarMailConfirmacion(reserva.getPropietario().getCorreoElectronico());
 	}
 	
 	public void rechazarReserva(Reserva reserva) {
@@ -61,8 +60,14 @@ public class Propietario extends Usuario {
 	
 	public void cancelarReserva(Reserva reserva) {
 		reserva.cambiarEstadoACancelada();
-		this.reservas.remove(reserva);
+		this.getMisReservas().remove(reserva);
 	}
+	
+	public void contactarPosibleInquilino() {
+		//HACEEEEEEEEEEEEER
+	}
+	
+	
 	public int cantVecesQueFueAlquiladoElInmueble(Inmueble inmueble) {
 		return inmueble.getReservas().size(); //solo hay q contar las finalizadas?
 	}
@@ -80,4 +85,9 @@ public class Propietario extends Usuario {
 		return true;
 	}
 
+	@Override
+	public boolean esInquilino() {
+		return false;
+	}
+	
 }
