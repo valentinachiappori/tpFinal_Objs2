@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 OPR/113.0.0.0" version="24.8.3">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2482" dy="1952" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1820" dy="1639" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -69,18 +69,18 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-27" value="SitioWeb" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="220" y="-1000" width="380" height="236" as="geometry">
+          <mxGeometry x="220" y="-1000" width="470" height="370" as="geometry">
             <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="TF3ZakS4_Q3tyRvPh33l-4" value="- List&amp;lt;Inmuebles&amp;gt; inmuebles&lt;div&gt;- List &amp;lt;Propietario&amp;gt; propietarios&lt;/div&gt;&lt;div&gt;- List &amp;lt;Inquilino&amp;gt; inquilinos&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
-          <mxGeometry y="26" width="380" height="60" as="geometry" />
+        <mxCell id="TF3ZakS4_Q3tyRvPh33l-4" value="&lt;div&gt;- usuarios:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;List &amp;lt;Usuario&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- inmuebles:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;List&amp;lt;Inmuebles&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- tiposDeInmuebles:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;List &amp;lt;Strings&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- servicios :&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;Set&amp;lt;Serivicio&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- imailSender:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;IMailSender&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
+          <mxGeometry y="26" width="470" height="90" as="geometry" />
         </mxCell>
         <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-31" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
-          <mxGeometry y="86" width="380" height="36" as="geometry" />
+          <mxGeometry y="116" width="470" height="36" as="geometry" />
         </mxCell>
-        <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-32" value="+ filtrarInmuebles(String, LocalDate, LocalDate, int, Double, Double)&#xa;+ ranking()&#xa;+ darDeAltaCategoria(Categoria)&#xa;+ darDeAltaInmueble((TipoDeInmueble)):&#xa;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
-          <mxGeometry y="122" width="380" height="108" as="geometry" />
+        <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-32" value="+ filtrarInmuebles(String, LocalDate, LocalDate, int, Double, Double): List&lt;Inmuebles&gt;&#xa;+ ranking()&#xa;+ darDeAltaCategoria(Categoria): void&#xa;+ darDeAltaInmueble(Inmueble): void&#xa;+ verificarSiEsPropietarioRegistrado(Usuario): boolean&#xa;+ esUsuarioRegistrado(Usuario): boolean&#xa;+ esPropietario(Usuario):boolean&#xa;+ enviarMailConfirmacio(String,Reserva):void&#xa;+ cancelarReserva(Reserva):void&#xa;+ enviarMailConReserva:(String,Reserva): reserva&#xa;+ topTenInquilinosConMasAlquileres: List&lt;Usuario&gt;&#xa;+ getInquilinos(): List&lt;Usuario&gt; &#xa;+ inmueblesLibres(): List&lt;Inmuebles&gt;&#xa;+ tasaDeOcupacion() float" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="6DMxvoGDxHoR4Lb7ZoXl-27" vertex="1">
+          <mxGeometry y="152" width="470" height="218" as="geometry" />
         </mxCell>
         <mxCell id="6DMxvoGDxHoR4Lb7ZoXl-43" value="Reserva" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-420" y="-150" width="320" height="180" as="geometry">
