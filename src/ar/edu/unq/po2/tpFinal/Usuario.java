@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario {
+public abstract class Usuario {
 	private SitioWeb sitio;
 	private String nombreCompleto;
 	private String correoElectronico;
@@ -38,6 +38,10 @@ public class Usuario {
 	public String getCorreoElectronico() {
 		return correoElectronico;
 	}
+	
+	public SitioWeb getSitioWeb() {
+		return sitio;
+	}
 
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
@@ -51,5 +55,7 @@ public class Usuario {
 	public void agregarCalificacion(Puntaje puntuacion) {
 	        this.calificaciones.add(puntuacion);
 	}  // podriamos hacer que la calificacion se de con Enums asi nos evitamos que salga de ese rango
+
+	public abstract boolean esPropietario();
 
 }

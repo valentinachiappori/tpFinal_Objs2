@@ -11,7 +11,7 @@ public class Inmueble {
 	private String pais; // 
 	private String ciudad; // 
 	private Propietario propietario;
-	private List<String> servicios; //ver esto
+	private List<Servicio> servicios; //ver esto
 	private int capacidad;
 	private List<String> fotos; //que no sean mas de 5 
 	private LocalTime checkIn;
@@ -99,6 +99,10 @@ public class Inmueble {
 
 	public List<Reserva> getReservas() {
 		return reservas;
+	}
+
+	public String getTipoInmueble() {
+		return tipo;
 	}
 	
 	/*

@@ -24,8 +24,8 @@ public class Propietario extends Usuario {
 		this.inmuebles = inmuebles;
 	}
 	
-	public void ponerEnAlquilerUnImbueble(Inmueble i) {
-		
+	public void ponerEnAlquilerUnInmueble(Inmueble i) {
+		this.getSitioWeb().darDeAltaInmueble(i);
 	}
 	
     public void agregarInmueble(Inmueble i) {
@@ -73,6 +73,11 @@ public class Propietario extends Usuario {
 	
 	public List<Inmueble> todosLosInmueblesQueYaFueronAlquilados() {
 		return inmuebles.stream().filter(i -> i.getReservas().size() >= 1).toList();
+	}
+
+	@Override
+	public boolean esPropietario() {
+		return true;
 	}
 
 }
