@@ -50,7 +50,7 @@ public class Propietario extends Usuario {
 		reserva.cambiarEstadoAAceptada();
 		this.posiblesReservas.remove(reserva);
 		this.getMisReservas().add(reserva);
-		this.getSitioWeb().enviarMailConfirmacion(reserva.getPropietario().getCorreoElectronico());
+		this.getSitioWeb().enviarMailConfirmacion(reserva);
 	}
 	
 	public void rechazarReserva(Reserva reserva) {

@@ -36,7 +36,7 @@ public class Inquilino extends Usuario {
 	}
 	
 	public void reservar(Inmueble inmueble, String metodoPago, LocalDate fechaInicio, LocalDate fechaFin) {
-		inmueble.getPropietario().recibirOferta(new Reserva(fechaInicio, fechaFin, inmueble, this));
+		inmueble.getPropietario().recibirOferta(new Reserva(fechaInicio, fechaFin, inmueble, this, inmueble.calcularPrecioEstadia(fechaInicio, fechaFin)));
 	}
 	
 	public void cancelarReserva(Reserva reserva) {

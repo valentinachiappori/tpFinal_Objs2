@@ -23,11 +23,12 @@ public class Inmueble {
 	private List<PeriodoConPrecio> periodosPublicados;
 	private List<Integer> calificaciones;
 	private List<Reserva> reservas;
+	private PoliticaDeCancelacion politicaDeCancelacion;
 
 	
 	public Inmueble(String tipo, int superficie, String pais, String ciudad, Propietario propietario, Set<Servicio> servicios, int capacidad
 			, LocalTime checkIn, LocalTime checkOut, List<String> metodosDePago,
-			List<PeriodoConPrecio> periodosPublicados) {
+			List<PeriodoConPrecio> periodosPublicados, PoliticaDeCancelacion politicaDeCancelacion ) {
 		super();
 		this.tipo = tipo;
 		this.superficie = superficie;
@@ -42,6 +43,7 @@ public class Inmueble {
 		this.metodosDePago = metodosDePago;
 		this.periodosPublicados = periodosPublicados;
 		this.reservas = new ArrayList<Reserva>();
+		this.politicaDeCancelacion = politicaDeCancelacion;
 		
 		
 		this.calificaciones = new ArrayList<Integer>();
@@ -114,6 +116,10 @@ public class Inmueble {
 		LocalDate hoy = LocalDate.now();
 		return reservas.stream().noneMatch(r -> !hoy.isBefore(r.getFechaEntrada()) && 
 				!hoy.isAfter(r.getFechaSalida()));
+	}
+
+	public PoliticaDeCancelacion getPoliticaDeCancelacion() {
+		return this.politicaDeCancelacion;
 	}
 	
 	

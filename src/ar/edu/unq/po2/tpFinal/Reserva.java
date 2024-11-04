@@ -8,13 +8,15 @@ public class Reserva {
 	private Inmueble inmueble;
 	private Inquilino inquilino;
 	private String estadoReserva; 
+	private Double precioTotal;
 	
-	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble, Inquilino inquilino) {
+	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble, Inquilino inquilino, Double precioTotal) {
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
 		this.inmueble = inmueble;
 		this.inquilino = inquilino;
 		this.setEstadoReserva("Pendiente");
+		this.precioTotal = precioTotal;
 	}
 
 	public LocalDate getFechaEntrada() {
@@ -34,7 +36,6 @@ public class Reserva {
 	}
 
 	public Propietario getPropietario() {
-		// TODO Auto-generated method stub
 		return this.inmueble.getPropietario();
 	}
 
@@ -53,5 +54,19 @@ public class Reserva {
 	public void setEstadoReserva(String estadoReserva) {
 		this.estadoReserva = estadoReserva;
 	}
+
+	public Double getPrecioTotal() {
+		return this.precioTotal;
+	}
+	
+	 public String toString() {
+	        return "Reserva{" +
+	               "Inmueble=" + inmueble +
+	               ", Fecha de entrada=" + fechaEntrada +
+	               ", Fecha de salida=" + fechaSalida +
+	               ", Política de cancelación= " + getInmueble().getPoliticaDeCancelacion() +
+	               ", Precio total= $" + precioTotal + 
+	               '}';
+	    }
 
 }
