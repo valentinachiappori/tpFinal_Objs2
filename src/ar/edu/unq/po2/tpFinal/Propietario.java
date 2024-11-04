@@ -36,11 +36,14 @@ public class Propietario extends Usuario {
 	}
 
 	public void recibirOferta(Reserva reserva) {
-		this.posiblesReservas.add(reserva);
+		if (reserva.getInmueble().estaDisponibleEnPeriodo(reserva.getFechaEntrada(), reserva.getFechaSalida())) {
+			this.posiblesReservas.add(reserva);
+		} else {
+			reserva.getInmueble().getReservasEnCola().add(reserva); //EXTRACT METHOD
+		}
 	}
 	
 	public void evaluarPosibleConcrecionDeReserva(Reserva reserva) {
-		
 		System.out.println("Información del Propietario:"+
 	       "Nombre: " + reserva.getPropietario().getNombreCompleto() +
 	        "Contacto: " + reserva.getPropietario().getCorreoElectronico());

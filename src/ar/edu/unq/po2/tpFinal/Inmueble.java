@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 public class Inmueble {
@@ -17,12 +18,13 @@ public class Inmueble {
 	private List<String> fotos; //que no sean mas de 5 
 	private LocalTime checkIn;
 	private LocalTime checkOut; 
-	//private double precio; //EstrategiaPrecio que dependiendo el dia te de un precio o el otro 
+	//private double precio;
 	// si usamos periodoConPrecio no necesitariamos precio como atributo, sino un mensaje.
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosPublicados;
 	private List<Integer> calificaciones;
 	private List<Reserva> reservas;
+	private List<Reserva> reservasEnCola;
 	private PoliticaDeCancelacion politicaDeCancelacion;
 
 	
@@ -44,9 +46,10 @@ public class Inmueble {
 		this.periodosPublicados = periodosPublicados;
 		this.reservas = new ArrayList<Reserva>();
 		this.politicaDeCancelacion = politicaDeCancelacion;
+		this.reservasEnCola = new ArrayList<Reserva>();
 		
 		
-		this.calificaciones = new ArrayList<Integer>();
+ 		this.calificaciones = new ArrayList<Integer>();
 	}
 
 	public void agregarFoto(String foto) {
@@ -120,6 +123,10 @@ public class Inmueble {
 
 	public PoliticaDeCancelacion getPoliticaDeCancelacion() {
 		return this.politicaDeCancelacion;
+	}
+
+	public List<Reserva> getReservasEnCola() {
+		return this.reservasEnCola;
 	}
 	
 	

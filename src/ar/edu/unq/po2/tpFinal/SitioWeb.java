@@ -23,7 +23,6 @@ public class SitioWeb {
 		this.mailSender = mailSender;
 	}
 	
-	
 	//getters y setters
 	
 	//Dar de alta los Tipos de Inmuebles que se utilizan en el sistema.
@@ -71,11 +70,19 @@ public class SitioWeb {
 
 	public void cancelarReserva(Reserva reserva) {
 		reserva.getPropietario().cancelarReserva(reserva);
+		ejecutarReservaCondicional(reserva);
 		this.mailSender.sendMail(reserva.getPropietario().getCorreoElectronico(),"Reserva cancelada", "Tu reserva " + reserva.toString() + "ha sido cancelada por el inquilino");
 		reserva.getInmueble().eliminarReserva(reserva);
 		reserva.getInmueble().getPoliticaDeCancelacion().ejecutar(reserva);
 	}
 	
+	private void ejecutarReservaCondicional(Reserva reserva) {
+		if (!reserva.getInmueble().getReservasEnCola().isEmpty()) {
+			reserva.getPropietario().recibirOferta(reserva.getInmueble().getReservasEnCola().getFirst());
+			reserva.getInmueble().getReservasEnCola().removeFirst();
+		}
+	}
+
 	public void enviarMailConReserva(Reserva reserva) {
 		this.mailSender.sendMail(reserva.getInquilino().getCorreoElectronico(),"Reserva", reserva.toString());
 	}
