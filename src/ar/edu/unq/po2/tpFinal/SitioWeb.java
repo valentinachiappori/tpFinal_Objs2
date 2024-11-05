@@ -66,6 +66,7 @@ public class SitioWeb {
 
 	public void enviarMailConfirmacion(Reserva reserva) {
 		this.mailSender.sendMail(reserva.getInquilino().getCorreoElectronico(),"Reserva confirmada", "Tu reserva" + reserva.toString() + "ha sido confirmada por su propietario");
+		notify("reserva de inmueble", reserva.getInmueble());
 	}
 
 	public void cancelarReserva(Reserva reserva) {
@@ -74,6 +75,7 @@ public class SitioWeb {
 		this.mailSender.sendMail(reserva.getPropietario().getCorreoElectronico(),"Reserva cancelada", "Tu reserva " + reserva.toString() + "ha sido cancelada por el inquilino");
 		reserva.getInmueble().eliminarReserva(reserva);
 		reserva.getInmueble().getPoliticaDeCancelacion().ejecutar(reserva);
+		notify("cancelación de reserva", reserva.getInmueble());
 	}
 	
 	
