@@ -120,6 +120,11 @@ public class SitioWeb {
 		interesados.add(interesado);
 	}
 	
+	/*no logro descifrar esto!!! 
+	 pq si lo dejamos acá está bien pq puede haber un interesado en varios inmuebles, y para no
+	 tener que agrearlo las veces que sea necesario a cada inmueble, es mejor directo en el sitio.
+	 Pero a la vez me suena raroooo :| */
+	
 	public void removerInteresado(Interesado interesado) {
 		interesados.remove(interesado);
 	}
