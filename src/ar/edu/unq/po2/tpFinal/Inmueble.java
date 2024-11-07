@@ -18,9 +18,7 @@ public class Inmueble {
 	private List<String> fotos; //que no sean mas de 5 
 	private LocalTime checkIn; 
 	private LocalTime checkOut; 
-	private double precioBase; /*se me ocurrio hacerlo como el precio de los viajes de pepita, con
-	strategy pero que la estrategia esté en sumarle x cant al precio base*/
-	
+	private double precioBase; /*se me ocurrio que tenga un precioBase que sea el precio que retorna calcularPrecioDia cuando la fecha no esta dentro ded ningun periodo */
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosPublicados;
 	private List<Integer> calificaciones;
@@ -49,9 +47,7 @@ public class Inmueble {
 		this.reservas = new ArrayList<Reserva>();
 		this.politicaDeCancelacion = politicaDeCancelacion;
 		this.reservasEnCola = new ArrayList<Reserva>();
-		
-		
- 		this.calificaciones = new ArrayList<Integer>();
+		this.calificaciones = new ArrayList<Integer>();
 	}
 
 	public void agregarFoto(String foto) {
@@ -90,6 +86,9 @@ public class Inmueble {
 		for (PeriodoConPrecio periodo : periodosPublicados) {
 			if (periodo.incluidaEnPeriodo(fecha)) {
 				return periodo.getPrecioPorDia();
+			} 
+			else {
+				return precioBase;
 			}
 		}
 		throw new IllegalArgumentException("Fecha inválida");
@@ -135,9 +134,21 @@ public class Inmueble {
 		if (periodo.getPrecioPorDia() > precioNuevo) {
 			this.getPropietario().getSitioWeb().notify("Baja de precio", this);
 		}
-		
+	}
+
+	public double getPrecioBase() {
+		return precioBase;
+	}
+
+	public void setPrecioBase(double precioBase) {
+		this.precioBase = precioBase;
 	}
 	
+	public void modificarPrecioBase(Double precioNuevo) {
+		if (precioBase > precioNuevo) {
+			this.getPropietario().getSitioWeb().notify("Baja de precio", this);
+		}
+	}
 	
 	/*
 	public boolean cumplenConLosFiltros(List<Filtro> filtros) {
