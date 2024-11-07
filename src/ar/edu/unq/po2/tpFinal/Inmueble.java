@@ -16,10 +16,11 @@ public class Inmueble {
 	private Set<Servicio> servicios; //ver esto
 	private int capacidad;
 	private List<String> fotos; //que no sean mas de 5 
-	private LocalTime checkIn;
+	private LocalTime checkIn; 
 	private LocalTime checkOut; 
-	//private double precio;
-	// si usamos periodoConPrecio no necesitariamos precio como atributo, sino un mensaje.
+	private double precioBase; /*se me ocurrio hacerlo como el precio de los viajes de pepita, con
+	strategy pero que la estrategia esté en sumarle x cant al precio base*/
+	
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosPublicados;
 	private List<Integer> calificaciones;
@@ -29,7 +30,7 @@ public class Inmueble {
 
 	
 	public Inmueble(String tipo, int superficie, String pais, String ciudad, Propietario propietario, Set<Servicio> servicios, int capacidad
-			, LocalTime checkIn, LocalTime checkOut, List<String> metodosDePago,
+			, LocalTime checkIn, LocalTime checkOut, double precioBase, List<String> metodosDePago,
 			List<PeriodoConPrecio> periodosPublicados, PoliticaDeCancelacion politicaDeCancelacion ) {
 		super();
 		this.tipo = tipo;
@@ -42,6 +43,7 @@ public class Inmueble {
 		this.fotos = new ArrayList<String>();
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
+		this.precioBase = precioBase;
 		this.metodosDePago = metodosDePago;
 		this.periodosPublicados = periodosPublicados;
 		this.reservas = new ArrayList<Reserva>();
