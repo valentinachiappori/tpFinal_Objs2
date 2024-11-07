@@ -10,18 +10,18 @@ import java.util.Set;
 public class Inmueble {
     private String tipo;
 	private int superficie;
-	private String pais; // 
-	private String ciudad; // 
+	private String pais; 
+	private String ciudad;
 	private Propietario propietario;
 	private Set<Servicio> servicios; //ver esto
 	private int capacidad;
 	private List<String> fotos; //que no sean mas de 5 
 	private LocalTime checkIn; 
 	private LocalTime checkOut; 
-	private double precioBase; /*se me ocurrio que tenga un precioBase que sea el precio que retorna calcularPrecioDia cuando la fecha no esta dentro ded ningun periodo */
+	private double precioBase; /*se me ocurrio que tenga un precioBase que sea el precio que retorna calcularPrecioDia cuando la fecha no esta dentro de ningun periodo */
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosPublicados;
-	private List<Integer> calificaciones;
+	private List<Puntaje> calificaciones;
 	private List<Reserva> reservas;
 	private List<Reserva> reservasEnCola;
 	private PoliticaDeCancelacion politicaDeCancelacion;
@@ -47,7 +47,7 @@ public class Inmueble {
 		this.reservas = new ArrayList<Reserva>();
 		this.politicaDeCancelacion = politicaDeCancelacion;
 		this.reservasEnCola = new ArrayList<Reserva>();
-		this.calificaciones = new ArrayList<Integer>();
+		this.calificaciones = new ArrayList<Puntaje>();
 	}
 
 	public void agregarFoto(String foto) {
@@ -56,14 +56,10 @@ public class Inmueble {
 		} //tirar error
 	}
 
-	public void agregarCalificacion(int puntuacion) {
-	    if (puntuacion >= 1 && puntuacion <= 5) {
-	        this.calificaciones.add(puntuacion);
-	    } else {
-	        throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
-	    }
-	}  // podriamos hacer que la calificacion se de con Enums asi nos evitamos que salga de ese rango
-
+	public void agregarCalificacion(Puntaje puntuacion) {
+	    this.calificaciones.add(puntuacion);
+	}
+	
 	public String getCiudad() {
 		return ciudad;
 	}

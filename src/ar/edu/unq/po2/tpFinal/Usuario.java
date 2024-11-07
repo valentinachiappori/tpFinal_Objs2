@@ -60,7 +60,7 @@ public abstract class Usuario {
 	
 	public void agregarCalificacion(Puntaje puntuacion) {
 	        this.calificaciones.add(puntuacion);
-	}  // podriamos hacer que la calificacion se de con Enums asi nos evitamos que salga de ese rango
+	}
 
 	public abstract boolean esPropietario();
 
