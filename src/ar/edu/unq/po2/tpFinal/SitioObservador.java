@@ -12,5 +12,9 @@ public class SitioObservador implements Interesado {
 			publisher.publish("un inmueble " + inmueble.getTipoInmueble() + "a tan sólo $" + inmueble.calcularPrecioDia(LocalDate.now()));
 		}
 	}
-
+	
+	//q el observer tenga los 3 mensajes
+	//ranking (lounico que debemos pensar), pasar las cosas a usuario
+	//filtros, admin (decidir implementacion)
+	//test!!!
 }

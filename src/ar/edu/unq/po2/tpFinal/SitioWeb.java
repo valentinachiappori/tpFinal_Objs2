@@ -11,7 +11,7 @@ public class SitioWeb {
 	private List<String> tiposDeInmueble;
 	private Set<Servicio> servicios;
 	private MailSender mailSender;
-	private List<Interesado> interesados;
+	
 	
 	//constructor
 	public SitioWeb( Set<Servicio> servicios, MailSender mailSender) {
@@ -35,33 +35,26 @@ public class SitioWeb {
 		if (ciudad.equals(null)||fechaEntrada.equals(null)|| fechaSalida.equals(null)) {
 			 new IllegalArgumentException();
 		}
-		List<Inmueble> inmueblesFiltrados = inmuebles.stream()
+		List<Inmueble> inmueblesFiltrados = inmuebles.stream() 
 		.filter(i -> i.getCiudad().equals(ciudad))
 		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
 		.filter(i -> cantHuespedes == null || i.getCapacidad() >= cantHuespedes)
 		.filter(i -> precioMin == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) >= precioMin)
 		.filter(i -> precioMax == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) <= precioMax)
 		.toList();
+		//probar de hacerlo con && y 
 		
 		return inmueblesFiltrados;
 	}
 
 	public void darDeAltaInmueble(Inmueble i) {
-		if (verificarEsPropietarioRegistrado(i.getPropietario()) && this.tiposDeInmueble.contains(i.getTipoInmueble())) {
+		if (esUsuarioRegistrado(i.getPropietario()) && this.tiposDeInmueble.contains(i.getTipoInmueble())) {
 			this.inmuebles.add(i);
 		}
-	}
-	
-	public boolean verificarEsPropietarioRegistrado(Usuario usuario) {
-		return esUsuarioRegistrado(usuario) && esPropietario(usuario);
 	}
 
 	private boolean esUsuarioRegistrado(Usuario usuario) {
 		return this.usuarios.contains(usuario);
-	}
-
-	private boolean esPropietario(Usuario usuario) {
-		return usuario.esPropietario();
 	}
 
 	public void enviarMailConfirmacion(Reserva reserva) {
@@ -111,23 +104,12 @@ public class SitioWeb {
 	
 	
 	public void notify(String cambio,Inmueble inmueble) {
-		for (Interesado interesado : interesados) {
+		for (Interesado interesado : inmueble.getInteresados()) {
 			interesado.update(cambio, inmueble);
 		}
 	}
 	
-	public void agregarInteresado(Interesado interesado) {
-		interesados.add(interesado);
-	}
 	
-	/*no logro descifrar esto!!! 
-	 pq si lo dejamos acá está bien pq puede haber un interesado en varios inmuebles, y para no
-	 tener que agrearlo las veces que sea necesario a cada inmueble, es mejor directo en el sitio.
-	 Pero a la vez me suena raroooo :| */
-	
-	public void removerInteresado(Interesado interesado) {
-		interesados.remove(interesado);
-	}
 	
 	/*
 	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, int cantHuespedes,

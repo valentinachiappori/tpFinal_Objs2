@@ -83,15 +83,6 @@ public class Propietario extends Usuario {
 		return inmuebles.stream().filter(i -> i.getReservas().size() >= 1).toList();
 	}
 
-	@Override
-	public boolean esPropietario() {
-		return true;
-	}
-
-	@Override
-	public boolean esInquilino() {
-		return false;
-	}
 	
 	public void modificarPrecio(Double precioNuevo, Inmueble inmueble, PeriodoConPrecio periodo) {
 		inmueble.modificarPrecioPeriodo(periodo, precioNuevo);

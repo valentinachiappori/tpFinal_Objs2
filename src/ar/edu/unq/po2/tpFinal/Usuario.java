@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Usuario {
+public class Usuario {
 	private SitioWeb sitio;
 	private String nombreCompleto;
 	private String correoElectronico;
@@ -62,8 +62,5 @@ public abstract class Usuario {
 	        this.calificaciones.add(puntuacion);
 	}
 
-	public abstract boolean esPropietario();
-
-	public abstract boolean esInquilino();
-
+	
 }

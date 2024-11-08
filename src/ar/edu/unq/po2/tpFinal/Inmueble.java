@@ -18,13 +18,14 @@ public class Inmueble {
 	private List<String> fotos; //que no sean mas de 5 
 	private LocalTime checkIn; 
 	private LocalTime checkOut; 
-	private double precioBase; /*se me ocurrio que tenga un precioBase que sea el precio que retorna calcularPrecioDia cuando la fecha no esta dentro de ningun periodo */
+	private Double precioBase; /*se me ocurrio que tenga un precioBase que sea el precio que retorna calcularPrecioDia cuando la fecha no esta dentro de ningun periodo */
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosPublicados;
 	private List<Puntaje> calificaciones;
 	private List<Reserva> reservas;
 	private List<Reserva> reservasEnCola;
 	private PoliticaDeCancelacion politicaDeCancelacion;
+	private List<Interesado> interesados;
 
 	
 	public Inmueble(String tipo, int superficie, String pais, String ciudad, Propietario propietario, Set<Servicio> servicios, int capacidad
@@ -83,11 +84,8 @@ public class Inmueble {
 			if (periodo.incluidaEnPeriodo(fecha)) {
 				return periodo.getPrecioPorDia();
 			} 
-			else {
-				return precioBase;
-			}
 		}
-		throw new IllegalArgumentException("Fecha inválida");
+		return precioBase;
 	}
 	
 	public Double calcularPrecioEstadia(LocalDate fechaEntrada, LocalDate fechaSalida) {
@@ -122,6 +120,10 @@ public class Inmueble {
 		return this.politicaDeCancelacion;
 	}
 
+	public void setPoliticaDeCancelacion(PoliticaDeCancelacion politica) {
+		this.politicaDeCancelacion = politica;
+	}
+	
 	public List<Reserva> getReservasEnCola() {
 		return this.reservasEnCola;
 	}
@@ -131,11 +133,15 @@ public class Inmueble {
 			this.getPropietario().getSitioWeb().notify("Baja de precio", this);
 		}
 	}
-
+	//se puede usar map para categorias a rankear!!!!!
 	public double getPrecioBase() {
 		return precioBase;
 	}
-
+	
+	public List<Interesado> getInteresados() {
+		return interesados;
+	}
+	
 	public void setPrecioBase(double precioBase) {
 		this.precioBase = precioBase;
 	}
@@ -144,6 +150,14 @@ public class Inmueble {
 		if (precioBase > precioNuevo) {
 			this.getPropietario().getSitioWeb().notify("Baja de precio", this);
 		}
+	}
+	
+	public void agregarInteresado(Interesado interesado) {
+		interesados.add(interesado);
+	}
+	
+	public void removerInteresado(Interesado interesado) {
+		interesados.remove(interesado);
 	}
 	
 	/*

@@ -48,13 +48,4 @@ public class Inquilino extends Usuario {
 		
 	}
 
-	@Override
-	public boolean esPropietario() {
-		return false;
-	}
-	
-	@Override
-	public boolean esInquilino() {
-		return true;
-	}
 }

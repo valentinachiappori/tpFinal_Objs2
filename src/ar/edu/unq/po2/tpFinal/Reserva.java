@@ -68,5 +68,6 @@ public class Reserva {
 	               ", Precio total= $" + precioTotal + 
 	               '}';
 	    }
-
+	 
+	 //metodo hacer checkOut!!!!!!
 }
