@@ -84,7 +84,7 @@ public class SitioWeb {
 	}
 	
 	public List<Usuario> getInquilinos(){
-		return this.usuarios.stream().filter(u -> u.esInquilino()).toList();
+		return this.usuarios.stream().filter(u -> u.).toList();
 	}
 	
 	public List<Usuario> topTenInquilinosConMasAlquileres(){
