@@ -23,7 +23,7 @@ public class SitioWeb {
 		this.interesados = new ArrayList<Interesado>();
 	}
 	
-	//getters y setters
+	//getters y setterss
 	
 	//Dar de alta los Tipos de Inmuebles que se utilizan en el sistema.
 	public void darDeAltaTipoInmueble(String tipoDeInmueble) {
