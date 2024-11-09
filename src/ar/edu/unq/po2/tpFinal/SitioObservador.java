@@ -8,8 +8,8 @@ public class SitioObservador implements Interesado {
 	@Override
 	public void update(EVENTO evento, Inmueble inmueble) {
 		// TODO Auto-generated method stub
-	        String mensaje = evento.aplicarMensaje(inmueble);
-	        publisher.publish(mensaje);
+	        ;
+	        publisher.publish(evento.aplicarMensaje(inmueble));
 	}
 	
 	//q el observer tenga los 3 mensajes
