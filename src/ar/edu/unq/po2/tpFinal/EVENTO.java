@@ -19,4 +19,5 @@ public enum EVENTO {
     public String aplicarMensaje(Inmueble inmueble) {
         return mensaje.apply(inmueble);
     }
+    
 }
