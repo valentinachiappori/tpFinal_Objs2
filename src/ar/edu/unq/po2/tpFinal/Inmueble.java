@@ -140,44 +140,41 @@ public class Inmueble {
 		return precioBase;
 	}
 	
+	/*
 	public List<Interesado> getInteresados() {
 		return interesados;
-	}
-	
+	}            hay que cambiarlo para map
+	*/
 	public void setPrecioBase(double precioBase) {
 		this.precioBase = precioBase;
 	}
 	
 	public void modificarPrecioBase(Double precioNuevo) {
 		if (precioBase > precioNuevo) {
-			this.getPropietario().getSitioWeb().notify("Baja de precio", this);
+		//	this.getPropietario().getSitioWeb().notify("Baja de precio", this); HAY QUE ENVIARLE AL DUEÑO QUE SE CAMBIO EL PRECIO?
+			this.notificar(EVENTO.BAJAPRECIO,this);
 		}
 	}
 	
 
-	
-	public class NotificationManager {
-	    private Map<Event, List<EventObserver>> observers = new HashMap<>();
+	public void subscribir(EVENTO evento, Interesado interesado) {
+	    this.interesados.computeIfAbsent(evento, k -> new ArrayList<>()).add(interesado);
+    }
 
-	    public void subscribe(Event event, EventObserver observer) {
-	        observers.computeIfAbsent(event, k -> new ArrayList<>()).add(observer);
+	public void desubscribir(EVENTO evento, Interesado interesado) {
+	    List<Interesado> interesadosDelEvento = this.interesados.get(evento);
+	    if (interesadosDelEvento != null) {
+	    	interesadosDelEvento.remove(interesado);
 	    }
+    }
 
-	    public void unsubscribe(Event event, EventObserver observer) {
-	        List<EventObserver> eventObservers = observers.get(event);
-	        if (eventObservers != null) {
-	            eventObservers.remove(observer);
-	        }
-	    }
+	public void notificar(EVENTO evento, Inmueble inmueble) {
+	    List<Interesado> interesadosDelEvento = this.interesados.get(evento);
 
-	    public void notify(Event event, String message) {
-	        List<EventObserver> eventObservers = observers.get(event);
-	        if (eventObservers != null) {
-	            for (EventObserver observer : eventObservers) {
-	                observer.update(event, message);
-	            }
-	        }
+	    if (interesadosDelEvento != null) {
+	        interesadosDelEvento.stream().forEach(i -> i.update(evento, inmueble));
 	    }
+	}
 	    
 	/*
 	public boolean cumplenConLosFiltros(List<Filtro> filtros) {
