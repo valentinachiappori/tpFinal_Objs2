@@ -3,10 +3,12 @@ package ar.edu.unq.po2.tpFinal;
 public class AplicacionMobile implements Interesado{
 	private PopUpWindow popupwindow;
 
-	public void update(String cambio, Inmueble inmueble) {
-		if (cambio.equals("cancelación de reserva")) {
-			popupwindow.popUp("El/la " + inmueble.getTipoInmueble() 
-			+ "que te interesa se ha liberado! Corre a reservarlo!", "BLUE", 12);
-		}
+
+	@Override
+	public void update(EVENTO evento, Inmueble inmueble) {
+		// TODO Auto-generated method stub
+		 
+			popupwindow.popUp(evento.aplicarMensaje(inmueble), "BLUE", 12);
+		
 	}
 }

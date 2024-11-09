@@ -2,6 +2,7 @@ package ar.edu.unq.po2.tpFinal;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -12,7 +13,6 @@ public class SitioWeb {
 	private Set<Servicio> servicios;
 	private MailSender mailSender;
 	
-	
 	//constructor
 	public SitioWeb( Set<Servicio> servicios, MailSender mailSender) {
 		this.usuarios = new ArrayList<Usuario>();
@@ -20,11 +20,12 @@ public class SitioWeb {
 		this.tiposDeInmueble = new ArrayList<String>();
 		this.servicios = servicios;
 		this.mailSender = mailSender;
-		this.interesados = new ArrayList<Interesado>();
+
 	}
 	
 	//getters y setterss
-	
+
+	    
 	//Dar de alta los Tipos de Inmuebles que se utilizan en el sistema.
 	public void darDeAltaTipoInmueble(String tipoDeInmueble) {
 		this.tiposDeInmueble.add(tipoDeInmueble);
@@ -102,12 +103,7 @@ public class SitioWeb {
 		return inmueblesAlquilados / totalInmuebles;
 	}
 	
-	
-	public void notify(String cambio,Inmueble inmueble) {
-		for (Interesado interesado : inmueble.getInteresados()) {
-			interesado.update(cambio, inmueble);
-		}
-	}
+}
 	
 	
 	

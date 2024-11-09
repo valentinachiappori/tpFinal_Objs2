@@ -3,7 +3,9 @@ package ar.edu.unq.po2.tpFinal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -25,7 +27,7 @@ public class Inmueble {
 	private List<Reserva> reservas;
 	private List<Reserva> reservasEnCola;
 	private PoliticaDeCancelacion politicaDeCancelacion;
-	private List<Interesado> interesados;
+	private Map<EVENTO, List<Interesado> > interesados;
 
 	
 	public Inmueble(String tipo, int superficie, String pais, String ciudad, Propietario propietario, Set<Servicio> servicios, int capacidad
@@ -49,7 +51,8 @@ public class Inmueble {
 		this.politicaDeCancelacion = politicaDeCancelacion;
 		this.reservasEnCola = new ArrayList<Reserva>();
 		this.calificaciones = new ArrayList<Puntaje>();
-	}
+		this.interesados = new HashMap<EVENTO, List<Interesado>>();	
+		}
 
 	public void agregarFoto(String foto) {
 		if (fotos.size() < 5) {
@@ -152,14 +155,31 @@ public class Inmueble {
 		}
 	}
 	
-	public void agregarInteresado(Interesado interesado) {
-		interesados.add(interesado);
-	}
+
 	
-	public void removerInteresado(Interesado interesado) {
-		interesados.remove(interesado);
-	}
-	
+	public class NotificationManager {
+	    private Map<Event, List<EventObserver>> observers = new HashMap<>();
+
+	    public void subscribe(Event event, EventObserver observer) {
+	        observers.computeIfAbsent(event, k -> new ArrayList<>()).add(observer);
+	    }
+
+	    public void unsubscribe(Event event, EventObserver observer) {
+	        List<EventObserver> eventObservers = observers.get(event);
+	        if (eventObservers != null) {
+	            eventObservers.remove(observer);
+	        }
+	    }
+
+	    public void notify(Event event, String message) {
+	        List<EventObserver> eventObservers = observers.get(event);
+	        if (eventObservers != null) {
+	            for (EventObserver observer : eventObservers) {
+	                observer.update(event, message);
+	            }
+	        }
+	    }
+	    
 	/*
 	public boolean cumplenConLosFiltros(List<Filtro> filtros) {
 		// TODO Auto-generated method stub
