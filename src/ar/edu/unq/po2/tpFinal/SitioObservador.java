@@ -9,7 +9,7 @@ public class SitioObservador implements Interesado {
 	@Override
 	public void update(String cambio, Inmueble inmueble) {
 		if (cambio.equals("Baja de precio")) {
-			publisher.publish("un inmueble " + inmueble.getTipoInmueble() + "a tan sólo $" + inmueble.calcularPrecioDia(LocalDate.now()));
+			publisher.publish(cambio.funcion()/x-> "un inmueble " + x.getTipoInmueble() + "a tan sólo $" + x.calcularPrecioDia(LocalDate.now()) inmueble);
 		}
 	}
 	
