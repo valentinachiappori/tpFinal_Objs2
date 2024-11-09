@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 public class Inmueble {
@@ -14,7 +13,7 @@ public class Inmueble {
 	private int superficie;
 	private String pais; 
 	private String ciudad;
-	private Propietario propietario;
+	private Usuario propietario;
 	private Set<Servicio> servicios; //ver esto
 	private int capacidad;
 	private List<String> fotos; //que no sean mas de 5 
@@ -30,7 +29,7 @@ public class Inmueble {
 	private Map<EVENTO, List<Interesado> > interesados;
 
 	
-	public Inmueble(String tipo, int superficie, String pais, String ciudad, Propietario propietario, Set<Servicio> servicios, int capacidad
+	public Inmueble(String tipo, int superficie, String pais, String ciudad, Usuario propietario, Set<Servicio> servicios, int capacidad
 			, LocalTime checkIn, LocalTime checkOut, double precioBase, List<String> metodosDePago,
 			List<PeriodoConPrecio> periodosPublicados, PoliticaDeCancelacion politicaDeCancelacion ) {
 		super();
@@ -78,7 +77,7 @@ public class Inmueble {
 		return capacidad;
 	}
 	
-	public Propietario getPropietario() {
+	public Usuario getPropietario() {
 		return propietario;
 	}
 

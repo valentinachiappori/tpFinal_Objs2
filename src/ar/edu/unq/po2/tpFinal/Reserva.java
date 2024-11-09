@@ -6,11 +6,11 @@ public class Reserva {
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
 	private Inmueble inmueble;
-	private Inquilino inquilino;
+	private Usuario inquilino;
 	private String estadoReserva; 
 	private Double precioTotal;
 	
-	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble, Inquilino inquilino, Double precioTotal) {
+	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble, Usuario inquilino, Double precioTotal) {
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
 		this.inmueble = inmueble;

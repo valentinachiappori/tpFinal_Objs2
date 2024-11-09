@@ -5,10 +5,9 @@ import java.util.List;
 
 public interface Inquilino {
 	
-	
 	public void hacerCheckOut(Inmueble i);
+	
 	public void rankearInmueble(Inmueble i);
- 
 
 	public void agregarReserva(Reserva reservas);
 	
@@ -16,16 +15,11 @@ public interface Inquilino {
 	
 	public List<Reserva> getReservasEnCiudad(String ciudad);
 	
-	
-	
 	public List<String> getCiudadesConReserva();
 
-	
 	public void agregarCalificacion(Puntaje puntuacion);
 
-	//public Inmueble visualizarInmueble(Inmueble inmueble) {
-	//	return inmueble;
-	//}
+	public Inmueble visualizarInmueble(Inmueble inmueble);
 	
 	public void reservar(Inmueble inmueble, String metodoPago, LocalDate fechaInicio, LocalDate fechaFin);
 	

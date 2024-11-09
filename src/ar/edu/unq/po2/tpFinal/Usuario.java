@@ -24,10 +24,8 @@ public class Usuario implements Inquilino, Propietario{
 	
 	public void hacerCheckOut(Inmueble i) {}
 	
-	
 	public void rankearInmueble(Inmueble i) {}
  
-
 	public void agregarReserva(Reserva reserva) {
 	        this.getMisReservas().add(reserva);
 	}
@@ -45,9 +43,9 @@ public class Usuario implements Inquilino, Propietario{
 	}
 
 
-	//public Inmueble visualizarInmueble(Inmueble inmueble) {
-	//	return inmueble;
-	//}
+	public Inmueble visualizarInmueble(Inmueble inmueble) {
+		return inmueble;
+	}
 	
 	public void reservar(Inmueble inmueble, String metodoPago, LocalDate fechaInicio, LocalDate fechaFin) {
 		inmueble.getPropietario().recibirOferta(new Reserva(fechaInicio, fechaFin, inmueble, this, inmueble.calcularPrecioEstadia(fechaInicio, fechaFin)));
@@ -165,10 +163,8 @@ public class Usuario implements Inquilino, Propietario{
 		return this.sitio.filtrarInmuebles(ciudad, fechaEntrada, fechaSalida, cantHuespuedes, precioMin, precioMax);
 	}
 	
-	
 	public void agregarCalificacion(Puntaje puntuacion) {
 	        this.calificaciones.add(puntuacion);
 	}
-
 	
 }
