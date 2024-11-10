@@ -23,16 +23,15 @@ public class Inmueble {
 	private Double precioBase; 
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosPublicados;
-	private List<Reserva> reservas;
-	private Ranking rankingInmueble;
 	private List<String> comentarios;
-	
-	//
+	private Ranking rankingInmueble;
+
+	private List<Reserva> reservasConfirmadas;
+	private List<Reserva> reservasPendientes;
 	private List<Reserva> reservasEnCola;
-	//
-	
+
 	private PoliticaDeCancelacion politicaDeCancelacion;
-	private Map<EVENTO, List<Interesado> > interesados;
+	private Map<Evento, List<Interesado> > interesados;
 
 	
 	public Inmueble(Usuario propietario, String tipo, int superficie, String pais, String ciudad, String direccion, Set<Servicio> servicios, int capacidad
@@ -52,10 +51,11 @@ public class Inmueble {
 		this.precioBase = precioBase;
 		this.metodosDePago = metodosDePago;
 		this.periodosPublicados = periodosPublicados;
-		this.reservas = new ArrayList<Reserva>();
-		this.politicaDeCancelacion = politicaDeCancelacion;
+		this.reservasConfirmadas = new ArrayList<Reserva>();
+		this.reservasPendientes = new ArrayList<Reserva>();
 		this.reservasEnCola = new ArrayList<Reserva>();
-		this.interesados = new HashMap<EVENTO, List<Interesado>>();	
+		this.politicaDeCancelacion = politicaDeCancelacion;
+		this.interesados = new HashMap<Evento, List<Interesado>>();	
 		}
 
 	
@@ -75,8 +75,20 @@ public class Inmueble {
 		return capacidad;
 	}
 	
-	public List<Reserva> getReservas() {
-		return reservas;
+	public double getPrecioBase() {
+		return precioBase;
+	}
+	
+	public List<Reserva> getReservasConfirmadas() {
+		return reservasConfirmadas;
+	}
+	
+	public List<Reserva> getReservasPendientes() {
+		return reservasPendientes;
+	}
+	
+	public List<Reserva> getReservasEnCola() {
+		return reservasEnCola;
 	}
 
 	public void setPoliticaDeCancelacion(PoliticaDeCancelacion politica) {
@@ -94,6 +106,10 @@ public class Inmueble {
 	public List<String> getComentarios(){
 		return comentarios;
 	}
+	
+	public Map<Evento, List<Interesado>> getInteresados() {
+		return interesados;
+	} 
 	
 	
 	public void agregarFoto(String foto) {
@@ -113,11 +129,27 @@ public class Inmueble {
 		return precioBase;
 	}
 	
-	//hasta aqui llegué
+	public void recibirReserva(Reserva reserva) {
+		if (this.estaDisponibleEnPeriodo(reserva.getFechaEntrada(), reserva.getFechaSalida())) {
+			this.reservasPendientes.add(reserva);
+		} else {
+			this.reservasEnCola.add(reserva); //EXTRACT METHOD?
+		}
+	}
+	
 	public boolean estaDisponibleEnPeriodo(LocalDate fechaEntrada, LocalDate fechaSalida) {
-		
-		return reservas.stream().noneMatch(r -> r.getFechaEntrada().isBefore(fechaSalida) && 
+		return reservasConfirmadas.stream()
+				.noneMatch(r -> r.getFechaEntrada().isBefore(fechaSalida) && 
 				r.getFechaSalida().isAfter(fechaEntrada));
+	}
+	
+	public void registrarReserva(Reserva reserva) {
+		this.reservasConfirmadas.add(reserva);
+		this.reservasPendientes.remove(reserva);
+	}
+	
+	public void eliminarReservaPendiente(Reserva reserva) {
+		this.reservasPendientes.remove(reserva);
 	}
 	
 	//es de aca o de reserva?
@@ -132,66 +164,47 @@ public class Inmueble {
 	}
 
 	public void eliminarReserva(Reserva reserva) {
-		this.reservas.remove(reserva);
+		this.reservasConfirmadas.remove(reserva);
 	}
 
 	public boolean estaDisponibleHoy() {
 		LocalDate hoy = LocalDate.now();
-		return reservas.stream().noneMatch(r -> !hoy.isBefore(r.getFechaEntrada()) && 
+		return reservasConfirmadas.stream().noneMatch(r -> !hoy.isBefore(r.getFechaEntrada()) && 
 				!hoy.isAfter(r.getFechaSalida()));
-	}
-
-	
-	
-	public List<Reserva> getReservasEnCola() {
-		return this.reservasEnCola;
 	}
 
 	public void modificarPrecioPeriodo(PeriodoConPrecio periodo, Double precioNuevo) {
 		if (periodo.getPrecioPorDia() > precioNuevo) {
-			this.getPropietario().getSitioWeb().notify("Baja de precio", this);
+			this.notificar(Evento.BAJAPRECIO,this);		//
 		}
-	}
-	//se puede usar map para categorias a rankear!!!!!
-	public double getPrecioBase() {
-		return precioBase;
-	}
-	
-	
-	
+		periodo.setPrecioPorDia(precioNuevo);
+	}	
 	
 	public void modificarPrecioBase(Double precioNuevo) {
 		if (precioBase > precioNuevo) {
-		//	this.getPropietario().getSitioWeb().notify("Baja de precio", this); HAY QUE ENVIARLE AL DUEÑO QUE SE CAMBIO EL PRECIO?
-			this.notificar(EVENTO.BAJAPRECIO,this);
+			this.notificar(Evento.BAJAPRECIO,this);
 		}
+		this.precioBase = precioNuevo;
 	}
 	
-
-	public void subscribir(EVENTO evento, Interesado interesado) {
+	public void subscribir(Evento evento, Interesado interesado) {
 	    this.interesados.computeIfAbsent(evento, k -> new ArrayList<>()).add(interesado);
     }
 
-	public void desubscribir(EVENTO evento, Interesado interesado) {
+	public void desubscribir(Evento evento, Interesado interesado) {
 	    List<Interesado> interesadosDelEvento = this.interesados.get(evento);
 	    if (interesadosDelEvento != null) {
 	    	interesadosDelEvento.remove(interesado);
 	    }
     }
 
-	public void notificar(EVENTO evento, Inmueble inmueble) {
+	public void notificar(Evento evento, Inmueble inmueble) {
 	    List<Interesado> interesadosDelEvento = this.interesados.get(evento);
 
 	    if (interesadosDelEvento != null) {
 	        interesadosDelEvento.stream().forEach(i -> i.update(evento, inmueble));
 	    }
 	}
-	    
-	/*
-	public List<Interesado> getInteresados() {
-		return interesados;
-	}            hay que cambiarlo para map
-	*/
 	
 }
 

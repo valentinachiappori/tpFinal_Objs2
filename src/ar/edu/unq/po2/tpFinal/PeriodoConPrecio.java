@@ -29,9 +29,6 @@ public class PeriodoConPrecio {
 		return precioPorDia;
 	}
 	public void setPrecioPorDia(Double precioPorDia) {
-		if (this.precioPorDia > precioPorDia) {
-			//avisarle al sitio
-		}
 		this.precioPorDia = precioPorDia;
 	}
 

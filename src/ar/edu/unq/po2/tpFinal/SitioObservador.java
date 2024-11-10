@@ -4,16 +4,14 @@ package ar.edu.unq.po2.tpFinal;
 public class SitioObservador implements Interesado {
 	
 	private HomePagePublisher publisher;
+	
+	public SitioObservador(HomePagePublisher publisher) {
+        this.publisher = publisher;
+    }
 
 	@Override
-	public void update(EVENTO evento, Inmueble inmueble) {
-		// TODO Auto-generated method stub
-	        ;
+	public void update(Evento evento, Inmueble inmueble) {
 	        publisher.publish(evento.aplicarMensaje(inmueble));
 	}
 	
-	//q el observer tenga los 3 mensajes
-	//ranking (lounico que debemos pensar), pasar las cosas a usuario
-	//filtros, admin (decidir implementacion)
-	//test!!!
 }

@@ -130,45 +130,58 @@ public class SitioWeb {
 		}
 	}
 	
-	public void registrarComentario(Reserva reserva, String comentario) {
+	public void registrarComentarioInmueble(Reserva reserva, String comentario) {
 		if (reserva.getEstadoReserva().equals("Finalizada")){
-			reserva.getInmueble().getComentarios().add(comentario);
+			reserva.getInmueble().getComentarios().add(comentario); //extract method?
 		}
 	}
 	
-	//hasta que llegue
+	public void registrarComentarioInquilino(Reserva reserva, String comentario) {
+		if (reserva.getEstadoReserva().equals("Finalizada")){
+			reserva.getInquilino().getComentariosInquilino().add(comentario); //extract method?
+		}
+	}
+	
+	public void reservar(Reserva reserva) {
+		reserva.getInmueble().recibirReserva(reserva);
+	}
+	
+	public void consolidarReserva(Reserva reserva) {
+		reserva.cambiarEstadoAAceptada();
+		reserva.getInmueble().registrarReserva(reserva);
+		reserva.getInquilino().registrarReserva(reserva);
+		enviarMailConfirmacion(reserva);
+		reserva.getInmueble().notificar(Evento.RESERVA, reserva.getInmueble());
+	}
+	
 	public void enviarMailConfirmacion(Reserva reserva) {
 		this.mailSender.sendMail(reserva.getInquilino().getCorreoElectronico(),"Reserva confirmada", "Tu reserva" + reserva.toString() + "ha sido confirmada por su propietario");
-		notify("reserva de inmueble", reserva.getInmueble());
 	}
 
-	public void cancelarReserva(Reserva reserva) {
-		reserva.getPropietario().cancelarReserva(reserva);
-		ejecutarReservaCondicional(reserva);
-		this.mailSender.sendMail(reserva.getPropietario().getCorreoElectronico(),"Reserva cancelada", "Tu reserva " + reserva.toString() + "ha sido cancelada por el inquilino");
-		reserva.getInmueble().eliminarReserva(reserva);
-		reserva.getInmueble().getPoliticaDeCancelacion().ejecutar(reserva);
-		notify("cancelación de reserva", reserva.getInmueble());
+	public void rechazarReserva(Reserva reserva){
+		reserva.getInmueble().eliminarReservaPendiente(reserva);
+		//que le mande mail tambien?
 	}
 	
-	
-	private void ejecutarReservaCondicional(Reserva reserva) {
-		if (!reserva.getInmueble().getReservasEnCola().isEmpty()) {
-			reserva.getPropietario().recibirOferta(reserva.getInmueble().getReservasEnCola().getFirst());
-			reserva.getInmueble().getReservasEnCola().removeFirst();
-		}
+	public void cancelarReserva(Reserva reserva) {
+		reserva.cambiarEstadoACancelada();
+		reserva.getInmueble().eliminarReserva(reserva);
+		reserva.getInquilino().eliminarReserva(reserva);
+		this.mailSender.sendMail(reserva.getPropietario().getCorreoElectronico(),"Reserva cancelada", "Tu reserva " + reserva.toString() + "ha sido cancelada por el inquilino");
+		reserva.getInmueble().getPoliticaDeCancelacion().ejecutar(reserva);
+		reserva.getInmueble().notificar(Evento.CANCELACION, reserva.getInmueble());
+		// hasta acá ví
+		
+		ejecutarReservaCondicional(reserva);
+		
 	}
 
 	public void enviarMailConReserva(Reserva reserva) {
 		this.mailSender.sendMail(reserva.getInquilino().getCorreoElectronico(),"Reserva", reserva.toString());
 	}
 	
-	public List<Usuario> getInquilinos(){
-		return this.usuarios.stream().filter(u -> u.).toList();
-	}
-	
 	public List<Usuario> topTenInquilinosConMasAlquileres(){
-		return this.getInquilinos().stream().sorted((i1, i2) -> 
+		return this.usuarios.stream().sorted((i1, i2) -> 
 		Integer.compare(i2.getMisReservas().size(), i1.getMisReservas().size())).limit(10).toList();
 	}
 	
@@ -182,5 +195,11 @@ public class SitioWeb {
 		return inmueblesAlquilados / totalInmuebles;
 	}
 
-	
+	private void ejecutarReservaCondicional(Reserva reserva) {
+		if (!reserva.getInmueble().getReservasEnCola().isEmpty()) {
+			reserva.getInmueble().recibirReserva(reserva.getInmueble().getReservasEnCola().getFirst());
+			//visualizar inquilino, para que le avise?
+			reserva.getInmueble().getReservasEnCola().removeFirst();
+		}
+	}
 }

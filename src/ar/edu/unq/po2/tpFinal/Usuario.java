@@ -14,6 +14,7 @@ public class Usuario implements Inquilino, Propietario{
 	private Ranking rankingPropietario;
 	private Ranking rankingInquilino;
 	private LocalDate fechaDeRegistro;
+	private List<String> comentariosInquilino;
 
 	
 	public Usuario(String nombreCompleto, String correoElectronico, int numeroDeTelefono) {
@@ -73,10 +74,18 @@ public class Usuario implements Inquilino, Propietario{
 		return this.fechaDeRegistro;
 	}
 	
+	public List<String> getComentariosInquilino(){
+		return comentariosInquilino;
+	}
+
 	
 	public void publicarInmueble(Inmueble i) {
 		this.sitio.darDeAltaInmueble(i);
 	}
+	
+	public void agregarInmueble(Inmueble i) {
+        inmuebles.add(i);
+    }
 	
 	public List<Inmueble> buscarInmuebles(String ciudad,LocalDate fechaEntrada, LocalDate fechaSalida, int cantHuespuedes, Double precioMin, Double precioMax) {
 		return this.sitio.filtrarInmuebles(ciudad, fechaEntrada, fechaSalida, cantHuespuedes, precioMin, precioMax);
@@ -95,7 +104,7 @@ public class Usuario implements Inquilino, Propietario{
 	}
 	
 	public void comentarInmueble(Reserva reserva, String comentario) {
-		this.sitio.registrarComentario(reserva, comentario);
+		this.sitio.registrarComentarioInmueble(reserva, comentario);
 	}
 	
 	public void getAntiguedad() {
@@ -129,94 +138,88 @@ public class Usuario implements Inquilino, Propietario{
             System.out.println("Puntaje Promedio del Propietario: " + inmueble.getPropietario().getRankingPropietario().obtenerPromedioTotal());
     }
 	
-	//hasta aca llegue
-	public void hacerCheckOut(Inmueble i) {}
- 
-	public void agregarReserva(Reserva reserva) {
-	        this.getMisReservas().add(reserva);
-	}
-	
-	public List<Reserva> getReservasFuturas(){
-		return this.getMisReservas().stream().filter(r -> r.getFechaEntrada().isAfter(LocalDate.now())).toList();
-	}
-	
-	public List<Reserva> getReservasEnCiudad(String ciudad){
-		return this.getMisReservas().stream().filter(r -> r.getInmueble().getCiudad().equals(ciudad)).toList();
-	}
-	
-	public List<String> getCiudadesConReserva(){
-		return this.getMisReservas().stream().map(r -> r.getInmueble().getCiudad()).toList();
-	}
-	
 	public void reservar(Inmueble inmueble, String metodoPago, LocalDate fechaInicio, LocalDate fechaFin) {
-		inmueble.getPropietario().recibirOferta(new Reserva(fechaInicio, fechaFin, inmueble, this, inmueble.calcularPrecioEstadia(fechaInicio, fechaFin)));
+		sitio.reservar(new Reserva(fechaInicio, fechaFin, inmueble, this, inmueble.calcularPrecioEstadia(fechaInicio, fechaFin)));
+		//inmueble.getPropietario().recibirOferta(new Reserva(fechaInicio, fechaFin, inmueble, this, inmueble.calcularPrecioEstadia(fechaInicio, fechaFin)));
 	}
 	
-    public void agregarInmueble(Inmueble i) {
-        inmuebles.add(i);
-    }
+	public void comentarInquilino(Reserva reserva, String comentario) {
+		this.sitio.registrarComentarioInquilino(reserva, comentario);
+	}
+	
+	public void visualizarInquilino(Usuario inquilino) { //parametro inquilino o reserva? 
+		///que este mensaje en realidad se llame recibirSolicitudDeReserva? y se lo pase el sitio
+		//cuando un inquilino haga la reserva (en vez de q lo tenga que llamar el)
+        System.out.println("Información del posible Inquilino:");
+        System.out.println("Nombre: " + inquilino.getNombreCompleto());
+        System.out.println("Comentarios: ");
+        for (String comentario : inquilino.getComentariosInquilino()) {
+            System.out.println(comentario);
+        }
+        System.out.println("Puntaje Promedio: " + inquilino.getRankingPropietario().obtenerPromedioTotal());
+        System.out.println("Contacto: " + inquilino.getCorreoElectronico() + ", Teléfono: " + inquilino.getNumeroDeTelefono());
+	}
+	
+	/*public void evaluarPosibleConcrecionDeReserva(Reserva reserva) {
+	System.out.println("Información del Propietario:"+
+       "Nombre: " + reserva.getPropietario().getNombreCompleto() +
+        "Contacto: " + reserva.getPropietario().getCorreoElectronico());
+	}*/
 
-
-	public void recibirOferta(Reserva reserva) {
-		if (reserva.getInmueble().estaDisponibleEnPeriodo(reserva.getFechaEntrada(), reserva.getFechaSalida())) {
-			this.posiblesReservas.add(reserva);
-		} else {
-			reserva.getInmueble().getReservasEnCola().add(reserva); //EXTRACT METHOD
-		}
-	}
-	
-	public void evaluarPosibleConcrecionDeReserva(Reserva reserva) {
-		System.out.println("Información del Propietario:"+
-	       "Nombre: " + reserva.getPropietario().getNombreCompleto() +
-	        "Contacto: " + reserva.getPropietario().getCorreoElectronico());
-	}
-	
 	public void aceptarUnaReserva(Reserva reserva) {
-		reserva.cambiarEstadoAAceptada();
-		this.posiblesReservas.remove(reserva);
-		this.getMisReservas().add(reserva);
-		this.getSitioWeb().enviarMailConfirmacion(reserva);
+		this.sitio.consolidarReserva(reserva);
+	}
+	
+	public void registrarReserva(Reserva reserva) {
+		this.reservas.add(reserva);
 	}
 	
 	public void rechazarReserva(Reserva reserva) {
-		reserva.cambiarEstadoACancelada();
-		this.posiblesReservas.remove(reserva);
+		this.sitio.rechazarReserva(reserva);
+	}
+ 
+	public List<Reserva> getReservasFuturas(){
+		return this.reservas.stream().filter(r -> r.getFechaEntrada().isAfter(LocalDate.now())).toList();
+	}
+	
+	public List<Reserva> getReservasEnCiudad(String ciudad){
+		return this.reservas.stream().filter(r -> r.getInmueble().getCiudad().equals(ciudad)).toList();
+	}
+	
+	public List<String> getCiudadesConReserva(){
+		return this.reservas.stream().map(r -> r.getInmueble().getCiudad()).toList();
 	}
 	
 	public void cancelarReserva(Reserva reserva) {
-		reserva.cambiarEstadoACancelada();
-		this.getMisReservas().remove(reserva);
+		this.sitio.cancelarReserva(reserva);
 	}
 	
-	public void contactarPosibleInquilino() {
-		//HACEEEEEEEEEEEEER
+	public void eliminarReserva(Reserva reserva) {
+		this.reservas.remove(reserva);
 	}
-	
 	
 	public int cantVecesQueFueAlquiladoElInmueble(Inmueble inmueble) {
-		return inmueble.getReservas().size(); //solo hay q contar las finalizadas?
+		return inmueble.getReservasConfirmadas().size(); //solo hay q contar las finalizadas?
 	}
 	
 	public int cantVecesQueAlquilo(){
-		return inmuebles.stream().mapToInt(i -> i.getReservas().size()).sum();
+		return inmuebles.stream().mapToInt(i -> i.getReservasConfirmadas().size()).sum();
 	}
 	
 	public List<Inmueble> todosLosInmueblesQueYaFueronAlquilados() {
-		return inmuebles.stream().filter(i -> i.getReservas().size() >= 1).toList();
+		return inmuebles.stream().filter(i -> i.getReservasConfirmadas().size() >= 1).toList();
 	}
-
 	
-	public void modificarPrecio(Double precioNuevo, Inmueble inmueble, PeriodoConPrecio periodo) {
+	public void modificarPrecioPeriodo(Double precioNuevo, Inmueble inmueble, PeriodoConPrecio periodo) {
 		inmueble.modificarPrecioPeriodo(periodo, precioNuevo);
-		
 	}
 	
+	public void modificarPrecioBase(Double precioNuevo, Inmueble inmueble) {
+		inmueble.modificarPrecioBase(precioNuevo);
+	}
 	
-	
-	
-	
-	/*public void agregarCalificacion(Puntaje puntuacion) {
-	        this.calificaciones.add(puntuacion);
-	}*/
-	
+	//hasta aca llegue
+		public void hacerCheckOut(Inmueble i) {
+			
+		}
 }
