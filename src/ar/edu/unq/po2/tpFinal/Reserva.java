@@ -31,11 +31,11 @@ public class Reserva {
 		return inmueble;
 	}
 
-	public Inquilino getInquilino() {
+	public Usuario getInquilino() {
 		return inquilino;
 	}
 
-	public Propietario getPropietario() {
+	public Usuario getPropietario() {
 		return this.inmueble.getPropietario();
 	}
 

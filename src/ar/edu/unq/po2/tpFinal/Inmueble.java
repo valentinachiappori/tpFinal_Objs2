@@ -9,35 +9,41 @@ import java.util.Map;
 import java.util.Set;
 
 public class Inmueble {
+	private Usuario propietario;
     private String tipo;
 	private int superficie;
 	private String pais; 
 	private String ciudad;
-	private Usuario propietario;
-	private Set<Servicio> servicios; //ver esto
+	private String direccion;
+	private Set<Servicio> servicios;
 	private int capacidad;
-	private List<String> fotos; //que no sean mas de 5 
+	private List<String> fotos;
 	private LocalTime checkIn; 
 	private LocalTime checkOut; 
-	private Double precioBase; /*se me ocurrio que tenga un precioBase que sea el precio que retorna calcularPrecioDia cuando la fecha no esta dentro de ningun periodo */
+	private Double precioBase; 
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosPublicados;
-	private List<Puntaje> calificaciones;
 	private List<Reserva> reservas;
+	private Ranking rankingInmueble;
+	private List<String> comentarios;
+	
+	//
 	private List<Reserva> reservasEnCola;
+	//
+	
 	private PoliticaDeCancelacion politicaDeCancelacion;
 	private Map<EVENTO, List<Interesado> > interesados;
 
 	
-	public Inmueble(String tipo, int superficie, String pais, String ciudad, Usuario propietario, Set<Servicio> servicios, int capacidad
+	public Inmueble(Usuario propietario, String tipo, int superficie, String pais, String ciudad, String direccion, Set<Servicio> servicios, int capacidad
 			, LocalTime checkIn, LocalTime checkOut, double precioBase, List<String> metodosDePago,
 			List<PeriodoConPrecio> periodosPublicados, PoliticaDeCancelacion politicaDeCancelacion ) {
-		super();
+		this.propietario = propietario;
 		this.tipo = tipo;
 		this.superficie = superficie;
 		this.pais = pais;
 		this.ciudad = ciudad;
-		this.propietario = propietario;
+		this.direccion = direccion;
 		this.servicios = servicios;
 		this.capacidad = capacidad;
 		this.fotos = new ArrayList<String>();
@@ -49,36 +55,53 @@ public class Inmueble {
 		this.reservas = new ArrayList<Reserva>();
 		this.politicaDeCancelacion = politicaDeCancelacion;
 		this.reservasEnCola = new ArrayList<Reserva>();
-		this.calificaciones = new ArrayList<Puntaje>();
 		this.interesados = new HashMap<EVENTO, List<Interesado>>();	
 		}
 
-	public void agregarFoto(String foto) {
-		if (fotos.size() < 5) {
-			fotos.add(foto);
-		} //tirar error
+	
+	public Usuario getPropietario() {
+		return propietario;
 	}
-
-	public void agregarCalificacion(Puntaje puntuacion) {
-	    this.calificaciones.add(puntuacion);
+	
+	public String getTipoInmueble() {
+		return tipo;
 	}
 	
 	public String getCiudad() {
 		return ciudad;
 	}
-
-	public boolean estaDisponibleEnPeriodo(LocalDate fechaEntrada, LocalDate fechaSalida) {
-		
-		return reservas.stream().noneMatch(r -> r.getFechaEntrada().isBefore(fechaSalida) && 
-				r.getFechaSalida().isAfter(fechaEntrada));
-	}
-
+	
 	public int getCapacidad() {
 		return capacidad;
 	}
 	
-	public Usuario getPropietario() {
-		return propietario;
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setPoliticaDeCancelacion(PoliticaDeCancelacion politica) {
+		this.politicaDeCancelacion = politica;
+	}
+	
+	public PoliticaDeCancelacion getPoliticaDeCancelacion() {
+		return this.politicaDeCancelacion;
+	}
+
+	public Ranking getRankingInmueble() {
+		return this.rankingInmueble;
+	}
+	
+	public List<String> getComentarios(){
+		return comentarios;
+	}
+	
+	
+	public void agregarFoto(String foto) {
+		if (fotos.size() < 5) {
+			fotos.add(foto);
+		} else {
+	        throw new IllegalArgumentException("No se pueden agregar más de 5 fotos.");
+	    }
 	}
 
 	public Double calcularPrecioDia(LocalDate fecha) {
@@ -90,6 +113,14 @@ public class Inmueble {
 		return precioBase;
 	}
 	
+	//hasta aqui llegué
+	public boolean estaDisponibleEnPeriodo(LocalDate fechaEntrada, LocalDate fechaSalida) {
+		
+		return reservas.stream().noneMatch(r -> r.getFechaEntrada().isBefore(fechaSalida) && 
+				r.getFechaSalida().isAfter(fechaEntrada));
+	}
+	
+	//es de aca o de reserva?
 	public Double calcularPrecioEstadia(LocalDate fechaEntrada, LocalDate fechaSalida) {
 		Double precioTotal = 0d;
 		LocalDate fechaActual = fechaEntrada;
@@ -98,14 +129,6 @@ public class Inmueble {
 			fechaActual.plusDays(1);
 		}
 		return precioTotal;
-	}
-
-	public List<Reserva> getReservas() {
-		return reservas;
-	}
-
-	public String getTipoInmueble() {
-		return tipo;
 	}
 
 	public void eliminarReserva(Reserva reserva) {
@@ -118,13 +141,7 @@ public class Inmueble {
 				!hoy.isAfter(r.getFechaSalida()));
 	}
 
-	public PoliticaDeCancelacion getPoliticaDeCancelacion() {
-		return this.politicaDeCancelacion;
-	}
-
-	public void setPoliticaDeCancelacion(PoliticaDeCancelacion politica) {
-		this.politicaDeCancelacion = politica;
-	}
+	
 	
 	public List<Reserva> getReservasEnCola() {
 		return this.reservasEnCola;
@@ -140,14 +157,8 @@ public class Inmueble {
 		return precioBase;
 	}
 	
-	/*
-	public List<Interesado> getInteresados() {
-		return interesados;
-	}            hay que cambiarlo para map
-	*/
-	public void setPrecioBase(double precioBase) {
-		this.precioBase = precioBase;
-	}
+	
+	
 	
 	public void modificarPrecioBase(Double precioNuevo) {
 		if (precioBase > precioNuevo) {
@@ -177,11 +188,11 @@ public class Inmueble {
 	}
 	    
 	/*
-	public boolean cumplenConLosFiltros(List<Filtro> filtros) {
-		// TODO Auto-generated method stub
-		return filtros.stream().allMatch(f -> f.cumpleElInmubleMiCriterio(this));
-	}
+	public List<Interesado> getInteresados() {
+		return interesados;
+	}            hay que cambiarlo para map
 	*/
+	
 }
 
 

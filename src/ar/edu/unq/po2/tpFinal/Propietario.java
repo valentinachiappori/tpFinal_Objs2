@@ -5,14 +5,12 @@ import java.util.List;
 public interface Propietario  {
 	
 	public List<Inmueble> getInmuebles() ;
-
-	public void setInmuebles(List<Inmueble> inmuebles);
 	
-	public void ponerEnAlquilerUnInmueble(Inmueble i);
+	public void publicarInmueble(Inmueble i);
 	
     public void agregarInmueble(Inmueble i);
 
-	public void agregarCalificacion(Puntaje puntuacion);
+	public void rankearInquilino(Reserva reserva, String categoria, Puntaje puntaje);
 
 	public void recibirOferta(Reserva reserva);
 	
@@ -22,7 +20,7 @@ public interface Propietario  {
 	
 	public void rechazarReserva(Reserva reserva);
 	
-	public void cancelarReserva(Reserva reserva);
+	//public void cancelarReserva(Reserva reserva);
 	
 	public void contactarPosibleInquilino();
 		

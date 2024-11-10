@@ -7,7 +7,11 @@ public interface Inquilino {
 	
 	public void hacerCheckOut(Inmueble i);
 	
-	public void rankearInmueble(Inmueble i);
+	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje);
+	
+	public void rankearInmueble(Reserva reserva, String categoria, Puntaje puntaje);
+	
+	public void comentarInmueble(Reserva reserva, String comentario);
 
 	public void agregarReserva(Reserva reservas);
 	
@@ -17,14 +21,10 @@ public interface Inquilino {
 	
 	public List<String> getCiudadesConReserva();
 
-	public void agregarCalificacion(Puntaje puntuacion);
-
-	public Inmueble visualizarInmueble(Inmueble inmueble);
+	public void visualizarInmueble(Inmueble inmueble);
 	
 	public void reservar(Inmueble inmueble, String metodoPago, LocalDate fechaInicio, LocalDate fechaFin);
 	
 	public void cancelarReserva(Reserva reserva);
-	
-	public void rankearInmueble(Inmueble inmueble, Puntaje puntaje) ;
 
 }
