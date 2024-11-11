@@ -1,6 +1,7 @@
 package ar.edu.unq.po2.tpFinal;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +18,17 @@ public class Usuario implements Inquilino, Propietario{
 	private List<String> comentariosInquilino;
 
 	
-	public Usuario(String nombreCompleto, String correoElectronico, int numeroDeTelefono) {
-		//sitio
+	public Usuario(SitioWeb sitio, String nombreCompleto, String correoElectronico, int numeroDeTelefono) {
+		this.sitio = sitio;
 		this.nombreCompleto = nombreCompleto;
 		this.correoElectronico = correoElectronico;
 		this.numeroDeTelefono = numeroDeTelefono;
 		this.reservas = new ArrayList<Reserva>();
 		this.inmuebles = new ArrayList<Inmueble>();
+		this.rankingInquilino = new Ranking();
+		this.rankingPropietario = new Ranking();
+		this.fechaDeRegistro = LocalDate.now();
+		this.comentariosInquilino = new ArrayList<String>();
 	}
 	
 	public SitioWeb getSitioWeb() {
@@ -78,7 +83,6 @@ public class Usuario implements Inquilino, Propietario{
 		return comentariosInquilino;
 	}
 
-	
 	public void publicarInmueble(Inmueble i) {
 		this.sitio.darDeAltaInmueble(i);
 	}
@@ -103,12 +107,22 @@ public class Usuario implements Inquilino, Propietario{
 		this.sitio.rankearInmueble(reserva, categoria, puntaje);
 	}
 	
+	public void agregarComentario(String comentario) {
+		this.comentariosInquilino.add(comentario);
+	}
+	
 	public void comentarInmueble(Reserva reserva, String comentario) {
 		this.sitio.registrarComentarioInmueble(reserva, comentario);
 	}
 	
-	public void getAntiguedad() {
-		//string?? o que devuelve
+	public String getAntiguedad() {
+	    LocalDate fechaActual = LocalDate.now();
+	    Period antiguedad = Period.between(this.fechaDeRegistro, fechaActual);
+
+	    int años = antiguedad.getYears();
+	    int meses = antiguedad.getMonths();
+
+	    return años + " año(s), " + meses + " meses";
 	}
 	
 	public void  visualizarInmueble(Inmueble inmueble) {
@@ -133,23 +147,21 @@ public class Usuario implements Inquilino, Propietario{
         // Información del propietario
             System.out.println("Información del Propietario:");
             System.out.println("Nombre: " + inmueble.getPropietario().getNombreCompleto());
+            System.out.println("Usuario del sitio hace: " + getAntiguedad());
             System.out.println("Veces alquilado el inmueble: " + inmueble.getPropietario().cantVecesQueFueAlquiladoElInmueble(inmueble));
             System.out.println("Veces alquilado: " + inmueble.getPropietario().cantVecesQueAlquilo());
             System.out.println("Puntaje Promedio del Propietario: " + inmueble.getPropietario().getRankingPropietario().obtenerPromedioTotal());
     }
 	
 	public void reservar(Inmueble inmueble, String metodoPago, LocalDate fechaInicio, LocalDate fechaFin) {
-		sitio.reservar(new Reserva(fechaInicio, fechaFin, inmueble, this, inmueble.calcularPrecioEstadia(fechaInicio, fechaFin)));
-		//inmueble.getPropietario().recibirOferta(new Reserva(fechaInicio, fechaFin, inmueble, this, inmueble.calcularPrecioEstadia(fechaInicio, fechaFin)));
+		sitio.reservar(new Reserva(fechaInicio, fechaFin, inmueble, this));
 	}
 	
 	public void comentarInquilino(Reserva reserva, String comentario) {
 		this.sitio.registrarComentarioInquilino(reserva, comentario);
 	}
 	
-	public void visualizarInquilino(Usuario inquilino) { //parametro inquilino o reserva? 
-		///que este mensaje en realidad se llame recibirSolicitudDeReserva? y se lo pase el sitio
-		//cuando un inquilino haga la reserva (en vez de q lo tenga que llamar el)
+	public void visualizarInquilino(Usuario inquilino) {
         System.out.println("Información del posible Inquilino:");
         System.out.println("Nombre: " + inquilino.getNombreCompleto());
         System.out.println("Comentarios: ");
@@ -159,12 +171,6 @@ public class Usuario implements Inquilino, Propietario{
         System.out.println("Puntaje Promedio: " + inquilino.getRankingPropietario().obtenerPromedioTotal());
         System.out.println("Contacto: " + inquilino.getCorreoElectronico() + ", Teléfono: " + inquilino.getNumeroDeTelefono());
 	}
-	
-	/*public void evaluarPosibleConcrecionDeReserva(Reserva reserva) {
-	System.out.println("Información del Propietario:"+
-       "Nombre: " + reserva.getPropietario().getNombreCompleto() +
-        "Contacto: " + reserva.getPropietario().getCorreoElectronico());
-	}*/
 
 	public void aceptarUnaReserva(Reserva reserva) {
 		this.sitio.consolidarReserva(reserva);
@@ -199,15 +205,15 @@ public class Usuario implements Inquilino, Propietario{
 	}
 	
 	public int cantVecesQueFueAlquiladoElInmueble(Inmueble inmueble) {
-		return inmueble.getReservasConfirmadas().size(); //solo hay q contar las finalizadas?
+		return inmueble.getReservasConfirmadas().stream().filter(r -> r.getEstadoReserva().equals("Finalizada")).toList().size();
 	}
 	
 	public int cantVecesQueAlquilo(){
-		return inmuebles.stream().mapToInt(i -> i.getReservasConfirmadas().size()).sum();
+		return inmuebles.stream().mapToInt(i -> this.cantVecesQueFueAlquiladoElInmueble(i)).sum();
 	}
 	
 	public List<Inmueble> todosLosInmueblesQueYaFueronAlquilados() {
-		return inmuebles.stream().filter(i -> i.getReservasConfirmadas().size() >= 1).toList();
+		return inmuebles.stream().filter(i -> this.cantVecesQueFueAlquiladoElInmueble(i) >= 1).toList();
 	}
 	
 	public void modificarPrecioPeriodo(Double precioNuevo, Inmueble inmueble, PeriodoConPrecio periodo) {
@@ -218,8 +224,7 @@ public class Usuario implements Inquilino, Propietario{
 		inmueble.modificarPrecioBase(precioNuevo);
 	}
 	
-	//hasta aca llegue
-		public void hacerCheckOut(Inmueble i) {
-			
-		}
+	public void hacerCheckOut(Reserva reserva) {
+		sitio.registrarCheckOut(reserva, LocalDate.now());
+	}
 }

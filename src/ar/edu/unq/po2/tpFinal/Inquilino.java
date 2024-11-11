@@ -5,11 +5,19 @@ import java.util.List;
 
 public interface Inquilino {
 	
-	public void hacerCheckOut(Inmueble i);
+	public List<Reserva> getMisReservas();
+	
+	public Ranking getRankingInquilino();
+	
+	public List<String> getComentariosInquilino();
+	
+	public void hacerCheckOut(Reserva reserva);
 	
 	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje);
 	
 	public void rankearInmueble(Reserva reserva, String categoria, Puntaje puntaje);
+	
+	public void agregarComentario(String comentario);
 	
 	public void comentarInmueble(Reserva reserva, String comentario);
 	

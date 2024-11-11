@@ -10,9 +10,9 @@ public class Intermedia implements PoliticaDeCancelacion{
 		 LocalDate hoy = LocalDate.now();
 
 		 if (hoy.isAfter(fecha10DiasAntes)) {
-			 System.out.println("Cancelación con cargo. Cargo aplicado: $" + reserva.getPrecioTotal());
+			 System.out.println("Cancelación con cargo. Cargo aplicado: $" + reserva.calcularPrecioEstadia());
 		 } else if (hoy.isAfter(fecha19DiasAntes) && hoy.isBefore(fecha10DiasAntes)){
-			 System.out.println("Cancelación con cargo. Cargo aplicado: $" + reserva.getPrecioTotal() / 2);
+			 System.out.println("Cancelación con cargo. Cargo aplicado: $" + reserva.calcularPrecioEstadia() / 2);
 		 } else {
 			 System.out.println("Cancelación sin cargo.");
 		 }

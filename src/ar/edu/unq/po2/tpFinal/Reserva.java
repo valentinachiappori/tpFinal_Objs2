@@ -8,15 +8,13 @@ public class Reserva {
 	private Inmueble inmueble;
 	private Usuario inquilino;
 	private String estadoReserva; 
-	private Double precioTotal;
 	
-	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble, Usuario inquilino, Double precioTotal) {
+	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble, Usuario inquilino) {
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
 		this.inmueble = inmueble;
 		this.inquilino = inquilino;
 		this.setEstadoReserva("Pendiente");
-		this.precioTotal = precioTotal;
 	}
 
 	public LocalDate getFechaEntrada() {
@@ -43,8 +41,8 @@ public class Reserva {
 		this.setEstadoReserva("Aceptada");
 	}
 
-	public void cambiarEstadoACancelada() {
-		this.setEstadoReserva("Cancelada");
+	public void cambiarEstadoAFinalizada() {
+		this.setEstadoReserva("Finalizada");
 	}
 
 	public String getEstadoReserva() {
@@ -54,20 +52,25 @@ public class Reserva {
 	public void setEstadoReserva(String estadoReserva) {
 		this.estadoReserva = estadoReserva;
 	}
-
-	public Double getPrecioTotal() {
-		return this.precioTotal;
+	
+	public Double calcularPrecioEstadia() {
+		Double precioTotal = 0d;
+		LocalDate fechaActual = fechaEntrada;
+		while (fechaActual != fechaSalida) {
+			precioTotal += inmueble.calcularPrecioDia(fechaActual);
+			fechaActual.plusDays(1);
+		}
+		return precioTotal;
 	}
 	
-	 public String toString() {
+	public String toString() {
 	        return "Reserva{" +
 	               "Inmueble=" + inmueble +
 	               ", Fecha de entrada=" + fechaEntrada +
 	               ", Fecha de salida=" + fechaSalida +
 	               ", Política de cancelación= " + getInmueble().getPoliticaDeCancelacion() +
-	               ", Precio total= $" + precioTotal + 
+	               ", Precio total= $" + calcularPrecioEstadia() +
 	               '}';
 	    }
 	 
-	 //metodo hacer checkOut!!!!!!
 }

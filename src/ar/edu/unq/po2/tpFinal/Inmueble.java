@@ -120,6 +120,10 @@ public class Inmueble {
 	    }
 	}
 
+	public void agregarComentario(String comentario) {
+		this.comentarios.add(comentario);
+	}
+	
 	public Double calcularPrecioDia(LocalDate fecha) {
 		for (PeriodoConPrecio periodo : periodosPublicados) {
 			if (periodo.incluidaEnPeriodo(fecha)) {
@@ -133,7 +137,7 @@ public class Inmueble {
 		if (this.estaDisponibleEnPeriodo(reserva.getFechaEntrada(), reserva.getFechaSalida())) {
 			this.reservasPendientes.add(reserva);
 		} else {
-			this.reservasEnCola.add(reserva); //EXTRACT METHOD?
+			this.reservasEnCola.add(reserva);
 		}
 	}
 	
@@ -150,17 +154,6 @@ public class Inmueble {
 	
 	public void eliminarReservaPendiente(Reserva reserva) {
 		this.reservasPendientes.remove(reserva);
-	}
-	
-	//es de aca o de reserva?
-	public Double calcularPrecioEstadia(LocalDate fechaEntrada, LocalDate fechaSalida) {
-		Double precioTotal = 0d;
-		LocalDate fechaActual = fechaEntrada;
-		while (fechaActual != fechaSalida) {
-			precioTotal += calcularPrecioDia(fechaActual);
-			fechaActual.plusDays(1);
-		}
-		return precioTotal;
 	}
 
 	public void eliminarReserva(Reserva reserva) {

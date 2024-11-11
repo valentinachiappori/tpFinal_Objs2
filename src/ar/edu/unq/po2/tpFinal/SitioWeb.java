@@ -14,7 +14,6 @@ public class SitioWeb {
 	private List<String> tiposDeInmueble;
 	private Set<Servicio> servicios;
 	private MailSender mailSender;
-	
 	private Map<String, Set<String>> categoriasPorEntidad;
 	
 	//constructor
@@ -105,8 +104,8 @@ public class SitioWeb {
 		.filter(i -> i.getCiudad().equals(ciudad))
 		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
 		.filter(i -> cantHuespedes == null || i.getCapacidad() >= cantHuespedes)
-		.filter(i -> precioMin == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) >= precioMin)
-		.filter(i -> precioMax == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) <= precioMax)
+		.filter(i -> precioMin == null || i.calcularPrecioDia(fechaEntrada) >= precioMin)
+		.filter(i -> precioMax == null || i.calcularPrecioDia(fechaEntrada) <= precioMax)
 		.toList();
 		
 		return inmueblesFiltrados;
@@ -125,25 +124,26 @@ public class SitioWeb {
 	}
 	
 	public void rankearInmueble(Reserva reserva, String categoria, Puntaje puntaje) {
-		if (reserva.getEstadoReserva().equals("Finalizada") && this.categoriasPorEntidad.get("Inquilino").contains(categoria)) {
+		if (reserva.getEstadoReserva().equals("Finalizada") && this.categoriasPorEntidad.get("Inmueble").contains(categoria)) {
 		 reserva.getInmueble().getRankingInmueble().agregarPuntaje(categoria, puntaje);
 		}
 	}
 	
 	public void registrarComentarioInmueble(Reserva reserva, String comentario) {
 		if (reserva.getEstadoReserva().equals("Finalizada")){
-			reserva.getInmueble().getComentarios().add(comentario); //extract method?
+			reserva.getInmueble().agregarComentario(comentario); //extract method?
 		}
 	}
 	
 	public void registrarComentarioInquilino(Reserva reserva, String comentario) {
 		if (reserva.getEstadoReserva().equals("Finalizada")){
-			reserva.getInquilino().getComentariosInquilino().add(comentario); //extract method?
+			reserva.getInquilino().agregarComentario(comentario); //extract method?
 		}
 	}
 	
 	public void reservar(Reserva reserva) {
 		reserva.getInmueble().recibirReserva(reserva);
+		reserva.getPropietario().visualizarInquilino(reserva.getInquilino());
 	}
 	
 	public void consolidarReserva(Reserva reserva) {
@@ -160,20 +160,15 @@ public class SitioWeb {
 
 	public void rechazarReserva(Reserva reserva){
 		reserva.getInmueble().eliminarReservaPendiente(reserva);
-		//que le mande mail tambien?
 	}
 	
 	public void cancelarReserva(Reserva reserva) {
-		reserva.cambiarEstadoACancelada();
 		reserva.getInmueble().eliminarReserva(reserva);
 		reserva.getInquilino().eliminarReserva(reserva);
 		this.mailSender.sendMail(reserva.getPropietario().getCorreoElectronico(),"Reserva cancelada", "Tu reserva " + reserva.toString() + "ha sido cancelada por el inquilino");
 		reserva.getInmueble().getPoliticaDeCancelacion().ejecutar(reserva);
-		reserva.getInmueble().notificar(Evento.CANCELACION, reserva.getInmueble());
-		// hasta acá ví
-		
+		reserva.getInmueble().notificar(Evento.CANCELACION, reserva.getInmueble());	
 		ejecutarReservaCondicional(reserva);
-		
 	}
 
 	public void enviarMailConReserva(Reserva reserva) {
@@ -198,8 +193,15 @@ public class SitioWeb {
 	private void ejecutarReservaCondicional(Reserva reserva) {
 		if (!reserva.getInmueble().getReservasEnCola().isEmpty()) {
 			reserva.getInmueble().recibirReserva(reserva.getInmueble().getReservasEnCola().getFirst());
-			//visualizar inquilino, para que le avise?
 			reserva.getInmueble().getReservasEnCola().removeFirst();
+		}
+	}
+	
+	public void registrarCheckOut(Reserva reserva, LocalDate fecha){
+		if (reserva.getFechaSalida().isBefore(fecha)) {
+			reserva.cambiarEstadoAFinalizada();
+		} else {
+			throw new IllegalArgumentException("La reserva aún no ha finalizado");
 		}
 	}
 }

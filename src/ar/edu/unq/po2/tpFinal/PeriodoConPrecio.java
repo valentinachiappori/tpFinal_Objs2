@@ -36,5 +36,4 @@ public class PeriodoConPrecio {
 		return fecha.isBefore(fechaFin) || fecha.isAfter(fechaInicio) || fecha.isEqual(fechaFin) || fecha.isEqual(fechaInicio);
 	}
 
-	
 }

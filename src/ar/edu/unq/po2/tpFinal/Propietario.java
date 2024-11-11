@@ -6,6 +6,8 @@ public interface Propietario  {
 	
 	public List<Inmueble> getInmuebles() ;
 	
+	public Ranking getRankingPropietario();
+	
 	public void publicarInmueble(Inmueble i);
 	
     public void agregarInmueble(Inmueble i);
