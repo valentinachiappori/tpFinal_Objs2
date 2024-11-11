@@ -142,7 +142,7 @@ public class Inmueble {
 	}
 	
 	public boolean estaDisponibleEnPeriodo(LocalDate fechaEntrada, LocalDate fechaSalida) {
-		return reservasConfirmadas.stream()
+		return getReservasConfirmadas().stream()
 				.noneMatch(r -> r.getFechaEntrada().isBefore(fechaSalida) && 
 				r.getFechaSalida().isAfter(fechaEntrada));
 	}
