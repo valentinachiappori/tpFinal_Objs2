@@ -32,7 +32,7 @@ public class Ranking {
     public double obtenerPromedioTotal() {
         int totalPuntuaciones = 0;
         int totalCantidad = 0;
-
+        
         for (List<Integer> puntuaciones : puntuacionesPorCategoria.values()) {
             totalPuntuaciones += puntuaciones.stream().mapToInt(i -> i.intValue()).sum();
             totalCantidad += puntuaciones.size();

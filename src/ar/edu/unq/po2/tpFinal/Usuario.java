@@ -92,7 +92,7 @@ public class Usuario implements Inquilino, Propietario{
     }
 	
 	public List<Inmueble> buscarInmuebles(FiltroCompuesto filtro) {
-		return getInmuebles().stream().filter(i -> filtro.cumple(i)).toList();
+		return getSitioWeb().filtrarInmuebles(filtro);
 	}
 	
 	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje) {

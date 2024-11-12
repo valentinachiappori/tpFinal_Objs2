@@ -204,4 +204,9 @@ public class SitioWeb {
 			throw new IllegalArgumentException("La reserva aún no ha finalizado");
 		}
 	}
+
+	public List<Inmueble> filtrarInmuebles(FiltroCompuesto filtro) {
+		// TODO Auto-generated method stub
+		return getInmuebles().stream().filter(i -> filtro.cumple(i)).toList();
+	}
 }
