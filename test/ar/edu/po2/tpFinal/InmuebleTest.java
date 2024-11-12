@@ -60,5 +60,15 @@ class InmuebleTest {
 		
 		assertTrue(inmueble.estaDisponibleEnPeriodo(LocalDate.of(2024, 9, 11),LocalDate.of(2024, 7, 12))) ;
 	}
+	
+	@Test
+	void Test2() {
+		inmueble.getReservasConfirmadas().add(reserva);
+		when(reserva.getFechaEntrada()).thenReturn(LocalDate.of(2024, 12, 12)); 
+		when(reserva.getFechaSalida()).thenReturn(LocalDate.of(2024, 12, 15)); 
+		assertTrue(inmueble.estaDisponibleHoy());
 
-}
+	}
+	
+	
+}	
