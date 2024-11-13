@@ -1,6 +1,8 @@
 package ar.edu.po2.tpFinal;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import org.mockito.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.tpFinal.Inmueble;
+import ar.edu.unq.po2.tpFinal.MailSender;
 import ar.edu.unq.po2.tpFinal.Ranking;
 import ar.edu.unq.po2.tpFinal.Reserva;
 import ar.edu.unq.po2.tpFinal.SitioWeb;
@@ -24,41 +27,20 @@ class UsuarioTest {
 	private Usuario usuario;
 	
 	private SitioWeb sitio;
-	private String nombreCompleto;
-	private String correoElectronico;
-	private int numeroDeTelefono;
-	private List<Reserva> reservas;
-	private List<Inmueble> inmuebles;
-	private Ranking rankingPropietario;
-	private Ranking rankingInquilino;
-	private LocalDate fechaDeRegistro;
-	private List<String> comentariosInquilino;
-	
 	private Reserva reserva1;
 	private Reserva reserva2;
-	
 	private Inmueble inmueble1;
 	private Inmueble inmueble2;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		
-		sitio = mock(SitioWeb.class);
-		rankingPropietario = mock(Ranking.class);
-		rankingInquilino = mock(Ranking.class);
-		fechaDeRegistro = LocalDate.of(2020, 9, 13);
+		sitio = spy(new SitioWeb(mock(MailSender.class)));
 		reserva1 = mock(Reserva.class);
 		reserva2 = mock(Reserva.class);
 		inmueble1 = mock(Inmueble.class);
 		inmueble2 = mock(Inmueble.class);
-		reservas = new ArrayList<Reserva>();
-		inmuebles = new ArrayList<Inmueble>();
-		comentariosInquilino = new ArrayList<String>();
-		nombreCompleto = "Juan Perez";
-		correoElectronico = "juanperez@gmail.com";
 		
-		usuario = new Usuario(sitio, nombreCompleto, correoElectronico, 4567);
-
+		usuario = new Usuario(sitio, "maria", "correo", 4567);
 	}
 	
 	@Test
@@ -82,18 +64,23 @@ class UsuarioTest {
 	    assertEquals(esperado, usuario.getAntiguedad());
 	}
 
-	/*
 	@Test
 	void testPublicarInmueble() {
+	    
 	    when(inmueble1.getTipoInmueble()).thenReturn("CASA");
 	    when(inmueble1.getPropietario()).thenReturn(usuario);
-	    
-	    when(sitio.verificarExisteTipoInmueble("CASA")).thenReturn(true);
-	    when(sitio.esUsuarioRegistrado(usuario)).thenReturn(true);
+
+	    doReturn(true).when(sitio).verificarExisteTipoInmueble("CASA");
+        doReturn(true).when(sitio).esUsuarioRegistrado(usuario);
+	    // Llamar al método que queremos probar
 	    usuario.publicarInmueble(inmueble1);
 
-	    assertTrue(usuario.getInmuebles().contains(inmueble1));
-	}*/
+	    // Verificar que se haya llamado al método darDeAltaInmueble
+	    verify(sitio, times(1)).darDeAltaInmueble(inmueble1);
+	    
+	    // Verificar que el inmueble fue agregado correctamente a los inmuebles del sitio
+	    assertTrue(sitio.getInmuebles().contains(inmueble1));
+	}
 
 
 }

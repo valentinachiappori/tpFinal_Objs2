@@ -35,17 +35,15 @@ class SitioWebTest {
 	private Usuario usuario;
 	private Inmueble inmueble;
 	private MailSender mails;
-	private Set<Servicio> servicios;
 	private Reserva reserva;
 	
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		servicios = new HashSet<Servicio>();
 		usuario = mock(Usuario.class);
 		inmueble = mock(Inmueble.class);
 		mails = mock(MailSender.class);
-		sitio = new SitioWeb(servicios,mails);
+		sitio = new SitioWeb(mails);
 		reserva = mock(Reserva.class);
 	}
 

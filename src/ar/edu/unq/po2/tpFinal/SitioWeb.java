@@ -16,11 +16,11 @@ public class SitioWeb {
 	private MailSender mailSender;
 	private Map<String, Set<String>> categoriasPorEntidad;
 	
-	public SitioWeb( Set<Servicio> servicios, MailSender mailSender) {
+	public SitioWeb( MailSender mailSender) {
 		this.usuarios = new ArrayList<Usuario>();
 		this.inmuebles = new ArrayList<Inmueble>();
 		this.tiposDeInmueble = new ArrayList<String>();
-		this.servicios = servicios;
+		this.servicios = new HashSet<Servicio>();
 		this.mailSender = mailSender;
 		this.categoriasPorEntidad = new HashMap<>();
 		
