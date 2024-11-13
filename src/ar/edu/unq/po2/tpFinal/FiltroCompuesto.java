@@ -10,6 +10,7 @@ public class FiltroCompuesto implements Filtro {
     private final Filtro filtroFechas;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    
     // Constructor que recibe los filtros obligatorios como parámetros
     public FiltroCompuesto( String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida) {
         this.filtroCiudad = new FiltroCiudad(ciudad);
@@ -35,7 +36,6 @@ public class FiltroCompuesto implements Filtro {
 
 
 	private boolean esFiltroValido(Filtro filtro) {
-		// TODO Auto-generated method stub
 		return filtro.esFiltroValido();
 	}
 
@@ -58,11 +58,8 @@ public class FiltroCompuesto implements Filtro {
 		return this.filtros.stream().allMatch(f -> f.cumple(inmueble));
 	}
 
-
-
 	@Override
 	public boolean esFiltroValido() {
-		// TODO Auto-generated method stub
 		return true ;
 	}
 
@@ -78,8 +75,6 @@ public class FiltroCompuesto implements Filtro {
 	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
-
-
 
 	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;

@@ -51,23 +51,39 @@ class InmuebleTest {
 		}
 	
 	@Test
-	void test() {
+	void testInmuebleDisponibleEnPeriodo() {
 		inmueble.getReservasConfirmadas().add(reserva);
 		when(reserva.getFechaEntrada()).thenReturn(LocalDate.of(2024, 12, 12)); 
 		when(reserva.getFechaSalida()).thenReturn(LocalDate.of(2024, 12, 15)); 
-		
-		//when(inmueble.getReservasConfirmadas()).thenReturn(reservas);
 		
 		assertTrue(inmueble.estaDisponibleEnPeriodo(LocalDate.of(2024, 9, 11),LocalDate.of(2024, 7, 12))) ;
 	}
 	
 	@Test
-	void Test2() {
+	void testInmuebleDisponibleHoy() {
 		inmueble.getReservasConfirmadas().add(reserva);
 		when(reserva.getFechaEntrada()).thenReturn(LocalDate.of(2024, 12, 12)); 
 		when(reserva.getFechaSalida()).thenReturn(LocalDate.of(2024, 12, 15)); 
+		
 		assertTrue(inmueble.estaDisponibleHoy());
-
+	}
+	
+	@Test
+	void testAgregarFoto() {
+		inmueble.agregarFoto("foto1");
+		
+		assertEquals(inmueble.getFotos().size(),1);
+	}
+	
+	@Test
+	void registrarReservaEnColaPorqueEstaReservadoElInmueble() {
+		when(reserva.getFechaEntrada()).thenReturn(LocalDate.of(2024, 12, 12)); 
+		when(reserva.getFechaSalida()).thenReturn(LocalDate.of(2024, 12, 15));
+		when(inmueble.estaDisponibleEnPeriodo(reserva.getFechaEntrada(), reserva.getFechaSalida())).thenReturn(false);
+		inmueble.recibirReserva(reserva);
+		
+		assertEquals(inmueble.getReservasEnCola().size(),1);
+		assertTrue(inmueble.getReservasPendientes().isEmpty());
 	}
 	
 	

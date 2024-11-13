@@ -111,6 +111,9 @@ public class Inmueble {
 		return interesados;
 	} 
 	
+	public List<String> getFotos(){
+		return fotos;
+	}
 	
 	public void agregarFoto(String foto) {
 		if (fotos.size() < 5) {
