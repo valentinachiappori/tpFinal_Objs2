@@ -13,7 +13,7 @@ public class FiltroFechas implements Filtro {
 	@Override
 	public boolean cumple(Inmueble inmueble) {
 		// TODO Auto-generated method stub
-		return false;
+		return inmueble.estaDisponibleEnPeriodo(getFechaInicio(), getFechaFin());
 	}
 	public LocalDate getFechaInicio() {
 		return fechaInicio;

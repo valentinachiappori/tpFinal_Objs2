@@ -3,21 +3,21 @@ package ar.edu.unq.po2.tpFinal;
 public class FiltroCiudad implements Filtro {
 	
 	
-	private String dato;
+	private String ciudad;
 	
 	public FiltroCiudad(String ciudad) {
-		this.setDato(ciudad);
+		this.setCiudad(ciudad);
 	}
 	@Override
 	public boolean cumple(Inmueble inmueble) {
 		// TODO Auto-generated method stub
-		return false;
+		return inmueble.getCiudad().equals(getDato());
 	}
 	public String getDato() {
-		return dato;
+		return ciudad;
 	}
-	public void setDato(String dato) {
-		this.dato = dato;
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}
 	@Override
 	public boolean esFiltroValido() {
