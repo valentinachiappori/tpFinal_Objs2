@@ -106,20 +106,17 @@ public class SitioWeb {
 	
 	//Dar de alta inmueble
 	public void darDeAltaInmueble(Inmueble i) {
-		if (esUsuarioRegistrado(i.getPropietario()) && this.tiposDeInmueble.contains(i.getTipoInmueble())) {
-			this.inmuebles.add(i);
+		if (esUsuarioRegistrado(i.getPropietario()) && tiposDeInmueble.contains(i.getTipoInmueble())) {
+			getInmuebles().add(i);
 			i.getPropietario().agregarInmueble(i);
 		}
 	}
 	
 	//Verificar es usuario registrado
-	private boolean esUsuarioRegistrado(Usuario usuario) {
+	public boolean esUsuarioRegistrado(Usuario usuario) {
 		return getUsuarios().contains(usuario);
 	}
 	
-	//Filtrar inmuebles
-
-
 	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje) {
 		if (reserva.getEstadoReserva().equals("Finalizada") && this.categoriasPorEntidad.get("Propietario").contains(categoria)) {
 		 reserva.getPropietario().getRankingPropietario().agregarPuntaje(categoria, puntaje);

@@ -245,11 +245,6 @@ public class Inmueble {
 		return metodosDePago;
 	}
 
-	
-	public String getTipo() {
-		return tipo;
-	}
-
 
 	public void agregarComentario(String comentario) {
 		getComentarios().add(comentario);
