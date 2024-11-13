@@ -15,6 +15,9 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.po2.tpFinal.Evento;
 import ar.edu.unq.po2.tpFinal.Inmueble;
 import ar.edu.unq.po2.tpFinal.MailSender;
+import ar.edu.unq.po2.tpFinal.Puntaje;
+import ar.edu.unq.po2.tpFinal.Ranking;
+import ar.edu.unq.po2.tpFinal.Reserva;
 import ar.edu.unq.po2.tpFinal.Servicio;
 import ar.edu.unq.po2.tpFinal.SitioWeb;
 import ar.edu.unq.po2.tpFinal.Usuario;
@@ -26,6 +29,8 @@ class SitioWebTest {
 	private Inmueble inmueble;
 	private MailSender mails;
 	private Set<Servicio> servicios;
+	private Reserva reserva;
+	
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -34,6 +39,7 @@ class SitioWebTest {
 		inmueble = mock(Inmueble.class);
 		mails = mock(MailSender.class);
 		sitio = new SitioWeb(servicios,mails);
+		reserva = mock(Reserva.class);
 	}
 
 	@Test
@@ -85,5 +91,49 @@ class SitioWebTest {
 		assertTrue(sitio.getInmuebles().contains(inmueble));
 	}
 	
+	@Test
+	void testRankearPropietario() {
+		Ranking ranking = mock(Ranking.class);
+		
+		when(reserva.getPropietario()).thenReturn(usuario);
+		when(usuario.getRankingPropietario()).thenReturn(ranking);
+		when(reserva.getEstadoReserva()).thenReturn("Finalizada");
+		
+		sitio.darDeAltaCategoriaParaEntidad("Propietario", "Amabilidad");
+		
+		sitio.rankearPropietario(reserva, "Amabilidad", Puntaje.CUATRO);
+		
+		verify(ranking, times(1)).agregarPuntaje("Amabilidad", Puntaje.CUATRO);
+	}
 
+	@Test
+	void testRankearInquilino() {
+		Ranking ranking = mock(Ranking.class);
+		
+		when(reserva.getInquilino()).thenReturn(usuario);
+		when(usuario.getRankingInquilino()).thenReturn(ranking);
+		when(reserva.getEstadoReserva()).thenReturn("Finalizada");
+		
+		sitio.darDeAltaCategoriaParaEntidad("Inquilino", "Responsabilidad");
+		
+		sitio.rankearInquilino(reserva, "Responsabilidad", Puntaje.CUATRO);
+		
+		verify(ranking, times(1)).agregarPuntaje("Responsabilidad", Puntaje.CUATRO);
+	}
+	
+	@Test
+	void testRankearInmueble() {
+		Ranking ranking = mock(Ranking.class);
+		
+		when(reserva.getInmueble()).thenReturn(inmueble);
+		when(inmueble.getRankingInmueble()).thenReturn(ranking);
+		when(reserva.getEstadoReserva()).thenReturn("Finalizada");
+		
+		sitio.darDeAltaCategoriaParaEntidad("Inmueble", "Limpieza");
+		
+		sitio.rankearInmueble(reserva, "Limpieza", Puntaje.TRES);
+		
+		verify(ranking, times(1)).agregarPuntaje("Limpieza", Puntaje.TRES);
+	}
+	
 }
