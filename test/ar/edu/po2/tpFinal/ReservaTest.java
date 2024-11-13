@@ -29,7 +29,6 @@ class ReservaTest {
 	private LocalDate fechaSalida;
 	private Inmueble inmueble;
 	private Usuario inquilino;
-	private String estadoReserva;
 	private Usuario propietario;
 	
 	
