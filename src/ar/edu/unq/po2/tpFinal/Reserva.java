@@ -54,13 +54,7 @@ public class Reserva {
 	}
 	
 	public Double calcularPrecioEstadia() {
-		Double precioTotal = 0d;
-		LocalDate fechaActual = fechaEntrada;
-		while (fechaActual != fechaSalida) {
-			precioTotal += inmueble.calcularPrecioDia(fechaActual);
-			fechaActual.plusDays(1);
-		}
-		return precioTotal;
+		return getInmueble().calcularPrecioEstadia(getFechaEntrada(), getFechaSalida());
 	}
 	
 	public String toString() {

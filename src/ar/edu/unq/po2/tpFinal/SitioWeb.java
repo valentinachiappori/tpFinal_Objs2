@@ -95,21 +95,7 @@ public class SitioWeb {
 	}
 	
 	//Filtrar inmuebles
-	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, Integer cantHuespedes,
-			Double precioMin, Double precioMax) {
-		if (ciudad == null || fechaEntrada == null || fechaSalida == null) {
-			 throw new IllegalArgumentException("Por favor, completa la ciudad y las fechas de entrada y salida para realizar la búsqueda.");
-		}
-		List<Inmueble> inmueblesFiltrados = inmuebles.stream() 
-		.filter(i -> i.getCiudad().equals(ciudad))
-		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
-		.filter(i -> cantHuespedes == null || i.getCapacidad() >= cantHuespedes)
-		.filter(i -> precioMin == null || i.calcularPrecioDia(fechaEntrada) >= precioMin)
-		.filter(i -> precioMax == null || i.calcularPrecioDia(fechaEntrada) <= precioMax)
-		.toList();
-		
-		return inmueblesFiltrados;
-	}
+
 
 	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje) {
 		if (reserva.getEstadoReserva().equals("Finalizada") && this.categoriasPorEntidad.get("Propietario").contains(categoria)) {

@@ -199,6 +199,15 @@ public class Inmueble {
 	    }
 	}
 	
+	public Double calcularPrecioEstadia(LocalDate fechaEntrada, LocalDate fechaSalida) {
+		Double precioTotal = 0d;
+		LocalDate fechaActual = fechaEntrada;
+		while (fechaActual != fechaSalida) {
+			precioTotal += calcularPrecioDia(fechaActual);
+			fechaActual.plusDays(1);
+		}
+		return precioTotal;
+	}
 }
 
 
