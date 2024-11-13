@@ -194,13 +194,18 @@ public class SitioWeb {
 		return getInmuebles().stream().filter(i -> i.estaDisponibleHoy()).toList();
 	}
 	
-	public float tasaDeOcupacion() {
+	public double tasaDeOcupacion() {
 		int inmueblesAlquilados = inmuebles.stream().filter(i -> !i.estaDisponibleHoy()).toList().size();  
 		int totalInmuebles = inmuebles.size();
-		return inmueblesAlquilados / totalInmuebles;
+		
+		if (totalInmuebles == 0) {
+	        return 0.0;
+	    }
+		
+		return (double) inmueblesAlquilados / totalInmuebles;
 	}
 
-	private void ejecutarReservaCondicional(Reserva reserva) {
+	public void ejecutarReservaCondicional(Reserva reserva) {
 		if (!reserva.getInmueble().getReservasEnCola().isEmpty()) {
 			reserva.getInmueble().recibirReserva(reserva.getInmueble().getReservasEnCola().getFirst());
 			reserva.getInmueble().getReservasEnCola().removeFirst();
@@ -216,7 +221,6 @@ public class SitioWeb {
 	}
 
 	public List<Inmueble> filtrarInmuebles(FiltroCompuesto filtro) {
-		// TODO Auto-generated method stub
 		return getInmuebles().stream().filter(i -> filtro.cumple(i)).toList();
 	}
 }
