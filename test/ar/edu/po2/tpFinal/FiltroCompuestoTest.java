@@ -8,6 +8,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -152,8 +154,43 @@ class FiltroCompuestoTest {
         FiltroCompuesto filtroCompuesto = new FiltroCompuesto("Buenos Aires", LocalDate.now(), LocalDate.now().plusDays(5));
 
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             filtroCompuesto.agregarFiltro(filtroPrecioMinMock);
-        });    
+        }); 
+        assertEquals("el filtro es invalido", exception.getMessage());
+        
      }
+    
+    @Test
+    public void testSetFechaInicio() {
+        FiltroCompuesto filtroCompuesto = new FiltroCompuesto("Buenos Aires", LocalDate.now(), LocalDate.now().plusDays(5));
+
+        LocalDate nuevaFechaInicio =LocalDate.now().plusDays(1);
+
+        filtroCompuesto.setFechaInicio(nuevaFechaInicio);
+
+        assertEquals(nuevaFechaInicio, filtroCompuesto.getFechaInicio());
+    }
+    
+    @Test
+    public void testSetFiltros() {
+        FiltroCompuesto filtroCompuesto = new FiltroCompuesto("Buenos Aires", LocalDate.now(), LocalDate.now().plusDays(5));
+
+        List<Filtro> filtros = new ArrayList<>();
+        FiltroSimple filtroCapacidadMock = mock(FiltroCapacidad.class);
+        filtros.add(filtroCapacidadMock);
+
+        filtroCompuesto.setFiltros(filtros);
+
+        assertEquals(filtros, filtroCompuesto.getFiltros());
+    }
+    
+    @Test
+    public void testGetFechaFin() {
+        LocalDate fechaInicio = LocalDate.now();
+        LocalDate fechaFin = fechaInicio.plusDays(5);
+        FiltroCompuesto filtroCompuesto = new FiltroCompuesto("Buenos Aires", fechaInicio, fechaFin);
+
+        assertEquals(fechaFin, filtroCompuesto.getFechaFin());
+    }
 }
