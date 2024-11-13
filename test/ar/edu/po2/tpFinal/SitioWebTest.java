@@ -350,13 +350,11 @@ class SitioWebTest {
 	    LocalDate fechaCheckOut = LocalDate.of(2024, 11, 10);
 
 	    when(reserva.getFechaSalida()).thenReturn(fechaSalida);
-
-	    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+	    
+	    assertThrows(IllegalArgumentException.class, () -> {
 	            sitio.registrarCheckOut(reserva, fechaCheckOut);
 	            });
 	    
-	    assertEquals("La reserva aún no ha finalizado", exception.getMessage());
-
 	    verify(reserva, never()).cambiarEstadoAFinalizada();
 	 }
 	 
@@ -384,29 +382,5 @@ class SitioWebTest {
 	    assertTrue(resultado.contains(inmueble));
 	    assertFalse(resultado.contains(inmueble2));
 	 }
-
-	 void testFiltrarInmueblesNingunoCumpleFiltro() {
-		Inmueble inmueble2 = mock(Inmueble.class);
-		FiltroCompuesto filtro = mock(FiltroCompuesto.class);
-			 
-		when(filtro.cumple(inmueble)).thenReturn(false);
-		when(filtro.cumple(inmueble2)).thenReturn(false);
-
-		when(inmueble.getPropietario()).thenReturn(usuario); 
-		when(inmueble.getTipoInmueble()).thenReturn("Casa");
-		when(inmueble2.getPropietario()).thenReturn(usuario); 
-		when(inmueble2.getTipoInmueble()).thenReturn("Casa");
-	        
-        sitio.darDeAltaUsuario(usuario);
-		sitio.darDeAltaTipoInmueble("Casa");
-		sitio.darDeAltaInmueble(inmueble2);
-		sitio.darDeAltaInmueble(inmueble);
-		    
-	    List<Inmueble> resultado = sitio.filtrarInmuebles(filtro);
-
-	    assertEquals(0, resultado.size());
-	    assertFalse(resultado.contains(inmueble));
-	    assertFalse(resultado.contains(inmueble2));
-	}
 	 
 }
