@@ -13,6 +13,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ar.edu.unq.po2.tpFinal.Puntaje;
 import ar.edu.unq.po2.tpFinal.Ranking;
@@ -29,6 +30,7 @@ class RankingTest {
     
     @BeforeEach
     void setUp() throws Exception {
+    	MockitoAnnotations.openMocks(this);
         ranking = new Ranking() {
             @Override
             public Map<String, List<Integer>> getPuntuacionesPorCategoria() {
