@@ -24,7 +24,7 @@ public class SitioWeb {
 		this.mailSender = mailSender;
 		this.categoriasPorEntidad = new HashMap<>();
 		
-		
+
 		categoriasPorEntidad.put("Propietario", new HashSet<>());
 		categoriasPorEntidad.put("Inquilino", new HashSet<>());
 		categoriasPorEntidad.put("Inmueble", new HashSet<>());
