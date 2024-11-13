@@ -16,7 +16,6 @@ public class SitioWeb {
 	private MailSender mailSender;
 	private Map<String, Set<String>> categoriasPorEntidad;
 	
-	//constructor
 	public SitioWeb( Set<Servicio> servicios, MailSender mailSender) {
 		this.usuarios = new ArrayList<Usuario>();
 		this.inmuebles = new ArrayList<Inmueble>();
@@ -25,7 +24,7 @@ public class SitioWeb {
 		this.mailSender = mailSender;
 		this.categoriasPorEntidad = new HashMap<>();
 		
-		//inicializamos las entidades para las categorias
+		
 		categoriasPorEntidad.put("Propietario", new HashSet<>());
 		categoriasPorEntidad.put("Inquilino", new HashSet<>());
 		categoriasPorEntidad.put("Inmueble", new HashSet<>());
@@ -52,6 +51,30 @@ public class SitioWeb {
 		return mailSender;
 	}
 
+	public Map<String, Set<String>> getCategoriasPorEntidad() {
+		return categoriasPorEntidad;
+	}
+
+	public void setCategoriasPorEntidad(Map<String, Set<String>> categoriasPorEntidad) {
+		this.categoriasPorEntidad = categoriasPorEntidad;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public void setInmuebles(List<Inmueble> inmuebles) {
+		this.inmuebles = inmuebles;
+	}
+
+	public void setTiposDeInmueble(List<String> tiposDeInmueble) {
+		this.tiposDeInmueble = tiposDeInmueble;
+	}
+
+	public void setServicios(Set<Servicio> servicios) {
+		this.servicios = servicios;
+	}
+
 	public void setMailSender(MailSender mailSender) {
 		this.mailSender = mailSender;
 	}
@@ -63,22 +86,22 @@ public class SitioWeb {
 	
 	//Dar de alta los tipos de inmuebles 
 	public void darDeAltaTipoInmueble(String tipoDeInmueble) {
-		this.tiposDeInmueble.add(tipoDeInmueble);
+		getTiposDeInmueble().add(tipoDeInmueble);
 	}
 	
 	//Dar de alta categoria en entidad
 	public void darDeAltaCategoriaParaEntidad(String entidad, String categoria) {
-		this.categoriasPorEntidad.get(entidad).add(categoria);
+		getCategoriasPorEntidad().get(entidad).add(categoria);
 	}
 	
 	//Dar de alta usuario
 	public void darDeAltaUsuario(Usuario usuario) {
-		this.usuarios.add(usuario);
+		getUsuarios().add(usuario);
 	}
 	
 	//Dar de alta servicio
 	public void darDeAltaServicio(Servicio servicio) {
-		this.servicios.add(servicio);
+		getServicios().add(servicio);
 	}
 	
 	//Dar de alta inmueble
@@ -91,7 +114,7 @@ public class SitioWeb {
 	
 	//Verificar es usuario registrado
 	private boolean esUsuarioRegistrado(Usuario usuario) {
-		return this.usuarios.contains(usuario);
+		return getUsuarios().contains(usuario);
 	}
 	
 	//Filtrar inmuebles
@@ -141,7 +164,7 @@ public class SitioWeb {
 	}
 	
 	public void enviarMailConfirmacion(Reserva reserva) {
-		this.mailSender.sendMail(reserva.getInquilino().getCorreoElectronico(),"Reserva confirmada", "Tu reserva" + reserva.toString() + "ha sido confirmada por su propietario");
+		getMailSender().sendMail(reserva.getInquilino().getCorreoElectronico(),"Reserva confirmada", "Tu reserva" + reserva.toString() + "ha sido confirmada por su propietario");
 	}
 
 	public void rechazarReserva(Reserva reserva){
@@ -167,7 +190,7 @@ public class SitioWeb {
 	}
 	
 	public List<Inmueble> inmueblesLibres(){
-		return inmuebles.stream().filter(i -> i.estaDisponibleHoy()).toList();
+		return getInmuebles().stream().filter(i -> i.estaDisponibleHoy()).toList();
 	}
 	
 	public float tasaDeOcupacion() {

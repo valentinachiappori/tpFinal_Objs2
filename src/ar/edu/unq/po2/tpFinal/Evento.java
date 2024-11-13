@@ -9,15 +9,18 @@ public enum Evento {
 	  BAJAPRECIO(inmueble -> "El/la " + inmueble.getTipoInmueble() + "que te interesa se ha liberado! Corre a reservarlo!");
 
 
-	private final Function<Inmueble, String> mensaje;
+	private Function<Inmueble, String> mensaje;
 	
 
 	Evento(Function<Inmueble, String> mensaje) {
-        this.mensaje = mensaje;
-    };
+		setMensaje(mensaje);
+};
     
     public String aplicarMensaje(Inmueble inmueble) {
         return mensaje.apply(inmueble);
     }
     
+    private void setMensaje(Function<Inmueble, String> mensaje) {
+    	this.mensaje = mensaje;
+    }
 }

@@ -11,18 +11,7 @@ public class FiltroPrecioMin implements FiltroSimple{
 	public FiltroPrecioMin(double precio) {
 		this.setPrecio(precio);
 	}
-	@Override
-	public boolean cumple(Inmueble inmueble) {
-		// TODO Auto-generated method stub
-		return inmueble.calcularPrecioEstadia(getFechaInicio(), getFechaFin()) > getPrecio();
-	}
 	
-	@Override
-	public boolean precisaFecha() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
@@ -41,6 +30,20 @@ public class FiltroPrecioMin implements FiltroSimple{
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+	
+	@Override
+	public boolean cumple(Inmueble inmueble) {
+		// TODO Auto-generated method stub
+		return inmueble.calcularPrecioEstadia(getFechaInicio(), getFechaFin()) > getPrecio();
+	}
+	
+	@Override
+	public boolean precisaFecha() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	
 	@Override
 	public boolean esFiltroValido() {
 		// TODO Auto-generated method stub
@@ -50,6 +53,5 @@ public class FiltroPrecioMin implements FiltroSimple{
 				(getPrecio()>= 0d)
 				);
 	}
-
 
 }

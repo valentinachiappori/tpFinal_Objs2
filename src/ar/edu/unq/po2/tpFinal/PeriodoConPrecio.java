@@ -8,9 +8,9 @@ public class PeriodoConPrecio {
 	private Double precioPorDia;
 	
 	public PeriodoConPrecio(LocalDate fechaInicio, LocalDate fechaFin, Double precioPorDia) {
-		this.fechaInicio = fechaInicio;
-		this.fechaFin = fechaFin;
-		this.precioPorDia = precioPorDia;
+		setFechaInicio(fechaInicio);
+		setFechaFin(fechaFin);
+		setPrecioPorDia(precioPorDia);
 	}
 	
 	public LocalDate getFechaInicio() {
@@ -33,7 +33,7 @@ public class PeriodoConPrecio {
 	}
 
 	public boolean incluidaEnPeriodo(LocalDate fecha) {
-		return fecha.isBefore(fechaFin) || fecha.isAfter(fechaInicio) || fecha.isEqual(fechaFin) || fecha.isEqual(fechaInicio);
+		return fecha.isBefore(getFechaFin()) || fecha.isAfter(getFechaInicio()) || fecha.isEqual(getFechaFin()) || fecha.isEqual(getFechaInicio());
 	}
 
 }

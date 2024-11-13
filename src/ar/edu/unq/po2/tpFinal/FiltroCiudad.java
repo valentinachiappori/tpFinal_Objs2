@@ -8,21 +8,24 @@ public class FiltroCiudad implements Filtro {
 	public FiltroCiudad(String ciudad) {
 		this.setCiudad(ciudad);
 	}
-	@Override
-	public boolean cumple(Inmueble inmueble) {
-		// TODO Auto-generated method stub
-		return inmueble.getCiudad().equals(getDato());
-	}
-	public String getDato() {
+	
+	public String getCiudad() {
 		return ciudad;
 	}
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
+	
+	@Override
+	public boolean cumple(Inmueble inmueble) {
+		// TODO Auto-generated method stub
+		return inmueble.getCiudad().equals(getCiudad());
+	}
+
 	@Override
 	public boolean esFiltroValido() {
 		// TODO Auto-generated method stub
-		return (!(getDato()==null));
+		return (!(getCiudad().equals(null)));
 	}
 
 }

@@ -19,18 +19,54 @@ public class Usuario implements Inquilino, Propietario{
 
 	
 	public Usuario(SitioWeb sitio, String nombreCompleto, String correoElectronico, int numeroDeTelefono) {
-		this.sitio = sitio;
-		this.nombreCompleto = nombreCompleto;
-		this.correoElectronico = correoElectronico;
-		this.numeroDeTelefono = numeroDeTelefono;
-		this.reservas = new ArrayList<Reserva>();
-		this.inmuebles = new ArrayList<Inmueble>();
-		this.rankingInquilino = new Ranking();
-		this.rankingPropietario = new Ranking();
-		this.fechaDeRegistro = LocalDate.now();
-		this.comentariosInquilino = new ArrayList<String>();
+	    setSitio(sitio);
+	    setNombreCompleto(nombreCompleto);
+	    setCorreoElectronico(correoElectronico);
+	    setNumeroDeTelefono(numeroDeTelefono); 
+	    setReservas(new ArrayList<Reserva>());
+	    setInmuebles(new ArrayList<Inmueble>());
+	    setRankingInquilino(new Ranking());
+	    setRankingPropietario(new Ranking());
+	    setFechaDeRegistro(LocalDate.now());
+	    setComentariosInquilino(new ArrayList<String>());
 	}
 	
+	public SitioWeb getSitio() {
+		return sitio;
+	}
+
+	public void setSitio(SitioWeb sitio) {
+		this.sitio = sitio;
+	}
+
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
+	public void setInmuebles(List<Inmueble> inmuebles) {
+		this.inmuebles = inmuebles;
+	}
+
+	public void setRankingPropietario(Ranking rankingPropietario) {
+		this.rankingPropietario = rankingPropietario;
+	}
+
+	public void setRankingInquilino(Ranking rankingInquilino) {
+		this.rankingInquilino = rankingInquilino;
+	}
+
+	public void setFechaDeRegistro(LocalDate fechaDeRegistro) {
+		this.fechaDeRegistro = fechaDeRegistro;
+	}
+
+	public void setComentariosInquilino(List<String> comentariosInquilino) {
+		this.comentariosInquilino = comentariosInquilino;
+	}
+
 	public SitioWeb getSitioWeb() {
 		return sitio;
 	}
@@ -84,11 +120,11 @@ public class Usuario implements Inquilino, Propietario{
 	}
 
 	public void publicarInmueble(Inmueble i) {
-		this.sitio.darDeAltaInmueble(i);
+		getSitio().darDeAltaInmueble(i);
 	}
 	
 	public void agregarInmueble(Inmueble i) {
-        inmuebles.add(i);
+        getInmuebles().add(i);
     }
 	
 	public List<Inmueble> buscarInmuebles(FiltroCompuesto filtro) {
@@ -96,15 +132,15 @@ public class Usuario implements Inquilino, Propietario{
 	}
 	
 	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje) {
-		this.sitio.rankearPropietario(reserva, categoria, puntaje);
+		getSitio().rankearPropietario(reserva, categoria, puntaje);
 	}
 	
 	public void rankearInquilino(Reserva reserva, String categoria, Puntaje puntaje) {
-		this.sitio.rankearInquilino(reserva, categoria, puntaje);
+		getSitio().rankearInquilino(reserva, categoria, puntaje);
 	}
 	
 	public void rankearInmueble(Reserva reserva, String categoria, Puntaje puntaje) {
-		this.sitio.rankearInmueble(reserva, categoria, puntaje);
+		getSitio().rankearInmueble(reserva, categoria, puntaje);
 	}
 	
 	public void agregarComentario(String comentario) {
@@ -154,11 +190,11 @@ public class Usuario implements Inquilino, Propietario{
     }
 	
 	public void reservar(Inmueble inmueble, String metodoPago, LocalDate fechaInicio, LocalDate fechaFin) {
-		sitio.reservar(new Reserva(fechaInicio, fechaFin, inmueble, this));
+		getSitio().reservar(new Reserva(fechaInicio, fechaFin, inmueble, this));
 	}
 	
 	public void comentarInquilino(Reserva reserva, String comentario) {
-		this.sitio.registrarComentarioInquilino(reserva, comentario);
+		getSitio().registrarComentarioInquilino(reserva, comentario);
 	}
 	
 	public void visualizarInquilino(Usuario inquilino) {
@@ -173,58 +209,72 @@ public class Usuario implements Inquilino, Propietario{
 	}
 
 	public void aceptarUnaReserva(Reserva reserva) {
-		this.sitio.consolidarReserva(reserva);
+	    getSitio().consolidarReserva(reserva);
 	}
-	
+
 	public void registrarReserva(Reserva reserva) {
-		this.reservas.add(reserva);
+	    getReservas().add(reserva);
 	}
-	
+
 	public void rechazarReserva(Reserva reserva) {
-		this.sitio.rechazarReserva(reserva);
+	    getSitio().rechazarReserva(reserva);
 	}
- 
-	public List<Reserva> getReservasFuturas(){
-		return this.reservas.stream().filter(r -> r.getFechaEntrada().isAfter(LocalDate.now())).toList();
+
+	public List<Reserva> getReservasFuturas() {
+	    return getReservas().stream()
+	            .filter(r -> r.getFechaEntrada().isAfter(LocalDate.now()))
+	            .toList();
 	}
-	
-	public List<Reserva> getReservasEnCiudad(String ciudad){
-		return this.reservas.stream().filter(r -> r.getInmueble().getCiudad().equals(ciudad)).toList();
+
+	public List<Reserva> getReservasEnCiudad(String ciudad) {
+	    return getReservas().stream()
+	            .filter(r -> r.getInmueble().getCiudad().equals(ciudad))
+	            .toList();
 	}
-	
-	public List<String> getCiudadesConReserva(){
-		return this.reservas.stream().map(r -> r.getInmueble().getCiudad()).toList();
+
+	public List<String> getCiudadesConReserva() {
+	    return getReservas().stream()
+	            .map(r -> r.getInmueble().getCiudad())
+	            .distinct()
+	            .toList();
 	}
-	
+
 	public void cancelarReserva(Reserva reserva) {
-		this.sitio.cancelarReserva(reserva);
+	    getSitio().cancelarReserva(reserva);
 	}
-	
+
 	public void eliminarReserva(Reserva reserva) {
-		this.reservas.remove(reserva);
+	    getReservas().remove(reserva);
 	}
-	
+
 	public int cantVecesQueFueAlquiladoElInmueble(Inmueble inmueble) {
-		return inmueble.getReservasConfirmadas().stream().filter(r -> r.getEstadoReserva().equals("Finalizada")).toList().size();
+	    return inmueble.getReservasConfirmadas().stream()
+	            .filter(r -> r.getEstadoReserva().equals("Finalizada"))
+	            .toList()
+	            .size();
 	}
-	
-	public int cantVecesQueAlquilo(){
-		return inmuebles.stream().mapToInt(i -> this.cantVecesQueFueAlquiladoElInmueble(i)).sum();
+
+	public int cantVecesQueAlquilo() {
+	    return getInmuebles().stream()
+	            .mapToInt(i -> cantVecesQueFueAlquiladoElInmueble(i))
+	            .sum();
 	}
-	
+
 	public List<Inmueble> todosLosInmueblesQueYaFueronAlquilados() {
-		return inmuebles.stream().filter(i -> this.cantVecesQueFueAlquiladoElInmueble(i) >= 1).toList();
+	    return getInmuebles().stream()
+	            .filter(i -> cantVecesQueFueAlquiladoElInmueble(i) >= 1)
+	            .toList();
 	}
-	
+
 	public void modificarPrecioPeriodo(Double precioNuevo, Inmueble inmueble, PeriodoConPrecio periodo) {
-		inmueble.modificarPrecioPeriodo(periodo, precioNuevo);
+	    inmueble.modificarPrecioPeriodo(periodo, precioNuevo);
 	}
-	
+
 	public void modificarPrecioBase(Double precioNuevo, Inmueble inmueble) {
-		inmueble.modificarPrecioBase(precioNuevo);
+	    inmueble.modificarPrecioBase(precioNuevo);
 	}
-	
+
 	public void hacerCheckOut(Reserva reserva) {
-		sitio.registrarCheckOut(reserva, LocalDate.now());
+	    getSitio().registrarCheckOut(reserva, LocalDate.now());
 	}
 }

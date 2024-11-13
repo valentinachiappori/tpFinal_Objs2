@@ -10,11 +10,7 @@ public class FiltroFechas implements Filtro {
 		this.setFechaInicio(fechaInicio);
 		this.setFechaFin(fechaFin);
 	}
-	@Override
-	public boolean cumple(Inmueble inmueble) {
-		// TODO Auto-generated method stub
-		return inmueble.estaDisponibleEnPeriodo(getFechaInicio(), getFechaFin());
-	}
+	
 	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
@@ -27,6 +23,13 @@ public class FiltroFechas implements Filtro {
 	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
+	
+	@Override
+	public boolean cumple(Inmueble inmueble) {
+		// TODO Auto-generated method stub
+		return inmueble.estaDisponibleEnPeriodo(getFechaInicio(), getFechaFin());
+	}
+	
 	@Override
 	public boolean esFiltroValido() {
 		// TODO Auto-generated method stub

@@ -7,6 +7,11 @@ public enum Puntaje {
 	private int nivel;
 
 	private Puntaje(int nivel) {
+		setNivel(nivel);
+	}
+
+	void setNivel(int nivel) {
+		// TODO Auto-generated method stub
 		this.nivel = nivel;
 	}
 

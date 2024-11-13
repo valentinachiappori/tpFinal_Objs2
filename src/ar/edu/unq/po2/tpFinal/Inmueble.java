@@ -37,27 +37,115 @@ public class Inmueble {
 	public Inmueble(Usuario propietario, String tipo, int superficie, String pais, String ciudad, String direccion, Set<Servicio> servicios, int capacidad
 			, LocalTime checkIn, LocalTime checkOut, double precioBase, List<String> metodosDePago,
 			List<PeriodoConPrecio> periodosPublicados, PoliticaDeCancelacion politicaDeCancelacion ) {
-		this.propietario = propietario;
-		this.tipo = tipo;
-		this.superficie = superficie;
-		this.pais = pais;
-		this.ciudad = ciudad;
-		this.direccion = direccion;
-		this.servicios = servicios;
-		this.capacidad = capacidad;
-		this.fotos = new ArrayList<String>();
-		this.checkIn = checkIn;
-		this.checkOut = checkOut;
-		this.precioBase = precioBase;
-		this.metodosDePago = metodosDePago;
-		this.periodosPublicados = periodosPublicados;
-		this.reservasConfirmadas = new ArrayList<Reserva>();
-		this.reservasPendientes = new ArrayList<Reserva>();
-		this.reservasEnCola = new ArrayList<Reserva>();
-		this.politicaDeCancelacion = politicaDeCancelacion;
-		this.interesados = new HashMap<Evento, List<Interesado>>();	
+		setPropietario(propietario);
+		setTipo(tipo);
+		setSuperficie(superficie);
+		setPais(pais);
+		setCiudad(ciudad);
+		setDireccion(direccion);
+		setServicios(servicios);
+		setCapacidad(capacidad);
+		setFotos(new ArrayList<String>());
+		setCheckIn(checkIn);
+		setCheckOut(checkOut);
+		setPrecioBase(precioBase);
+		setMetodosDePago(metodosDePago);
+		setPeriodosPublicados(periodosPublicados);
+		setReservasConfirmadas(new ArrayList<Reserva>());
+		setReservasPendientes( new ArrayList<Reserva>());
+		setReservasEnCola( new ArrayList<Reserva>());
+		setPoliticaDeCancelacion( politicaDeCancelacion);
+		setInteresados(new HashMap<Evento, List<Interesado>>());	
 		}
 
+
+	public void setPoliticaDeCancelacion(PoliticaDeCancelacion politica) {
+		this.politicaDeCancelacion = politica;
+	}
+	public void setCheckOut(LocalTime checkOut) {
+		this.checkOut = checkOut;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+
+	public void setPeriodosPublicados(List<PeriodoConPrecio> periodosPublicados) {
+		this.periodosPublicados = periodosPublicados;
+	}
+
+
+	public void setPropietario(Usuario propietario) {
+		this.propietario = propietario;
+	}
+
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+
+	public void setCapacidad(int capacidad) {
+		this.capacidad = capacidad;
+	}
+
+
+	public void setFotos(List<String> fotos) {
+		this.fotos = fotos;
+	}
+
+
+	public void setPrecioBase(Double precioBase) {
+		this.precioBase = precioBase;
+	}
+
+
+	public void setComentarios(List<String> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+
+	public void setRankingInmueble(Ranking rankingInmueble) {
+		this.rankingInmueble = rankingInmueble;
+	}
+
+
+	public void setReservasConfirmadas(List<Reserva> reservasConfirmadas) {
+		this.reservasConfirmadas = reservasConfirmadas;
+	}
+
+
+	public void setReservasPendientes(List<Reserva> reservasPendientes) {
+		this.reservasPendientes = reservasPendientes;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+	
+	public void setReservasEnCola(List<Reserva> reservasEnCola) {
+		this.reservasEnCola = reservasEnCola;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+	
+	public void setInteresados(Map<Evento, List<Interesado>> interesados) {
+		this.interesados = interesados;
+	}
+	public void setMetodosDePago(List<String> metodosDePago) {
+		this.metodosDePago = metodosDePago;
+	}
+	
+	public void setSuperficie(int superficie) {
+		this.superficie = superficie;
+	}
+	
+	public List<PeriodoConPrecio> getPeriodosPublicados() {
+		return periodosPublicados;
+	}
 	
 	public Usuario getPropietario() {
 		return propietario;
@@ -90,10 +178,6 @@ public class Inmueble {
 	public List<Reserva> getReservasEnCola() {
 		return reservasEnCola;
 	}
-
-	public void setPoliticaDeCancelacion(PoliticaDeCancelacion politica) {
-		this.politicaDeCancelacion = politica;
-	}
 	
 	public PoliticaDeCancelacion getPoliticaDeCancelacion() {
 		return this.politicaDeCancelacion;
@@ -115,18 +199,68 @@ public class Inmueble {
 		return fotos;
 	}
 	
+
+	public int getSuperficie() {
+		return superficie;
+	}
+
+
+
+	public String getPais() {
+		return pais;
+	}
+
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+
+	public Set<Servicio> getServicios() {
+		return servicios;
+	}
+
+
+	public void setServicios(Set<Servicio> servicios) {
+		this.servicios = servicios;
+	}
+
+
+	public LocalTime getCheckIn() {
+		return checkIn;
+	}
+
+
+	public void setCheckIn(LocalTime checkIn) {
+		this.checkIn = checkIn;
+	}
+
+
+	public LocalTime getCheckOut() {
+		return checkOut;
+	}
+
+
+	public List<String> getMetodosDePago() {
+		return metodosDePago;
+	}
+
+	
+	public String getTipo() {
+		return tipo;
+	}
+
+
+	public void agregarComentario(String comentario) {
+		getComentarios().add(comentario);
+	}
 	public void agregarFoto(String foto) {
-		if (fotos.size() < 5) {
-			fotos.add(foto);
+		if (getFotos().size() < 5) {
+			getFotos().add(foto);
 		} else {
 	        throw new IllegalArgumentException("No se pueden agregar más de 5 fotos.");
 	    }
 	}
-
-	public void agregarComentario(String comentario) {
-		this.comentarios.add(comentario);
-	}
-	
 	public Double calcularPrecioDia(LocalDate fecha) {
 		for (PeriodoConPrecio periodo : periodosPublicados) {
 			if (periodo.incluidaEnPeriodo(fecha)) {
@@ -137,10 +271,10 @@ public class Inmueble {
 	}
 	
 	public void recibirReserva(Reserva reserva) {
-		if (this.estaDisponibleEnPeriodo(reserva.getFechaEntrada(), reserva.getFechaSalida())) {
-			this.reservasPendientes.add(reserva);
+		if (estaDisponibleEnPeriodo(reserva.getFechaEntrada(), reserva.getFechaSalida())) {
+			getReservasPendientes().add(reserva);
 		} else {
-			this.reservasEnCola.add(reserva);
+			getReservasEnCola().add(reserva);
 		}
 	}
 	
@@ -151,51 +285,51 @@ public class Inmueble {
 	}
 	
 	public void registrarReserva(Reserva reserva) {
-		this.reservasConfirmadas.add(reserva);
-		this.reservasPendientes.remove(reserva);
+		getReservasConfirmadas().add(reserva);
+		getReservasPendientes().remove(reserva);
 	}
 	
 	public void eliminarReservaPendiente(Reserva reserva) {
-		this.reservasPendientes.remove(reserva);
+		getReservasPendientes().remove(reserva);
 	}
 
 	public void eliminarReserva(Reserva reserva) {
-		this.reservasConfirmadas.remove(reserva);
+		getReservasConfirmadas().remove(reserva);
 	}
 
 	public boolean estaDisponibleHoy() {
 		LocalDate hoy = LocalDate.now();
-		return reservasConfirmadas.stream().noneMatch(r -> !hoy.isBefore(r.getFechaEntrada()) && 
+		return getReservasConfirmadas().stream().noneMatch(r -> !hoy.isBefore(r.getFechaEntrada()) && 
 				!hoy.isAfter(r.getFechaSalida()));
 	}
 
 	public void modificarPrecioPeriodo(PeriodoConPrecio periodo, Double precioNuevo) {
 		if (periodo.getPrecioPorDia() > precioNuevo) {
-			this.notificar(Evento.BAJAPRECIO,this);		//
+			notificar(Evento.BAJAPRECIO,this);		//
 		}
 		periodo.setPrecioPorDia(precioNuevo);
 	}	
 	
 	public void modificarPrecioBase(Double precioNuevo) {
 		if (precioBase > precioNuevo) {
-			this.notificar(Evento.BAJAPRECIO,this);
+			notificar(Evento.BAJAPRECIO,this);
 		}
-		this.precioBase = precioNuevo;
+		setPrecioBase(precioNuevo);
 	}
 	
 	public void subscribir(Evento evento, Interesado interesado) {
-	    this.interesados.computeIfAbsent(evento, k -> new ArrayList<>()).add(interesado);
+	    getInteresados().computeIfAbsent(evento, k -> new ArrayList<>()).add(interesado);
     }
 
 	public void desubscribir(Evento evento, Interesado interesado) {
-	    List<Interesado> interesadosDelEvento = this.interesados.get(evento);
+	    List<Interesado> interesadosDelEvento = getInteresados().get(evento);
 	    if (interesadosDelEvento != null) {
 	    	interesadosDelEvento.remove(interesado);
 	    }
     }
 
 	public void notificar(Evento evento, Inmueble inmueble) {
-	    List<Interesado> interesadosDelEvento = this.interesados.get(evento);
+	    List<Interesado> interesadosDelEvento = getInteresados().get(evento);
 
 	    if (interesadosDelEvento != null) {
 	        interesadosDelEvento.stream().forEach(i -> i.update(evento, inmueble));
@@ -211,6 +345,9 @@ public class Inmueble {
 		}
 		return precioTotal;
 	}
+
+
+
 }
 
 

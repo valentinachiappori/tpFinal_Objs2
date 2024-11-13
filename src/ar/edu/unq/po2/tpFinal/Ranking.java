@@ -12,17 +12,25 @@ public class Ranking {
 
     //Constructor 
     public Ranking () {
-        this.puntuacionesPorCategoria = new HashMap<>();
+        setPuntuacionesPorCategoria(new HashMap<>());
     }
 	
-    public void agregarPuntaje(String categoria, Puntaje puntaje) {
-    	puntuacionesPorCategoria.putIfAbsent(categoria, new ArrayList<Integer>());
-        puntuacionesPorCategoria.get(categoria).add(puntaje.getNivel());
+    public Map<String, List<Integer>> getPuntuacionesPorCategoria() {
+		return puntuacionesPorCategoria;
+	}
+
+	public void setPuntuacionesPorCategoria(Map<String, List<Integer>> puntuacionesPorCategoria) {
+		this.puntuacionesPorCategoria = puntuacionesPorCategoria;
+	}
+
+	public void agregarPuntaje(String categoria, Puntaje puntaje) {
+    	getPuntuacionesPorCategoria().putIfAbsent(categoria, new ArrayList<Integer>());
+        getPuntuacionesPorCategoria().get(categoria).add(puntaje.getNivel());
 	}
     
     public double obtenerPromedioPorCategoria(String categoria) {
         List<Integer> puntuaciones = puntuacionesPorCategoria.get(categoria);
-        if (puntuaciones == null || puntuaciones.isEmpty()) {
+        if (puntuaciones.isEmpty()) {
             return 0;
         }
         int total = puntuaciones.stream().mapToInt(i -> i.intValue()).sum();
@@ -47,7 +55,7 @@ public class Ranking {
     
     public Map<String, Double> obtenerPromediosPorCategoria() {
         Map<String, Double> promedios = new HashMap<>();
-        for (String categoria : puntuacionesPorCategoria.keySet()) {
+        for (String categoria : getPuntuacionesPorCategoria().keySet()) {
             promedios.put(categoria, obtenerPromedioPorCategoria(categoria));
         }
         return promedios;

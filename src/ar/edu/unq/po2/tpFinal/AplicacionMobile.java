@@ -5,11 +5,15 @@ public class AplicacionMobile implements Interesado{
 	private PopUpWindow popupwindow;
 
 	public AplicacionMobile(PopUpWindow popupwindow) {
-		this.popupwindow = popupwindow;
+		setPopUpWindow(popupwindow);
 	}
 
 	@Override
 	public void update(Evento evento, Inmueble inmueble) {
 		popupwindow.popUp(evento.aplicarMensaje(inmueble), "BLUE", 12);
 	}
+	private void setPopUpWindow(PopUpWindow popupwindow) {
+		this.popupwindow = popupwindow; 
+	}
+
 }
