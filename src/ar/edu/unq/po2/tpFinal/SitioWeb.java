@@ -106,7 +106,7 @@ public class SitioWeb {
 	
 	//Dar de alta inmueble
 	public void darDeAltaInmueble(Inmueble i) {
-		if (esUsuarioRegistrado(i.getPropietario()) && tiposDeInmueble.contains(i.getTipoInmueble())) {
+		if (esUsuarioRegistrado(i.getPropietario()) && verificarExisteTipoInmueble(i.getTipoInmueble())) {
 			getInmuebles().add(i);
 			i.getPropietario().agregarInmueble(i);
 		}
@@ -115,6 +115,10 @@ public class SitioWeb {
 	//Verificar es usuario registrado
 	public boolean esUsuarioRegistrado(Usuario usuario) {
 		return getUsuarios().contains(usuario);
+	}
+	
+	public boolean verificarExisteTipoInmueble(String tipo) {
+		return getTiposDeInmueble().contains(tipo);
 	}
 	
 	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje) {
