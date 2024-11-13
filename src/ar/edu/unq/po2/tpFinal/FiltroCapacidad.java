@@ -14,7 +14,7 @@ public class FiltroCapacidad implements FiltroSimple{
 	@Override
 	public boolean cumple(Inmueble inmueble) {
 		// TODO Auto-generated method stub
-		return false;
+		return inmueble.getCapacidad() == getCapacidad();
 	}
 
 	@Override

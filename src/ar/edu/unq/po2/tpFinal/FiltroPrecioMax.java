@@ -14,7 +14,7 @@ public class FiltroPrecioMax implements Filtro{
 		@Override
 		public boolean cumple(Inmueble inmueble) {
 			// TODO Auto-generated method stub
-			return false;
+			return inmueble.calcularPrecioEstadia(getFechaInicio(), getFechaFin()) < getPrecio();
 		}
 		
 		public LocalDate getFechaFin() {

@@ -14,8 +14,9 @@ public class FiltroPrecioMin implements FiltroSimple{
 	@Override
 	public boolean cumple(Inmueble inmueble) {
 		// TODO Auto-generated method stub
-		return false;
+		return inmueble.calcularPrecioEstadia(getFechaInicio(), getFechaFin()) > getPrecio();
 	}
+	
 	@Override
 	public boolean precisaFecha() {
 		// TODO Auto-generated method stub
