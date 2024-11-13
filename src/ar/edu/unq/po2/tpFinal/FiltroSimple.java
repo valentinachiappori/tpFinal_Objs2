@@ -7,4 +7,6 @@ public interface FiltroSimple extends Filtro {
 	boolean precisaFecha();
 	void setFechaInicio(LocalDate fechaInicio);
 	void setFechaFin(LocalDate fechaFin);
+	LocalDate getFechaInicio();
+	LocalDate getFechaFin();
 }

@@ -2,7 +2,7 @@ package ar.edu.unq.po2.tpFinal;
 
 import java.time.LocalDate;
 
-public class FiltroPrecioMax implements Filtro{
+public class FiltroPrecioMax implements FiltroSimple{
 
 		private LocalDate fechaInicio;
 		private LocalDate fechaFin;
@@ -45,6 +45,12 @@ public class FiltroPrecioMax implements Filtro{
 					(getFechaInicio().isBefore(getFechaFin()))&&
 					(getPrecio()>= 0d)
 					);
+		}
+
+		@Override
+		public boolean precisaFecha() {
+			// TODO Auto-generated method stub
+			return false;
 		}
 
 	}

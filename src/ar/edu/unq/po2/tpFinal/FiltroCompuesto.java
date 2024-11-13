@@ -6,8 +6,8 @@ import java.util.List;
 
 public class FiltroCompuesto implements Filtro {
     private List<Filtro> filtros;
-    private final Filtro filtroCiudad;
-    private final Filtro filtroFechas;
+    private Filtro filtroCiudad;
+    private Filtro filtroFechas;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     
@@ -39,12 +39,43 @@ public class FiltroCompuesto implements Filtro {
 	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
+	
+
+	public Filtro getFiltroCiudad() {
+		return filtroCiudad;
+	}
+
+	public Filtro getFiltroFechas() {
+		return filtroFechas;
+	}
+	
+	public List<Filtro> getFiltros() {
+		return filtros;
+	}
+
+	public void setFiltros(List<Filtro> filtros) {
+		this.filtros = filtros;
+	}
+
+	public void setFiltroCiudad(Filtro filtroCiudad) {
+		if (esFiltroValido(filtroCiudad)) {
+			getFiltros().remove(getFiltroCiudad());
+			this.filtroCiudad = filtroCiudad;
+		}
+	}
+
+	public void setFiltroFechas(Filtro filtroFechas) {
+		if (esFiltroValido(filtroFechas)) {
+		getFiltros().remove(getFiltroFechas());
+		this.filtroFechas = filtroFechas;
+		}
+	}
 
 	private void validarFiltros(Filtro filtroCiudad, Filtro filtroFechas) {
 		// TODO Auto-generated method stub
-		if (!(esFiltroValido(filtroCiudad) || esFiltroValido(filtroFechas))) {
-			 throw new IllegalArgumentException("Uno de los FiltrosObligatorios tiene un valorNull");
-		};
+	    if (!(esFiltroValido(filtroCiudad) && esFiltroValido(filtroFechas))) {  // Cambié || a && para verificar ambos filtros
+	        throw new IllegalArgumentException("Uno de los FiltrosObligatorios tiene un valorNull");
+	    }
 	}
 
 	private boolean esFiltroValido(Filtro filtro) {

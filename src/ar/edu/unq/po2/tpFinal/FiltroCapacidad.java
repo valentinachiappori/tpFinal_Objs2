@@ -51,4 +51,16 @@ public class FiltroCapacidad implements FiltroSimple{
 		
 	}
 
+	@Override
+	public LocalDate getFechaInicio() {
+		// TODO Auto-generated method stub
+		return null ;
+	}
+
+	@Override
+	public LocalDate getFechaFin() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
