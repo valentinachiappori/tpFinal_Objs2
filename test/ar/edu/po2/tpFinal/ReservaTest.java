@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ar.edu.unq.po2.tpFinal.Inmueble;
+import ar.edu.unq.po2.tpFinal.PoliticaDeCancelacion;
 import ar.edu.unq.po2.tpFinal.Reserva;
 import ar.edu.unq.po2.tpFinal.Usuario;
 
@@ -29,7 +30,6 @@ class ReservaTest {
 	private Inmueble inmueble;
 	private Usuario inquilino;
 	private String estadoReserva;
-	
 	private Usuario propietario;
 	
 	
@@ -47,9 +47,53 @@ class ReservaTest {
 	@Test
 	void testGetPropietario() {
 		when(inmueble.getPropietario()).thenReturn(propietario);
-		
 		assertEquals(reserva.getPropietario(), propietario);
-		
+	}
+	
+	@Test
+	void testGetInquilino() {
+		assertEquals(reserva.getInquilino(), inquilino);
 	}
 
+	@Test
+	void testGetFechaEntrada() {
+		assertEquals(reserva.getFechaEntrada(), fechaEntrada);
+	}
+	
+	@Test
+	void testGetFechaSalida() {
+		assertEquals(reserva.getFechaSalida(), fechaSalida);
+	}
+	
+	@Test
+	void testCambiarEstadoAAceptada() {
+		reserva.cambiarEstadoAAceptada();
+		
+		assertEquals(reserva.getEstadoReserva(), "Aceptada");
+	}
+	
+	@Test
+	void testCambiarEstadoAFinalizada() {
+		reserva.cambiarEstadoAFinalizada();
+		
+		assertEquals(reserva.getEstadoReserva(), "Finalizada");
+	}
+	
+	@Test
+	void testToString() {
+	    PoliticaDeCancelacion politica = mock(PoliticaDeCancelacion.class);
+	    when(politica.toString()).thenReturn("Flexible");
+	    when(inmueble.getPoliticaDeCancelacion()).thenReturn(politica);
+	    when(inmueble.toString()).thenReturn("Departamento");
+	    when(reserva.calcularPrecioEstadia()).thenReturn(300d);
+	    String expected = "Reserva{Inmueble=Departamento, Fecha de entrada=2024-09-11, Fecha de salida=2024-12-11, Política de cancelación= Flexible, Precio total= $300.0}";
+
+
+	    assertEquals(expected, reserva.toString());
+	}
+
+
+	
 }
+
+

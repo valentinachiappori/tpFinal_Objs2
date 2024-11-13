@@ -1,6 +1,8 @@
 package ar.edu.po2.tpFinal;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import org.mockito.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import ar.edu.unq.po2.tpFinal.Evento;
 import ar.edu.unq.po2.tpFinal.Inmueble;
 import ar.edu.unq.po2.tpFinal.PeriodoConPrecio;
 import ar.edu.unq.po2.tpFinal.PoliticaDeCancelacion;
@@ -31,7 +34,7 @@ class InmuebleTest {
 	private Set<Servicio> servicios1;
 	private Servicio servicio;
 	private List<String> metodosDePago;
-	private List<PeriodoConPrecio> periodoConPrecios;
+	private List<PeriodoConPrecio> periodosConPrecios;
 	private PeriodoConPrecio periodoConPrecio;
 	private PoliticaDeCancelacion politicaDeCancelacion;
 	private Reserva reserva;
@@ -43,10 +46,11 @@ class InmuebleTest {
 	    servicio = mock(Servicio.class);
 	    periodoConPrecio = mock(PeriodoConPrecio.class);
 	    servicios1 = new HashSet<Servicio>();
+	    periodosConPrecios = new ArrayList<PeriodoConPrecio>();
 	    politicaDeCancelacion = mock(PoliticaDeCancelacion.class);
 		inmueble = new Inmueble(usuario,"casa" ,15, "Argentina", "dsd", "123", servicios1, 5
 				, LocalTime.of(10,0),LocalTime.of(2,0) , 200d, metodosDePago,
-				periodoConPrecios, politicaDeCancelacion );
+				periodosConPrecios, politicaDeCancelacion );
 		reserva = mock(Reserva.class);	
 		}
 	
@@ -76,15 +80,61 @@ class InmuebleTest {
 	}
 	
 	@Test
-	void registrarReservaEnColaPorqueEstaReservadoElInmueble() {
-		when(reserva.getFechaEntrada()).thenReturn(LocalDate.of(2024, 12, 12)); 
-		when(reserva.getFechaSalida()).thenReturn(LocalDate.of(2024, 12, 15));
-		when(inmueble.estaDisponibleEnPeriodo(reserva.getFechaEntrada(), reserva.getFechaSalida())).thenReturn(false);
-		inmueble.recibirReserva(reserva);
-		
-		assertEquals(inmueble.getReservasEnCola().size(),1);
-		assertTrue(inmueble.getReservasPendientes().isEmpty());
+	void testNoSePuedenAgregarMasDeCincoFotos() {
+		inmueble.agregarFoto("foto1");
+        inmueble.agregarFoto("foto2");
+        inmueble.agregarFoto("foto3");
+        inmueble.agregarFoto("foto4");
+        inmueble.agregarFoto("foto5");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            inmueble.agregarFoto("foto6");
+        }, "No se pueden agregar más de 5 fotos.");
 	}
 	
+	@Test
+	void testRecibirEnInmuebleUnaReservaPendiente() {
+		inmueble.recibirReserva(reserva);
+		
+		assertEquals(1,inmueble.getReservasPendientes().size());
+		assertTrue(inmueble.getReservasPendientes().contains(reserva));
+		assertTrue(inmueble.getReservasEnCola().isEmpty());
+	}
+	
+	@Test
+	void testCalcularPrecioPorDiaDeUnPeriodoEspecial() {
+		LocalDate fecha = LocalDate.of(2024, 12, 12);
+		
+		when(periodoConPrecio.incluidaEnPeriodo(fecha)).thenReturn(true); 
+	    when(periodoConPrecio.getPrecioPorDia()).thenReturn(300d);
+	    
+	    periodosConPrecios.add(periodoConPrecio);
+	    
+	    Double precioCalculado = inmueble.calcularPrecioDia(fecha);
+	    
+	    assertEquals(300d, precioCalculado, 0.01); 
+
+	    verify(periodoConPrecio).incluidaEnPeriodo(fecha);
+	    verify(periodoConPrecio).getPrecioPorDia();
+	}
+	
+	@Test
+	void testModificarPrecioBase(){
+		inmueble.modificarPrecioBase(300d);
+		
+		assertEquals(300d, inmueble.getPrecioBase());
+	}
+	
+	@Test
+	void testModificarPrecioPeriodo(){
+		
+		inmueble.getPeriodosConPrecio().add(periodoConPrecio);
+		
+		inmueble.modificarPrecioPeriodo(periodoConPrecio,300d);
+		
+		assertEquals(300d, periodoConPrecio.getPrecioPorDia());
+		
+		verify(periodoConPrecio, times(1)).setPrecioPorDia(300d);
+	}
 	
 }	
