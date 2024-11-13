@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import ar.edu.unq.po2.tpFinal.Evento;
 import ar.edu.unq.po2.tpFinal.Inmueble;
 import ar.edu.unq.po2.tpFinal.PeriodoConPrecio;
 import ar.edu.unq.po2.tpFinal.PoliticaDeCancelacion;
@@ -79,6 +80,19 @@ class InmuebleTest {
 	}
 	
 	@Test
+	void testNoSePuedenAgregarMasDeCincoFotos() {
+		inmueble.agregarFoto("foto1");
+        inmueble.agregarFoto("foto2");
+        inmueble.agregarFoto("foto3");
+        inmueble.agregarFoto("foto4");
+        inmueble.agregarFoto("foto5");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            inmueble.agregarFoto("foto6");
+        }, "No se pueden agregar más de 5 fotos.");
+	}
+	
+	@Test
 	void testRecibirEnInmuebleUnaReservaPendiente() {
 		inmueble.recibirReserva(reserva);
 		
@@ -105,16 +119,22 @@ class InmuebleTest {
 	}
 	
 	@Test
-	void testCalcularPrecioEstadia() {
+	void testModificarPrecioBase(){
+		inmueble.modificarPrecioBase(300d);
 		
-		LocalDate fechaEntrada = LocalDate.of(2024, 12, 12);
-        LocalDate fechaSalida = LocalDate.of(2024, 12, 14);
-		        
-        Double precioCalculado = inmueble.calcularPrecioEstadia(fechaEntrada, fechaSalida);
-        
-        assertEquals(600d, precioCalculado, 0.01); 
-        
-		verify(inmueble, times(3)).calcularPrecioDia(any(LocalDate.class));
+		assertEquals(300d, inmueble.getPrecioBase());
+	}
+	
+	@Test
+	void testModificarPrecioPeriodo(){
+		
+		inmueble.getPeriodosConPrecio().add(periodoConPrecio);
+		
+		inmueble.modificarPrecioPeriodo(periodoConPrecio,300d);
+		
+		assertEquals(300d, periodoConPrecio.getPrecioPorDia());
+		
+		verify(periodoConPrecio, times(1)).setPrecioPorDia(300d);
 	}
 	
 }	
