@@ -19,13 +19,17 @@ class PeriodoConPrecioTest {
 	}
 
 	@Test
-	void test() {
+	void testFechaEstaIncluidaEnPeriodo() {
 		assertTrue(unPeriodo.incluidaEnPeriodo(LocalDate.of(2024,11,25))) ;
 	}
 	
+	@Test 
+	void testGetPrecioPorDia() {
+		assertEquals(5000d, unPeriodo.getPrecioPorDia());
+	}
+	
 	@Test
-	void test2() {
-		assertFalse(unPeriodo.incluidaEnPeriodo(LocalDate.of(2024,12,25)));
-		
+	void testFechaNoEstaIncluidaEnPeriodo() {
+		assertFalse(unPeriodo.incluidaEnPeriodo(LocalDate.of(2025,2,25)));
 	}
 }

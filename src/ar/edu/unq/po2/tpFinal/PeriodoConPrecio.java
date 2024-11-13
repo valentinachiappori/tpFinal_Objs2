@@ -33,7 +33,8 @@ public class PeriodoConPrecio {
 	}
 
 	public boolean incluidaEnPeriodo(LocalDate fecha) {
-		return fecha.isBefore(getFechaFin()) || fecha.isAfter(getFechaInicio()) || fecha.isEqual(getFechaFin()) || fecha.isEqual(getFechaInicio());
+		return (fecha.isEqual(getFechaInicio()) || fecha.isAfter(getFechaInicio())) 
+		           && (fecha.isEqual(getFechaFin()) || fecha.isBefore(getFechaFin()));
 	}
 
 }
