@@ -24,33 +24,30 @@ import ar.edu.unq.po2.tpFinal.PoliticaDeCancelacion;
 import ar.edu.unq.po2.tpFinal.Reserva;
 import ar.edu.unq.po2.tpFinal.Servicio;
 import ar.edu.unq.po2.tpFinal.Usuario;
-
+import ar.edu.unq.po2.tpFinal.Interesado;
 
 class InmuebleTest {
 
-	
 	private Inmueble inmueble;
 	private Usuario usuario;
-	private Set<Servicio> servicios1;
-	private Servicio servicio;
+	private Set<Servicio> servicios;
 	private List<String> metodosDePago;
 	private List<PeriodoConPrecio> periodosConPrecios;
 	private PeriodoConPrecio periodoConPrecio;
 	private PoliticaDeCancelacion politicaDeCancelacion;
 	private Reserva reserva;
-	private List<Reserva> reservas;
+	private Interesado interesado;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 	    usuario = mock(Usuario.class);
-	    servicio = mock(Servicio.class);
+	    interesado = mock(Interesado.class);
 	    periodoConPrecio = mock(PeriodoConPrecio.class);
-	    servicios1 = new HashSet<Servicio>();
+	    servicios = new HashSet<Servicio>();
 	    periodosConPrecios = new ArrayList<PeriodoConPrecio>();
 	    politicaDeCancelacion = mock(PoliticaDeCancelacion.class);
-		inmueble = new Inmueble(usuario,"casa" ,15, "Argentina", "dsd", "123", servicios1, 5
-				, LocalTime.of(10,0),LocalTime.of(2,0) , 200d, metodosDePago,
-				periodosConPrecios, politicaDeCancelacion );
+		inmueble = new Inmueble(usuario,"casa" ,15, "Argentina", "dsd", "123", servicios, 
+					5, LocalTime.of(10,0),LocalTime.of(2,0) , 200d, metodosDePago, periodosConPrecios, politicaDeCancelacion );
 		reserva = mock(Reserva.class);	
 		}
 	
@@ -88,8 +85,7 @@ class InmuebleTest {
         inmueble.agregarFoto("foto5");
 
         assertThrows(IllegalArgumentException.class, () -> {
-            inmueble.agregarFoto("foto6");
-        }, "No se pueden agregar más de 5 fotos.");
+            inmueble.agregarFoto("foto6"); }, "No se pueden agregar más de 5 fotos.");
 	}
 	
 	@Test
@@ -128,13 +124,65 @@ class InmuebleTest {
 	@Test
 	void testModificarPrecioPeriodo(){
 		
-		inmueble.getPeriodosConPrecio().add(periodoConPrecio);
-		
-		inmueble.modificarPrecioPeriodo(periodoConPrecio,300d);
-		
+		inmueble.getPeriodosPublicados().add(periodoConPrecio); 
+
+	    inmueble.modificarPrecioPeriodo(periodoConPrecio, 300d);
+
+	    when(periodoConPrecio.getPrecioPorDia()).thenReturn(300d);
+
 		assertEquals(300d, periodoConPrecio.getPrecioPorDia());
 		
 		verify(periodoConPrecio, times(1)).setPrecioPorDia(300d);
 	}
+	
+	@Test
+	void testRegistrarReserva() {
+		inmueble.recibirReserva(reserva);
+		inmueble.registrarReserva(reserva);
+		
+		assertEquals(1,inmueble.getReservasConfirmadas().size());
+		assertTrue(inmueble.getReservasConfirmadas().contains(reserva));
+		assertTrue(inmueble.getReservasEnCola().isEmpty());
+		assertTrue(inmueble.getReservasPendientes().isEmpty());
+	}
+	
+	@Test 
+	void testEliminarReserva() {
+		inmueble.recibirReserva(reserva);
+		inmueble.registrarReserva(reserva);
+		inmueble.eliminarReserva(reserva);
+		
+		assertEquals(0,inmueble.getReservasConfirmadas().size());
+		assertTrue(inmueble.getReservasEnCola().isEmpty());
+		assertTrue(inmueble.getReservasPendientes().isEmpty());
+	}
+
+	@Test
+	void testSubscribirUnInteresado() {
+		inmueble.subscribir(Evento.BAJAPRECIO, interesado);
+		
+		assertTrue(inmueble.getInteresados().get(Evento.BAJAPRECIO).contains(interesado));
+	    assertEquals(1, inmueble.getInteresados().get(Evento.BAJAPRECIO).size());
+	}
+	
+	@Test
+	void testDesubscribirUnInteresado() {
+		inmueble.subscribir(Evento.BAJAPRECIO, interesado);
+		assertTrue(inmueble.getInteresados().get(Evento.BAJAPRECIO).contains(interesado));
+		
+		inmueble.desubscribir(Evento.BAJAPRECIO, interesado);
+
+		assertFalse(inmueble.getInteresados().get(Evento.BAJAPRECIO).contains(interesado));
+	    assertEquals(0, inmueble.getInteresados().get(Evento.BAJAPRECIO).size());
+	}
+	
+	@Test
+	void testNotificar() {
+		inmueble.subscribir(Evento.BAJAPRECIO, interesado);
+		inmueble.modificarPrecioBase(100d);
+		
+		verify(interesado, times(1)).update(Evento.BAJAPRECIO, inmueble);
+	}
+	
 	
 }	
