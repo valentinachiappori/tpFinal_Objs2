@@ -136,4 +136,61 @@ class SitioWebTest {
 		verify(ranking, times(1)).agregarPuntaje("Limpieza", Puntaje.TRES);
 	}
 	
+	@Test
+	void registrarComentarioInmueble() {
+		when(reserva.getEstadoReserva()).thenReturn("Finalizada");
+		when(reserva.getInmueble()).thenReturn(inmueble);
+		
+		sitio.registrarComentarioInmueble(reserva, "buenisimo");
+		
+		verify(inmueble, times(1)).agregarComentario("buenisimo");
+	}
+	
+	@Test
+	void registrarComentarioInquilino() {
+		when(reserva.getEstadoReserva()).thenReturn("Finalizada");
+		when(reserva.getInquilino()).thenReturn(usuario);
+		
+		sitio.registrarComentarioInquilino(reserva, "buenisimo");
+		
+		verify(usuario, times(1)).agregarComentario("buenisimo");
+	}
+	
+	@Test
+	void testReservar() {
+		when(reserva.getInmueble()).thenReturn(inmueble);
+		when(reserva.getPropietario()).thenReturn(usuario);
+		when(reserva.getInquilino()).thenReturn(usuario);
+		
+		sitio.reservar(reserva);
+		
+		verify(inmueble,times(1)).recibirReserva(reserva);
+		verify(usuario, times(1)).visualizarInquilino(usuario);
+	}
+	
+	@Test
+	void testConsolidarReserva() {
+		when(reserva.getInmueble()).thenReturn(inmueble);  
+	    when(reserva.getInquilino()).thenReturn(usuario);  
+	    
+	    sitio.consolidarReserva(reserva);
+	    
+	    verify(reserva, times(1)).cambiarEstadoAAceptada();  
+	    verify(inmueble, times(1)).registrarReserva(reserva); 
+	    verify(usuario, times(1)).registrarReserva(reserva); 
+	    verify(inmueble, times(1)).notificar(Evento.RESERVA, inmueble);
+	}
+	
+	@Test
+	void testEnviarMailConfirmacion() {
+		when(reserva.getInquilino()).thenReturn(usuario);
+		when(usuario.getCorreoElectronico()).thenReturn("email");
+		when(reserva.toString()).thenReturn("Detalles de la reserva");
+		
+		sitio.enviarMailConfirmacion(reserva);
+
+		verify(mails,times(1)).sendMail("email", "Reserva confirmada", "Tu reservaDetalles de la reservaha sido confirmada por su propietario");
+	}
+	
+	
 }
