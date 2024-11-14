@@ -232,7 +232,7 @@ public class SitioWeb {
 		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
 		.filter(i -> cantHuespedes == null || i.getCapacidad() >= cantHuespedes)
 		.filter(i -> precioMin == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) >= precioMin)
-		.filter(i -> precioMax == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) <= cantHuespedes)
+		.filter(i -> precioMax == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) <= precioMax)
 		.toList();
 		return inmueblesFiltrados;
 	}

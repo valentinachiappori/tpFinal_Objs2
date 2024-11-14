@@ -359,12 +359,12 @@ class SitioWebTest {
 	 @Test
 	 void testEnviarMailConReserva() {
 		 Usuario inquilino = mock(Usuario.class);
-		 	when(reserva.getInquilino()).thenReturn(inquilino);
-	        when(inquilino.getCorreoElectronico()).thenReturn("inquilino@gmail.com");
-	        when(reserva.toString()).thenReturn("Detalles de la reserva");
+		 when(reserva.getInquilino()).thenReturn(inquilino);
+	     when(inquilino.getCorreoElectronico()).thenReturn("inquilino@gmail.com");
+	     when(reserva.toString()).thenReturn("Detalles de la reserva");
 	        
-	        sitio.enviarMailConReserva(reserva);
-	        verify(mails).sendMail("inquilino@gmail.com", "Reserva", "Detalles de la reserva");
+	     sitio.enviarMailConReserva(reserva);
+	     verify(mails).sendMail("inquilino@gmail.com", "Reserva", "Detalles de la reserva");
 	 }
 	 
 	 @Test
@@ -382,8 +382,7 @@ class SitioWebTest {
     @Test
     void testSetUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
-        Usuario usuarioMock = mock(Usuario.class);
-        usuarios.add(usuarioMock);
+        usuarios.add(usuario);
 
         sitio.setUsuarios(usuarios);
 
@@ -393,8 +392,7 @@ class SitioWebTest {
     @Test
     void testSetInmuebles() {
         List<Inmueble> inmuebles = new ArrayList<>();
-        Inmueble inmuebleMock = mock(Inmueble.class);
-        inmuebles.add(inmuebleMock);
+        inmuebles.add(inmueble);
 
         sitio.setInmuebles(inmuebles);
 
@@ -430,8 +428,8 @@ class SitioWebTest {
 	     assertEquals(nuevoMailSender, sitio.getMailSender());
 	    }
 
-	  @Test
-	  void testGetCategoriasPorEntidad() {
+	 @Test
+	 void testGetCategoriasPorEntidad() {
 		  Map<String, Set<String>> categorias = new HashMap<>();
 	      Set<String> categoriasPropietario = new HashSet<>(Arrays.asList("Responsable", "Confiable"));
 	      categorias.put("Propietario", categoriasPropietario);
@@ -440,6 +438,56 @@ class SitioWebTest {
 	      Set<String> result = sitio.getCategoriasPorEntidad("Propietario");
 
 	      assertEquals(categoriasPropietario, result);
-	    }
+	 }
 	 
+	 @Test
+	 void testFiltrarInmueblesConTodosLosParametros() {
+
+		  when(inmueble.getCiudad()).thenReturn("Ciudad");
+	      when(inmueble.estaDisponibleEnPeriodo(any(), any())).thenReturn(true);
+	      when(inmueble.getCapacidad()).thenReturn(4);
+	      when(inmueble.calcularPrecioEstadia(any(), any())).thenReturn(500.0);
+	      
+	      sitio.getInmuebles().add(inmueble);
+	      
+	      LocalDate fechaEntrada = LocalDate.now().plusDays(1);
+	      LocalDate fechaSalida = LocalDate.now().plusDays(3);
+
+	      List<Inmueble> resultado = sitio.filtrarInmuebles("Ciudad", fechaEntrada, fechaSalida, 3, 300.0, 600.0);
+	        
+	      assertEquals(1, resultado.size());
+	      assertTrue(resultado.contains(inmueble));
+	}
+	 
+	 @Test
+	 void testFiltrarInmueblesConParametrosObligatoriosNulos() {
+	        
+	      assertThrows(IllegalArgumentException.class, () -> {
+	            sitio.filtrarInmuebles(null, LocalDate.now(), LocalDate.now().plusDays(1), null, null, null);
+	      });
+	        
+	      assertThrows(IllegalArgumentException.class, () -> {
+	            sitio.filtrarInmuebles("Ciudad", null, LocalDate.now().plusDays(1), null, null, null);
+	      });
+	        
+	      assertThrows(IllegalArgumentException.class, () -> {
+	            sitio.filtrarInmuebles("Ciudad", LocalDate.now(), null, null, null, null);
+	      });
+	 }
+	 
+	 @Test
+	 void testFiltrarInmueblesConParametrosOpcionalesNulos() {
+	     when(inmueble.getCiudad()).thenReturn("Ciudad");
+	     when(inmueble.estaDisponibleEnPeriodo(any(), any())).thenReturn(true);
+	     
+	     sitio.getInmuebles().add(inmueble);
+
+	     LocalDate fechaEntrada = LocalDate.now().plusDays(1);
+	     LocalDate fechaSalida = LocalDate.now().plusDays(3);
+
+	     List<Inmueble> resultado = sitio.filtrarInmuebles("Ciudad", fechaEntrada, fechaSalida, null, null, null);
+	        
+	     assertEquals(1, resultado.size());
+	     assertTrue(resultado.contains(inmueble));
+	 }
 }

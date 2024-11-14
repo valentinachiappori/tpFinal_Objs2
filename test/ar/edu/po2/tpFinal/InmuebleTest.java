@@ -186,16 +186,13 @@ class InmuebleTest {
 	}
 	
 	@Test
-	void testCalcularPrecioEstadia() {
-		PeriodoConPrecio periodo1 = mock(PeriodoConPrecio.class);
-		PeriodoConPrecio periodo2 = mock(PeriodoConPrecio.class);
+	void testCalcularPrecioEstadia() {	    
+	    when(periodoConPrecio.getPrecioPorDia()).thenReturn(100.0);
+	    when(periodoConPrecio.getFechaInicio()).thenReturn(LocalDate.of(2024, 11, 20));
+	    when(periodoConPrecio.getFechaFin()).thenReturn(LocalDate.of(2024, 11, 21));
+	    
+	    Double precioCalculado = inmueble.calcularPrecioEstadia(LocalDate.of(2024, 11, 20), LocalDate.of(2024, 11, 21));
 
-        inmueble = new Inmueble(
-                null, "Departamento", 50, "Argentina", "Buenos Aires", "Av. Siempre Viva 123",
-                null, 4, null, null, 100.0, null, Arrays.asList(periodo1, periodo2), null);
-        
-        
-        
+	    assertEquals(100.0 * 2, precioCalculado);
 	}
-	
 }	
