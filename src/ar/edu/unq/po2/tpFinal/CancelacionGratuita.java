@@ -2,7 +2,7 @@ package ar.edu.unq.po2.tpFinal;
 
 import java.time.LocalDate;
 
-public class Gratuita implements PoliticaDeCancelacion{
+public class CancelacionGratuita implements PoliticaDeCancelacion{
 
 	public void ejecutar(Reserva reserva) {
 		 LocalDate fechaLimiteCancelacion = reserva.getFechaEntrada().minusDays(10);

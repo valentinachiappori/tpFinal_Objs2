@@ -11,22 +11,22 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.po2.tpFinal.Gratuita;
+import ar.edu.unq.po2.tpFinal.CancelacionGratuita;
 import ar.edu.unq.po2.tpFinal.Inmueble;
 import ar.edu.unq.po2.tpFinal.Reserva;
 
-public class GratuitaTest {
+public class CancelacionGratuitaTest {
 
     private Reserva reservaMock;
     private Inmueble inmuebleMock;
-    private Gratuita politicaCancelacion;
+    private CancelacionGratuita politicaCancelacion;
     private ByteArrayOutputStream outputStream;
 
     @BeforeEach
     public void setUp() {
         reservaMock = mock(Reserva.class);
         inmuebleMock = mock(Inmueble.class);
-        politicaCancelacion = new Gratuita();
+        politicaCancelacion = new CancelacionGratuita();
         
         // Capturar la salida de System.out
         outputStream = new ByteArrayOutputStream();

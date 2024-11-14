@@ -2,7 +2,7 @@ package ar.edu.unq.po2.tpFinal;
 
 import java.time.LocalDate;
 
-public class Intermedia implements PoliticaDeCancelacion{
+public class CancelacionIntermedia implements PoliticaDeCancelacion{
 
 	public void ejecutar(Reserva reserva) {
 		 LocalDate fecha19DiasAntes = reserva.getFechaEntrada().minusDays(19);

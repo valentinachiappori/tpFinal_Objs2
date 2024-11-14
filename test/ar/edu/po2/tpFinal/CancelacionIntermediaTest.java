@@ -11,19 +11,19 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.po2.tpFinal.Intermedia;
+import ar.edu.unq.po2.tpFinal.CancelacionIntermedia;
 import ar.edu.unq.po2.tpFinal.Reserva;
 
-public class IntermediaTest {
+public class CancelacionIntermediaTest {
 
     private Reserva reservaMock;
-    private Intermedia politicaCancelacion;
+    private CancelacionIntermedia politicaCancelacion;
     private ByteArrayOutputStream outputStream;
 
     @BeforeEach
     public void setUp() {
         reservaMock = mock(Reserva.class);
-        politicaCancelacion = new Intermedia();
+        politicaCancelacion = new CancelacionIntermedia();
         
         // Capturar la salida de System.out
         outputStream = new ByteArrayOutputStream();
