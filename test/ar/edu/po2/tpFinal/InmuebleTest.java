@@ -22,6 +22,7 @@ import ar.edu.unq.po2.tpFinal.Evento;
 import ar.edu.unq.po2.tpFinal.Inmueble;
 import ar.edu.unq.po2.tpFinal.PeriodoConPrecio;
 import ar.edu.unq.po2.tpFinal.PoliticaDeCancelacion;
+import ar.edu.unq.po2.tpFinal.Ranking;
 import ar.edu.unq.po2.tpFinal.Reserva;
 import ar.edu.unq.po2.tpFinal.Servicio;
 import ar.edu.unq.po2.tpFinal.Usuario;
@@ -47,11 +48,97 @@ class InmuebleTest {
 	    servicios = new HashSet<Servicio>();
 	    periodosConPrecios = new ArrayList<PeriodoConPrecio>();
 	    politicaDeCancelacion = mock(PoliticaDeCancelacion.class);
-		inmueble = new Inmueble(usuario,"casa" ,15, "Argentina", "dsd", "123", servicios, 
-					5, LocalTime.of(10,0),LocalTime.of(2,0) , 200d, metodosDePago, periodosConPrecios, politicaDeCancelacion );
+		inmueble = new Inmueble(usuario,"casa" ,15, "Argentina", "ciudad", "123", servicios, 
+					5, LocalTime.of(10,0),LocalTime.of(14,0) , 200d, metodosDePago, periodosConPrecios, politicaDeCancelacion );
 		reserva = mock(Reserva.class);	
 		}
 	
+	@Test
+    void testSetComentarios() {
+        List<String> comentarios = Arrays.asList("Buena ubicación", "Limpio y cómodo");
+
+        inmueble.setComentarios(comentarios);
+
+        assertEquals(comentarios, inmueble.getComentarios());
+    }
+
+    @Test
+    void testSetRankingInmueble() {
+        Ranking ranking = mock(Ranking.class); 
+
+        inmueble.setRankingInmueble(ranking);
+
+        assertNotNull(inmueble.getRankingInmueble());
+        assertEquals(ranking, inmueble.getRankingInmueble());
+    }
+    
+    @Test
+    public void testGetPropietario() {
+        assertNotNull(inmueble.getPropietario());
+        assertEquals(usuario, inmueble.getPropietario());
+    }
+
+    @Test
+    void testGetTipoInmueble() {
+        assertEquals("casa", inmueble.getTipoInmueble());
+    }
+
+    @Test
+    void testGetCiudad() {
+        assertEquals("ciudad", inmueble.getCiudad());
+    }
+
+    @Test
+    void testGetCapacidad() {
+        assertEquals(5, inmueble.getCapacidad());
+    }
+
+    @Test
+    void testGetSuperficie() {
+    	assertEquals(15, inmueble.getSuperficie());
+    }
+
+    @Test
+    void testGetPais() {
+    	assertEquals("Argentina", inmueble.getPais());
+    }
+
+    @Test
+    void testGetDireccion() {
+    	assertEquals("123", inmueble.getDireccion());    
+    }
+    
+    @Test
+    void testGetServicios() {
+    	assertEquals(servicios, inmueble.getServicios());    
+    }
+    
+    @Test
+    void testGetCheckIn() {
+    	assertEquals(LocalTime.of(10,0), inmueble.getCheckIn());    
+    }
+    
+    @Test
+    void testGetCheckOut() {
+    	assertEquals(LocalTime.of(14,0), inmueble.getCheckOut());    
+    }
+    
+    @Test
+    void testMetodosDePago() {
+    	assertEquals(metodosDePago, inmueble.getMetodosDePago());    
+    }
+    
+    @Test
+    void testAgregarComentario() {
+    	String comentario = "Muy buen lugar, limpio y cómodo.";
+    	
+    	inmueble.agregarComentario(comentario);
+    	List<String> comentarios = inmueble.getComentarios();
+    	
+    	assertEquals(1, comentarios.size());
+    	assertTrue(comentarios.contains(comentario));
+    }
+    
 	@Test
 	void testInmuebleDisponibleEnPeriodo() {
 		inmueble.getReservasConfirmadas().add(reserva);

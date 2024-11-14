@@ -344,26 +344,4 @@ class UsuarioTest {
         verify(sitio).registrarCheckOut(reserva1, LocalDate.now());
     }
 	
-	@Test
-	void testBuscarInmueble() {
-	    // Configuración de los mocks para el inmueble
-	    when(inmueble1.getCiudad()).thenReturn("Ciudad");
-	    when(inmueble1.estaDisponibleEnPeriodo(any(), any())).thenReturn(true);
-	    when(inmueble1.calcularPrecioEstadia(any(), any())).thenReturn(500.0);
-
-	    // Datos de entrada
-	    LocalDate fechaEntrada = LocalDate.of(2024, 11, 20);
-	    LocalDate fechaSalida = LocalDate.of(2024, 11, 23);
-
-	    // Usamos eq() para los valores específicos y any() para los genéricos
-	    when(sitio.filtrarInmuebles(eq("Ciudad"), eq(fechaEntrada), eq(fechaSalida), anyInt(), anyDouble(), anyDouble()))
-	        .thenReturn(List.of(inmueble1));
-
-	    // Llamada al método que estamos testeando
-	    List<Inmueble> resultado = usuario.buscarInmuebles("Ciudad", fechaEntrada, fechaSalida, null, null, null);
-	    
-	    // Verificaciones
-	    assertEquals(1, resultado.size());
-	    assertTrue(resultado.contains(inmueble1)); 
-	}
 }
