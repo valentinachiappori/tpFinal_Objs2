@@ -28,39 +28,31 @@ public class CancelacionGratuitaTest {
         inmuebleMock = mock(Inmueble.class);
         politicaCancelacion = new CancelacionGratuita();
         
-        // Capturar la salida de System.out
         outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
     }
 
     @Test
     public void testCancelacionGratuitaAntesDeFechaLimite() {
-        // Configurar fecha de entrada y límite de cancelación
         LocalDate fechaEntrada = LocalDate.now().plusDays(15);
         when(reservaMock.getFechaEntrada()).thenReturn(fechaEntrada);
 
-        // Ejecutar el método
         politicaCancelacion.ejecutar(reservaMock);
 
-        // Verificar la salida
         String output = outputStream.toString().trim();
         assertEquals("Cancelación gratuita.", output);
     }
 
     @Test
     public void testCancelacionConCargoDespuesDeFechaLimite() {
-        // Configurar fecha de entrada y límite de cancelación
         LocalDate fechaEntrada = LocalDate.now().plusDays(5);
         when(reservaMock.getFechaEntrada()).thenReturn(fechaEntrada);
 
-        // Configurar el inmueble y el cargo calculado
         when(reservaMock.getInmueble()).thenReturn(inmuebleMock);
         when(inmuebleMock.calcularPrecioDia(fechaEntrada)).thenReturn(100.0);
 
-        // Ejecutar el método
         politicaCancelacion.ejecutar(reservaMock);
 
-        // Verificar la salida
         String output = outputStream.toString().trim();
         assertEquals("Cancelación con cargo. Cargo aplicado: $200.0", output);
     }
