@@ -153,7 +153,6 @@ public class SitioWeb {
 	
 	public void reservar(Reserva reserva) {
 		reserva.getInmueble().recibirReserva(reserva);
-		reserva.getPropietario().visualizarInquilino(reserva.getInquilino());
 	}
 	
 	public void consolidarReserva(Reserva reserva) {

@@ -170,7 +170,6 @@ class SitioWebTest {
 		sitio.reservar(reserva);
 		
 		verify(inmueble,times(1)).recibirReserva(reserva);
-		verify(usuario, times(1)).visualizarInquilino(usuario);
 	}
 	
 	@Test

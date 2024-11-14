@@ -120,10 +120,8 @@ class UsuarioTest {
         verify(sitio, times(1)).rankearInmueble(reserva1, "Limpieza", Puntaje.CINCO);
     }
 	
-	@Test //arreglar
+	@Test
 	void testReservar() {
-		when(reserva1.getPropietario()).thenReturn(usuario);
-
 		usuario.reservar(inmueble1, "Transferencia", LocalDate.of(2024, 11, 15), LocalDate.of(2024, 11, 20));
 		verify(sitio, times(1)).reservar(any(Reserva.class));
 	}
