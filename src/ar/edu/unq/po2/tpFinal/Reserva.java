@@ -3,10 +3,10 @@ package ar.edu.unq.po2.tpFinal;
 import java.time.LocalDate;
 
 public class Reserva {
-	private LocalDate fechaEntrada;
-	private LocalDate fechaSalida;
-	private Inmueble inmueble;
-	private Usuario inquilino;
+	private final LocalDate fechaEntrada;
+	private final LocalDate fechaSalida;
+	private final Inmueble inmueble;
+	private final Usuario inquilino;
 	private String estadoReserva; 
 	
 	public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, Inmueble inmueble, Usuario inquilino) {
@@ -38,12 +38,20 @@ public class Reserva {
 	}
 
 	public void cambiarEstadoAAceptada() {
-		this.setEstadoReserva("Aceptada");
-	}
+        if ("Pendiente".equals(this.estadoReserva)) {
+            this.estadoReserva = "Aceptada";
+        } else {
+            throw new IllegalStateException("No se puede cambiar el estado a Aceptada si no está en Pendiente.");
+        }
+    }
 
 	public void cambiarEstadoAFinalizada() {
-		this.setEstadoReserva("Finalizada");
-	}
+        if ("Aceptada".equals(this.estadoReserva)) {
+            this.estadoReserva = "Finalizada";
+        } else {
+            throw new IllegalStateException("No se puede cambiar el estado a Finalizada si no está en Aceptada.");
+        }
+    }
 
 	public String getEstadoReserva() {
 		return estadoReserva;

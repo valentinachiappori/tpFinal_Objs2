@@ -122,21 +122,25 @@ public class SitioWeb {
 	}
 	
 	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje) {
-		if (reserva.getEstadoReserva().equals("Finalizada") && this.categoriasPorEntidad.get("Propietario").contains(categoria)) {
+		if (esReservaFinalizada(reserva) && this.categoriasPorEntidad.get("Propietario").contains(categoria)) {
 		 reserva.getPropietario().getRankingPropietario().agregarPuntaje(categoria, puntaje);
 		}
 	}
 	
 	public void rankearInquilino(Reserva reserva, String categoria, Puntaje puntaje) {
-		if (reserva.getEstadoReserva().equals("Finalizada") && this.categoriasPorEntidad.get("Inquilino").contains(categoria)) {
+		if (esReservaFinalizada(reserva) && this.categoriasPorEntidad.get("Inquilino").contains(categoria)) {
 		 reserva.getInquilino().getRankingInquilino().agregarPuntaje(categoria, puntaje);
 		}
 	}
 	
 	public void rankearInmueble(Reserva reserva, String categoria, Puntaje puntaje) {
-		if (reserva.getEstadoReserva().equals("Finalizada") && this.categoriasPorEntidad.get("Inmueble").contains(categoria)) {
+		if (esReservaFinalizada(reserva) && this.categoriasPorEntidad.get("Inmueble").contains(categoria)) {
 		 reserva.getInmueble().getRankingInmueble().agregarPuntaje(categoria, puntaje);
 		}
+	}
+	
+	private boolean esReservaFinalizada(Reserva reserva) {
+	    return "Finalizada".equals(reserva.getEstadoReserva());
 	}
 	
 	public void registrarComentarioInmueble(Reserva reserva, String comentario) {
