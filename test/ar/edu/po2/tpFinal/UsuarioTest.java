@@ -177,4 +177,5 @@ class UsuarioTest {
 	    assertTrue(reservasEnBuenosAires.contains(reserva1));
 	    assertFalse(reservasEnBuenosAires.contains(reserva2));
 	}
+	
 }
