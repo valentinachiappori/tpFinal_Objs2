@@ -22,6 +22,8 @@ public class EventoTest {
 
     private Inmueble inmuebleMock;
     private Evento evento;
+    private String mensajeEsperado;
+    private String mensajeAplicado;
 
     @BeforeEach
     public void setUp() {
@@ -36,8 +38,8 @@ public class EventoTest {
         when(inmuebleMock.getTipoInmueble()).thenReturn("Apartamento");
         when(inmuebleMock.calcularPrecioDia(LocalDate.now())).thenReturn(100.0);
         // Aplicar el mensaje para el evento CANCELACION
-        String mensajeEsperado = "un inmueble Apartamento a tan sólo $100.0";
-        String mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
+        mensajeEsperado = "un inmueble Apartamento a tan sólo $100.0";
+        mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
 
         // Verificar que el mensaje aplicado sea el esperado
         assertEquals(mensajeEsperado, mensajeAplicado);
@@ -51,8 +53,8 @@ public class EventoTest {
         
         evento = Evento.BAJAPRECIO;
         // Aplicar el mensaje para el evento BAJAPRECIO
-        String mensajeEsperado = "El/la Apartamento que te interesa se ha liberado! Corre a reservarlo!";
-        String mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
+        mensajeEsperado = "El/la Apartamento que te interesa se ha liberado! Corre a reservarlo!";
+        mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
 
         // Verificar que el mensaje aplicado sea el esperado
         assertEquals(mensajeEsperado, mensajeAplicado);
@@ -66,8 +68,8 @@ public class EventoTest {
         
         evento = Evento.RESERVA;
         // Aplicar el mensaje para el evento RESERVA
-        String mensajeEsperado = "un inmueble Apartamento el inmueble fue reservado";
-        String mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
+        mensajeEsperado = "un inmueble Apartamento el inmueble fue reservado";
+        mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
 
         // Verificar que el mensaje aplicado sea el esperado
         assertEquals(mensajeEsperado, mensajeAplicado);

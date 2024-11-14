@@ -28,12 +28,20 @@ class FiltroCompuestoTest {
     private FiltroCiudad filtroCiudadMock;
     private FiltroFechas filtroFechasMock;
     private FiltroCompuesto filtroCompuesto;
+    private Inmueble inmuebleMock;
+    private FiltroSimple filtroCapacidadMock;
+    private FiltroSimple filtroPrecioMinMock;
     
-
     @BeforeEach
     public void setUp() {
 
-        filtroCompuesto = new FiltroCompuesto("Buenos Aires", LocalDate.now(), LocalDate.now().plusDays(5));
+        filtroCompuesto = new FiltroCompuesto("Buenos Aires", LocalDate.now(), LocalDate.now().plusDays(5)); 
+        inmuebleMock = mock(Inmueble.class);
+        filtroCiudadMock = mock(FiltroCiudad.class);
+        filtroFechasMock = mock(FiltroFechas.class);
+        filtroCapacidadMock = mock(FiltroCapacidad.class);
+        filtroPrecioMinMock = mock(FiltroPrecioMin.class);
+
     }
     
     @Test
@@ -53,16 +61,11 @@ class FiltroCompuestoTest {
         	new FiltroCompuesto("Buenos Aires", LocalDate.now(), null);
         });
 
-        // Verifica que el mensaje de la excepción es el esperado
         assertEquals("Uno de los FiltrosObligatorios tiene un valorNull", exception.getMessage());
     }
     
     @Test
     public void cumple_conTodosLosFiltrosQueCumplen_devuelveTrue() {
-        Inmueble inmuebleMock = mock(Inmueble.class);
-        FiltroCiudad filtroCiudadMock = mock(FiltroCiudad.class);
-        FiltroFechas filtroFechasMock = mock(FiltroFechas.class);
-        FiltroSimple filtroCapacidadMock = mock(FiltroCapacidad.class);
 
         when(filtroCiudadMock.cumple(inmuebleMock)).thenReturn(true);
         when(filtroFechasMock.cumple(inmuebleMock)).thenReturn(true);
@@ -71,8 +74,6 @@ class FiltroCompuestoTest {
         when(filtroFechasMock.esFiltroValido()).thenReturn(true);
         when(filtroCapacidadMock.esFiltroValido()).thenReturn(true);        
         when(inmuebleMock.getCiudad()).thenReturn("Buenos Aires");
-
-        FiltroCompuesto filtroCompuesto = new FiltroCompuesto("Buenos Aires", LocalDate.now(), LocalDate.now().plusDays(5));
 
         filtroCompuesto.agregarFiltro(filtroCapacidadMock);
 
@@ -84,10 +85,7 @@ class FiltroCompuestoTest {
 
     @Test
     public void cumple_conAlgunFiltroQueNoCumple_devuelveFalse() {
-        Inmueble inmuebleMock = mock(Inmueble.class);
-        FiltroCiudad filtroCiudadMock = mock(FiltroCiudad.class);
-        FiltroFechas filtroFechasMock = mock(FiltroFechas.class);
-        FiltroSimple filtroCapacidadMock = mock(FiltroCapacidad.class);
+
 
         when(filtroCiudadMock.cumple(inmuebleMock)).thenReturn(false);
         when(filtroFechasMock.cumple(inmuebleMock)).thenReturn(true);
@@ -109,10 +107,6 @@ class FiltroCompuestoTest {
     
     @Test
     public void agregoUnFiltroQueNecesitaFechasYCumple() {
-        Inmueble inmuebleMock = mock(Inmueble.class);
-        FiltroCiudad filtroCiudadMock = mock(FiltroCiudad.class);
-        FiltroFechas filtroFechasMock = mock(FiltroFechas.class);
-        FiltroSimple filtroPrecioMinMock = mock(FiltroPrecioMin.class);
 
         when(filtroCiudadMock.cumple(inmuebleMock)).thenReturn(false);
         when(filtroFechasMock.cumple(inmuebleMock)).thenReturn(true);
@@ -136,10 +130,6 @@ class FiltroCompuestoTest {
  
     @Test
     public void agregoUnFiltroPeroNoEsValido() {
-        Inmueble inmuebleMock = mock(Inmueble.class);
-        FiltroCiudad filtroCiudadMock = mock(FiltroCiudad.class);
-        FiltroFechas filtroFechasMock = mock(FiltroFechas.class);
-        FiltroSimple filtroPrecioMinMock = mock(FiltroPrecioMin.class);
 
         when(filtroCiudadMock.cumple(inmuebleMock)).thenReturn(false);
         when(filtroFechasMock.cumple(inmuebleMock)).thenReturn(true);
@@ -148,10 +138,8 @@ class FiltroCompuestoTest {
         when(filtroPrecioMinMock.esFiltroValido()).thenReturn(false);
         
         when(filtroPrecioMinMock.precisaFecha()).thenReturn(true);
-        when(inmuebleMock.getCiudad()).thenReturn("Buenos Aires");
         when(filtroPrecioMinMock.getFechaInicio()).thenReturn(LocalDate.now());
         when(filtroPrecioMinMock.getFechaFin()).thenReturn(LocalDate.now().plusDays(5));
-        FiltroCompuesto filtroCompuesto = new FiltroCompuesto("Buenos Aires", LocalDate.now(), LocalDate.now().plusDays(5));
 
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -177,7 +165,6 @@ class FiltroCompuestoTest {
         FiltroCompuesto filtroCompuesto = new FiltroCompuesto("Buenos Aires", LocalDate.now(), LocalDate.now().plusDays(5));
 
         List<Filtro> filtros = new ArrayList<>();
-        FiltroSimple filtroCapacidadMock = mock(FiltroCapacidad.class);
         filtros.add(filtroCapacidadMock);
 
         filtroCompuesto.setFiltros(filtros);
@@ -189,7 +176,6 @@ class FiltroCompuestoTest {
     public void testGetFechaFin() {
         LocalDate fechaInicio = LocalDate.now();
         LocalDate fechaFin = fechaInicio.plusDays(5);
-        FiltroCompuesto filtroCompuesto = new FiltroCompuesto("Buenos Aires", fechaInicio, fechaFin);
 
         assertEquals(fechaFin, filtroCompuesto.getFechaFin());
     }
