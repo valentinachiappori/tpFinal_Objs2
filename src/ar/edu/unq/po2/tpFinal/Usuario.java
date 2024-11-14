@@ -95,8 +95,8 @@ public class Usuario implements Inquilino, Propietario{
         inmuebles.add(i);
     }
 	
-	public List<Inmueble> buscarInmuebles(FiltroCompuesto filtro) {
-		return getSitioWeb().filtrarInmuebles(filtro);
+	public List<Inmueble> buscarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, Integer cantHuespedes, Double precioMin, Double precioMax) {
+		return getSitioWeb().filtrarInmuebles(ciudad, fechaEntrada, fechaSalida, cantHuespedes, precioMin, precioMax);
 	}
 	
 	public void rankearPropietario(Reserva reserva, String categoria, Puntaje puntaje) {

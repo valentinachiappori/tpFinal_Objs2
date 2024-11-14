@@ -2,7 +2,6 @@ package ar.edu.po2.tpFinal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import org.mockito.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,7 +19,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.po2.tpFinal.Evento;
-import ar.edu.unq.po2.tpFinal.FiltroCompuesto;
 import ar.edu.unq.po2.tpFinal.Inmueble;
 import ar.edu.unq.po2.tpFinal.MailSender;
 import ar.edu.unq.po2.tpFinal.PoliticaDeCancelacion;
@@ -356,31 +354,6 @@ class SitioWebTest {
 	            });
 	    
 	    verify(reserva, never()).cambiarEstadoAFinalizada();
-	 }
-	 
-	 @Test
-	 void testFiltrarInmueblesCumplenFiltro() {
-		Inmueble inmueble2 = mock(Inmueble.class);
-		FiltroCompuesto filtro = mock(FiltroCompuesto.class);
-		 
-	    when(filtro.cumple(inmueble)).thenReturn(true);
-	    when(filtro.cumple(inmueble2)).thenReturn(false);
-
-		when(inmueble.getPropietario()).thenReturn(usuario); 
-		when(inmueble.getTipoInmueble()).thenReturn("Casa");
-		when(inmueble2.getPropietario()).thenReturn(usuario); 
-		when(inmueble2.getTipoInmueble()).thenReturn("Casa");
-        
-        sitio.darDeAltaUsuario(usuario);
-		sitio.darDeAltaTipoInmueble("Casa");
-		sitio.darDeAltaInmueble(inmueble2);
-		sitio.darDeAltaInmueble(inmueble);
-	    
-	    List<Inmueble> resultado = sitio.filtrarInmuebles(filtro);
-
-	    assertEquals(1, resultado.size());
-	    assertTrue(resultado.contains(inmueble));
-	    assertFalse(resultado.contains(inmueble2));
 	 }
 	 
 	 @Test

@@ -223,7 +223,17 @@ public class SitioWeb {
 		}
 	}
 
-	public List<Inmueble> filtrarInmuebles(FiltroCompuesto filtro) {
-		return getInmuebles().stream().filter(i -> filtro.cumple(i)).toList();
+	public List<Inmueble> filtrarInmuebles(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida, Integer cantHuespedes, Double precioMin, Double precioMax) {
+		if (ciudad == null || fechaEntrada == null || fechaSalida == null) {
+		    throw new IllegalArgumentException("Ciudad, fecha de entrada y fecha de salida no pueden ser nulas");
+		}
+		List<Inmueble> inmueblesFiltrados = inmuebles.stream()
+		.filter(i -> i.getCiudad().equals(ciudad))
+		.filter(i -> i.estaDisponibleEnPeriodo(fechaEntrada, fechaSalida))
+		.filter(i -> cantHuespedes == null || i.getCapacidad() >= cantHuespedes)
+		.filter(i -> precioMin == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) >= precioMin)
+		.filter(i -> precioMax == null || i.calcularPrecioEstadia(fechaEntrada, fechaSalida) <= cantHuespedes)
+		.toList();
+		return inmueblesFiltrados;
 	}
 }

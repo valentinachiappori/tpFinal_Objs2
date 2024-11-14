@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -184,5 +185,17 @@ class InmuebleTest {
 		verify(interesado, times(1)).update(Evento.BAJAPRECIO, inmueble);
 	}
 	
+	@Test
+	void testCalcularPrecioEstadia() {
+		PeriodoConPrecio periodo1 = mock(PeriodoConPrecio.class);
+		PeriodoConPrecio periodo2 = mock(PeriodoConPrecio.class);
+
+        inmueble = new Inmueble(
+                null, "Departamento", 50, "Argentina", "Buenos Aires", "Av. Siempre Viva 123",
+                null, 4, null, null, 100.0, null, Arrays.asList(periodo1, periodo2), null);
+        
+        
+        
+	}
 	
 }	
