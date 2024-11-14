@@ -16,34 +16,30 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 class SinCancelacionTest {
 
-	private SinCancelacion sinCancelacion;
-    private Reserva reserva;
-    private ByteArrayOutputStream outputStream;
+    private SinCancelacion sinCancelacion;
+    private Reserva reservaMock;
+
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @BeforeEach
     void setUp() {
-        reserva = mock(Reserva.class);
+        reservaMock = mock(Reserva.class);
         sinCancelacion = new SinCancelacion();
-        
-        outputStream = mock(ByteArrayOutputStream.class);
-        System.setOut(new PrintStream(outputStream));
+        System.setOut(new PrintStream(outContent));
     }
 
     @Test
     void testEjecutar() {
-        double precioEstadia = 100.0;
-        when(reserva.calcularPrecioEstadia()).thenReturn(precioEstadia);
-        
-        sinCancelacion.ejecutar(mockReserva);
-        
-        // Verificar que el mensaje esperado ha sido impreso
-        String expectedOutput = "Cancelación con cargo. Cargo aplicado: $" + precioEstadia + "\n";
-        assertEquals(expectedOutput, outputStream.toString());
-        
-        // Verificar que el método calcularPrecioEstadia fue llamado
-        verify(mockReserva).calcularPrecioEstadia();
-    }
+        when(reservaMock.calcularPrecioEstadia()).thenReturn(100.0);
 
+        sinCancelacion.ejecutar(reservaMock);
+
+        verify(reservaMock).calcularPrecioEstadia();
+        assertTrue(outContent.toString().contains("Cancelación con cargo. Cargo aplicado: $100.0"));
+    }
 }

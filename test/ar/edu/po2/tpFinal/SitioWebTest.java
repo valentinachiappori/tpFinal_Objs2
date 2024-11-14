@@ -10,8 +10,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -279,6 +281,7 @@ class SitioWebTest {
 		assertFalse(inmueblesLibres.contains(inmuebleNoDisponible));
 	}
 	
+	@Test
 	void testTasaDeOcupacionSinInmuebles() {
         assertEquals(0.0, sitio.tasaDeOcupacion(), 0.01);
     }
@@ -379,5 +382,91 @@ class SitioWebTest {
 	    assertTrue(resultado.contains(inmueble));
 	    assertFalse(resultado.contains(inmueble2));
 	 }
+	 
+	 @Test
+	 void testEnviarMailConReserva() {
+		 Usuario inquilino = mock(Usuario.class);
+		 	when(reserva.getInquilino()).thenReturn(inquilino);
+	        when(inquilino.getCorreoElectronico()).thenReturn("inquilino@gmail.com");
+	        when(reserva.toString()).thenReturn("Detalles de la reserva");
+	        
+	        sitio.enviarMailConReserva(reserva);
+	        verify(mails).sendMail("inquilino@gmail.com", "Reserva", "Detalles de la reserva");
+	 }
+	 
+	 @Test
+	 void testSetCategoriasPorEntidad() {
+	     Map<String, Set<String>> categorias = new HashMap<>();
+	     Set<String> categoriasPropietario = new HashSet<>(Arrays.asList("Responsable", "Confiable"));
+	     categorias.put("Propietario", categoriasPropietario);
+
+	     sitio.setCategoriasPorEntidad(categorias);
+
+	     assertEquals(categoriasPropietario, sitio.getCategoriasPorEntidad("Propietario"));
+	 }
+
+
+    @Test
+    void testSetUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+        Usuario usuarioMock = mock(Usuario.class);
+        usuarios.add(usuarioMock);
+
+        sitio.setUsuarios(usuarios);
+
+        assertEquals(usuarios, sitio.getUsuarios());
+    }
+
+    @Test
+    void testSetInmuebles() {
+        List<Inmueble> inmuebles = new ArrayList<>();
+        Inmueble inmuebleMock = mock(Inmueble.class);
+        inmuebles.add(inmuebleMock);
+
+        sitio.setInmuebles(inmuebles);
+
+        assertEquals(inmuebles, sitio.getInmuebles());
+    }
+
+    @Test
+    void testSetTiposDeInmueble() {
+    	List<String> tiposDeInmueble = Arrays.asList("Casa", "Departamento");
+
+    	sitio.setTiposDeInmueble(tiposDeInmueble);
+
+    	assertEquals(tiposDeInmueble, sitio.getTiposDeInmueble());
+    }
+
+    @Test
+    void testSetServicios() {
+    	Set<Servicio> servicios = new HashSet<>();
+    	Servicio servicioMock = mock(Servicio.class);
+    	servicios.add(servicioMock);
+
+	    sitio.setServicios(servicios);
+	    
+	    assertEquals(servicios, sitio.getServicios());
+	 }
+
+	 @Test
+	 void testSetMailSender() {
+		 MailSender nuevoMailSender = mock(MailSender.class);
+
+	     sitio.setMailSender(nuevoMailSender);
+
+	     assertEquals(nuevoMailSender, sitio.getMailSender());
+	    }
+
+	  @Test
+	  void testGetCategoriasPorEntidad() {
+		  Map<String, Set<String>> categorias = new HashMap<>();
+	      Set<String> categoriasPropietario = new HashSet<>(Arrays.asList("Responsable", "Confiable"));
+	      categorias.put("Propietario", categoriasPropietario);
+	      sitio.setCategoriasPorEntidad(categorias);
+	      
+	      Set<String> result = sitio.getCategoriasPorEntidad("Propietario");
+
+	      assertEquals(categoriasPropietario, result);
+	    }
 	 
 }
