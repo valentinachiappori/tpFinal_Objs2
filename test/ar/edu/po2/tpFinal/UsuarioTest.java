@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.po2.tpFinal.FiltroCompuesto;
 import ar.edu.unq.po2.tpFinal.Inmueble;
 import ar.edu.unq.po2.tpFinal.MailSender;
+import ar.edu.unq.po2.tpFinal.PeriodoConPrecio;
+import ar.edu.unq.po2.tpFinal.PoliticaDeCancelacion;
 import ar.edu.unq.po2.tpFinal.Puntaje;
 import ar.edu.unq.po2.tpFinal.Ranking;
 import ar.edu.unq.po2.tpFinal.Reserva;
@@ -178,4 +180,123 @@ class UsuarioTest {
 	    assertFalse(reservasEnBuenosAires.contains(reserva2));
 	}
 	
+	@Test
+    void testAgregarComentario() {
+        usuario.agregarComentario("Excelente inquilino");
+
+        assertTrue(usuario.getComentariosInquilino().contains("Excelente inquilino"));
+    }
+	
+	@Test
+    void testComentarInmueble() {
+		when(reserva1.getEstadoReserva()).thenReturn("Finalizada");
+		when(reserva1.getInmueble()).thenReturn(inmueble1);
+        usuario.comentarInmueble(reserva1, "Hermoso departamento");
+
+        verify(sitio, times(1)).registrarComentarioInmueble(reserva1, "Hermoso departamento");
+    }
+	
+	@Test
+    void testGetCiudadesConReserva() {
+		when(reserva1.getInmueble()).thenReturn(inmueble1);
+        when(reserva2.getInmueble()).thenReturn(inmueble2);
+        when(inmueble1.getCiudad()).thenReturn("Buenos Aires");
+        when(inmueble2.getCiudad()).thenReturn("Córdoba");
+        
+        usuario.registrarReserva(reserva1);
+        usuario.registrarReserva(reserva2);
+        
+        List<String> ciudades = usuario.getCiudadesConReserva();
+
+        assertEquals(2, ciudades.size());
+        assertTrue(ciudades.contains("Buenos Aires"));
+        assertTrue(ciudades.contains("Córdoba"));
+    }
+	
+	@Test
+    void testCancelarReserva() {
+		PoliticaDeCancelacion politica = mock(PoliticaDeCancelacion.class);
+		
+		when(reserva1.getInmueble()).thenReturn(inmueble1);
+		when(reserva1.getInquilino()).thenReturn(usuario);
+		when(reserva1.getPropietario()).thenReturn(usuario);
+		when(inmueble1.getPoliticaDeCancelacion()).thenReturn(politica);
+		
+        usuario.cancelarReserva(reserva1);
+        
+        verify(sitio, times(1)).cancelarReserva(reserva1);
+	}
+
+	@Test
+	void testEliminarReserva() {
+		usuario.registrarReserva(reserva1);
+	
+	    usuario.eliminarReserva(reserva1);
+	
+	    assertFalse(usuario.getMisReservas().contains(reserva1));
+	}
+	
+	@Test
+	void testCantVecesQueFueAlquiladoElInmueble() {
+		when(reserva1.getEstadoReserva()).thenReturn("Finalizada");
+	    when(reserva2.getEstadoReserva()).thenReturn("Pendiente");
+	    when(inmueble1.getReservasConfirmadas()).thenReturn(List.of(reserva1, reserva2));
+	    
+	    int cantidad = usuario.cantVecesQueFueAlquiladoElInmueble(inmueble1);
+	
+	    assertEquals(1, cantidad);
+	}
+	
+	@Test
+	void testCantVecesQueAlquilo() {
+		when(reserva1.getEstadoReserva()).thenReturn("Finalizada");
+        when(reserva2.getEstadoReserva()).thenReturn("Finalizada");
+        when(inmueble1.getReservasConfirmadas()).thenReturn(List.of(reserva1));
+        when(inmueble2.getReservasConfirmadas()).thenReturn(List.of(reserva2));
+        usuario.agregarInmueble(inmueble1);
+        usuario.agregarInmueble(inmueble2);
+
+		int cantidadTotal = usuario.cantVecesQueAlquilo();
+
+        assertEquals(2, cantidadTotal);
+    }
+	
+	@Test
+    void testTodosLosInmueblesQueYaFueronAlquilados() {
+		when(reserva1.getEstadoReserva()).thenReturn("Finalizada");
+        when(reserva2.getEstadoReserva()).thenReturn("Finalizada");
+        when(inmueble1.getReservasConfirmadas()).thenReturn(List.of(reserva1));
+        when(inmueble2.getReservasConfirmadas()).thenReturn(List.of(reserva2));
+        usuario.agregarInmueble(inmueble1);
+        usuario.agregarInmueble(inmueble2);
+		
+        List<Inmueble> inmueblesAlquilados = usuario.todosLosInmueblesQueYaFueronAlquilados();
+
+        assertEquals(2, inmueblesAlquilados.size());
+        assertTrue(inmueblesAlquilados.contains(inmueble1));
+        assertTrue(inmueblesAlquilados.contains(inmueble2));
+    }
+	
+	@Test
+    void testModificarPrecioPeriodo() {
+		PeriodoConPrecio periodo = mock(PeriodoConPrecio.class);
+        usuario.modificarPrecioPeriodo(1500.0, inmueble1, periodo);
+
+        verify(inmueble1).modificarPrecioPeriodo(periodo, 1500.0);
+    }
+	
+	@Test
+	void testModificarPrecioBase() {
+        usuario.modificarPrecioBase(2000.0, inmueble1);
+
+        verify(inmueble1).modificarPrecioBase(2000.0);
+    }
+	
+	@Test
+    void testHacerCheckOut() {
+		when(reserva1.getFechaSalida()).thenReturn(LocalDate.of(2024, 11, 13));
+        usuario.hacerCheckOut(reserva1);
+
+        verify(sitio).registrarCheckOut(reserva1, LocalDate.now());
+    }
 }

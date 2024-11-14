@@ -73,6 +73,8 @@ class ReservaTest {
 	
 	@Test
 	void testCambiarEstadoAFinalizada() {
+		reserva.cambiarEstadoAAceptada();
+		
 		reserva.cambiarEstadoAFinalizada();
 		
 		assertEquals(reserva.getEstadoReserva(), "Finalizada");
