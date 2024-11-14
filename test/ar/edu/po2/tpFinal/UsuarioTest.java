@@ -48,6 +48,42 @@ class UsuarioTest {
 	}
 	
 	@Test
+    void testSetAndGetNombreCompleto() {
+        usuario.setNombreCompleto("pedro");
+        
+        assertEquals("pedro", usuario.getNombreCompleto());
+    }
+	
+	@Test
+    void testSetCorreoElectronico() {
+        usuario.setCorreoElectronico("nuevoCorreo");
+        
+        assertEquals("nuevoCorreo", usuario.getCorreoElectronico());
+    }
+	
+	@Test
+    void testSetAndGetNumeroDeTelefono() {
+        usuario.setNumeroDeTelefono(12345678);
+        
+        assertEquals(12345678, usuario.getNumeroDeTelefono());
+    }
+	
+	@Test
+	void testGetRankingPropietario() {
+		assertTrue(usuario.getRankingPropietario() instanceof Ranking);
+	}
+	
+	@Test
+	void testGetRankingInquilino() {
+		assertTrue(usuario.getRankingInquilino() instanceof Ranking);
+	}
+	
+	@Test
+	void getFechaDeRegistro() {
+		assertTrue(usuario.getFechaDeRegistro() instanceof LocalDate);
+	}
+	
+	@Test
 	void testAgregarInmueble() {
 	    usuario.agregarInmueble(inmueble1);
 	    
@@ -194,6 +230,15 @@ class UsuarioTest {
         usuario.comentarInmueble(reserva1, "Hermoso departamento");
 
         verify(sitio, times(1)).registrarComentarioInmueble(reserva1, "Hermoso departamento");
+    }
+	
+	@Test
+    void testComentarInquilino() {
+		when(reserva1.getEstadoReserva()).thenReturn("Finalizada");
+		when(reserva1.getInquilino()).thenReturn(usuario);
+        usuario.comentarInquilino(reserva1, "Excelente inquilino");
+
+        verify(sitio, times(1)).registrarComentarioInquilino(reserva1, "Excelente inquilino");
     }
 	
 	@Test
