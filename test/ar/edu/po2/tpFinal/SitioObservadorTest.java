@@ -22,25 +22,20 @@ public class SitioObservadorTest {
 
     @BeforeEach
     public void setUp() {
-        // Configuración de los mocks comunes
         publisherMock = mock(HomePagePublisher.class);
         inmuebleMock = mock(Inmueble.class);
         eventoMock = mock(Evento.class);
 
-        // Crear el SitioObservador con el mock de HomePagePublisher
         observador = new SitioObservador(publisherMock);
     }
 
     @Test
     public void testUpdate() {
-        // Simular el comportamiento del mensaje en el Evento
         String mensajeEsperado = "Mensaje esperado";
         when(eventoMock.aplicarMensaje(inmuebleMock)).thenReturn(mensajeEsperado);
 
-        // Llamar al método update
         observador.update(eventoMock, inmuebleMock);
 
-        // Verificar que se haya llamado al método publish con el mensaje esperado
         verify(publisherMock).publish(mensajeEsperado);
     }
 }

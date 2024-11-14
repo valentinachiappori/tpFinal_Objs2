@@ -118,20 +118,6 @@ class UsuarioTest {
 	    
 	    verify(sitio, times(1)).darDeAltaInmueble(inmueble1);
 	}
-	/*
-	@Test
-	void testBuscarInmuebles() {
-		FiltroCompuesto filtro = mock(FiltroCompuesto.class);
-		when(sitio.filtrarInmuebles(filtro)).thenReturn(List.of(inmueble1, inmueble2));
-		when(filtro.cumple(inmueble1)).thenReturn(true);
-	    when(filtro.cumple(inmueble2)).thenReturn(false);
-	    
-		List<Inmueble> resultado = usuario.buscarInmuebles(filtro);
-
-	    assertEquals(2, resultado.size());
-	    assertTrue(resultado.contains(inmueble1));
-	    assertTrue(resultado.contains(inmueble2));
-	}*/
 	
 	@Test
     void testRankearPropietario() {

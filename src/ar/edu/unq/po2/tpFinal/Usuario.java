@@ -135,26 +135,23 @@ public class Usuario implements Inquilino, Propietario{
         System.out.println("Ciudad: " + inmueble.getCiudad());
         System.out.println("Precio: " + inmueble.getPrecioBase());
 
-        // Puntajes
         System.out.println("Puntajes del Inmueble:");
         for (String categoria : inmueble.getPropietario().getSitioWeb().getCategoriasPorEntidad("Inmueble")) {
             System.out.println(categoria + ": " + inmueble.getRankingInmueble().obtenerPromedioPorCategoria(categoria));
         }
         System.out.println("Puntaje Promedio Total: " + inmueble.getRankingInmueble().obtenerPromedioTotal());
 
-        // Comentarios
         System.out.println("Comentarios:");
         for (String comentario : inmueble.getComentarios()) {
             System.out.println(comentario);
         }
         
-        // Información del propietario
-            System.out.println("Información del Propietario:");
-            System.out.println("Nombre: " + inmueble.getPropietario().getNombreCompleto());
-            System.out.println("Usuario del sitio hace: " + getAntiguedad());
-            System.out.println("Veces alquilado el inmueble: " + inmueble.getPropietario().cantVecesQueFueAlquiladoElInmueble(inmueble));
-            System.out.println("Veces alquilado: " + inmueble.getPropietario().cantVecesQueAlquilo());
-            System.out.println("Puntaje Promedio del Propietario: " + inmueble.getPropietario().getRankingPropietario().obtenerPromedioTotal());
+        System.out.println("Información del Propietario:");
+        System.out.println("Nombre: " + inmueble.getPropietario().getNombreCompleto());
+        System.out.println("Usuario del sitio hace: " + getAntiguedad());
+        System.out.println("Veces alquilado el inmueble: " + inmueble.getPropietario().cantVecesQueFueAlquiladoElInmueble(inmueble));
+        System.out.println("Veces alquilado: " + inmueble.getPropietario().cantVecesQueAlquilo());
+        System.out.println("Puntaje Promedio del Propietario: " + inmueble.getPropietario().getRankingPropietario().obtenerPromedioTotal());
     }
 	
 	public void reservar(Inmueble inmueble, String metodoPago, LocalDate fechaInicio, LocalDate fechaFin) {

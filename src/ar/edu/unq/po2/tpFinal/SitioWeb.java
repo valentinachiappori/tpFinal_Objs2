@@ -30,7 +30,6 @@ public class SitioWeb {
 		categoriasPorEntidad.put("Inmueble", new HashSet<>());
 	}
 	
-	//getters y setters
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
@@ -84,27 +83,22 @@ public class SitioWeb {
 	}
 	
 	
-	//Dar de alta los tipos de inmuebles 
 	public void darDeAltaTipoInmueble(String tipoDeInmueble) {
 		getTiposDeInmueble().add(tipoDeInmueble);
 	}
 	
-	//Dar de alta categoria en entidad
 	public void darDeAltaCategoriaParaEntidad(String entidad, String categoria) {
 		getCategoriasPorEntidad().get(entidad).add(categoria);
 	}
 	
-	//Dar de alta usuario
 	public void darDeAltaUsuario(Usuario usuario) {
 		getUsuarios().add(usuario);
 	}
 	
-	//Dar de alta servicio
 	public void darDeAltaServicio(Servicio servicio) {
 		getServicios().add(servicio);
 	}
 	
-	//Dar de alta inmueble
 	public void darDeAltaInmueble(Inmueble i) {
 		if (esUsuarioRegistrado(i.getPropietario()) && verificarExisteTipoInmueble(i.getTipoInmueble())) {
 			getInmuebles().add(i);
@@ -112,7 +106,6 @@ public class SitioWeb {
 		}
 	}
 	
-	//Verificar es usuario registrado
 	public boolean esUsuarioRegistrado(Usuario usuario) {
 		return getUsuarios().contains(usuario);
 	}

@@ -10,7 +10,6 @@ public class Ranking {
 	
 	private Map<String, List<Integer>> puntuacionesPorCategoria;
 
-    //Constructor 
     public Ranking () {
         setPuntuacionesPorCategoria(new HashMap<>());
     }

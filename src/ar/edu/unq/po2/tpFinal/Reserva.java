@@ -73,6 +73,6 @@ public class Reserva {
 	               ", Política de cancelación= " + getInmueble().getPoliticaDeCancelacion() +
 	               ", Precio total= $" + calcularPrecioEstadia() +
 	               '}';
-	    }
+	}
 	 
 }

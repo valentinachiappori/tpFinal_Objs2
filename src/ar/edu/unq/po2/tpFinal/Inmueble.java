@@ -55,7 +55,8 @@ public class Inmueble {
 		setReservasPendientes( new ArrayList<Reserva>());
 		setReservasEnCola( new ArrayList<Reserva>());
 		setPoliticaDeCancelacion( politicaDeCancelacion);
-		setInteresados(new HashMap<Evento, List<Interesado>>());	
+		setInteresados(new HashMap<Evento, List<Interesado>>());
+		setComentarios(new ArrayList<String>());
 		}
 
 
@@ -247,7 +248,7 @@ public class Inmueble {
 
 
 	public void agregarComentario(String comentario) {
-		getComentarios().add(comentario);
+		comentarios.add(comentario);
 	}
 	public void agregarFoto(String foto) {
 		if (getFotos().size() < 5) {

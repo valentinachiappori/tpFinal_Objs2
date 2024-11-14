@@ -34,44 +34,36 @@ public class EventoTest {
 
     @Test
     public void testAplicarMensajeCancelacion() {
-        // Simular el comportamiento del mock de inmueble para el precio
-        when(inmuebleMock.getTipoInmueble()).thenReturn("Apartamento");
+        when(inmuebleMock.getTipoInmueble()).thenReturn("Departamento");
         when(inmuebleMock.calcularPrecioDia(LocalDate.now())).thenReturn(100.0);
-        // Aplicar el mensaje para el evento CANCELACION
-        mensajeEsperado = "un inmueble Apartamento a tan sólo $100.0";
+
+        mensajeEsperado = "un inmueble Departamento a tan sólo $100.0";
         mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
 
-        // Verificar que el mensaje aplicado sea el esperado
         assertEquals(mensajeEsperado, mensajeAplicado);
     }
     
     @Test
     public void testAplicarMensajeBajaPrecio() {
-        // Simular el comportamiento del mock de inmueble para obtener el tipo de inmueble y el precio
-        when(inmuebleMock.getTipoInmueble()).thenReturn("Apartamento");
-        when(inmuebleMock.calcularPrecioDia(LocalDate.now())).thenReturn(100.0);  // Simular un precio distinto de 0.0
+        when(inmuebleMock.getTipoInmueble()).thenReturn("Departamento");
+        when(inmuebleMock.calcularPrecioDia(LocalDate.now())).thenReturn(100.0); 
         
         evento = Evento.BAJAPRECIO;
-        // Aplicar el mensaje para el evento BAJAPRECIO
-        mensajeEsperado = "El/la Apartamento que te interesa se ha liberado! Corre a reservarlo!";
+        mensajeEsperado = "El/la Departamento que te interesa se ha liberado! Corre a reservarlo!";
         mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
 
-        // Verificar que el mensaje aplicado sea el esperado
         assertEquals(mensajeEsperado, mensajeAplicado);
     }
     
     @Test
     public void testAplicarMensajeReserva() {
-        // Simular el comportamiento del mock de inmueble para el precio
-        when(inmuebleMock.getTipoInmueble()).thenReturn("Apartamento");
+        when(inmuebleMock.getTipoInmueble()).thenReturn("Departamento");
         when(inmuebleMock.calcularPrecioDia(LocalDate.now())).thenReturn(150.0);
         
         evento = Evento.RESERVA;
-        // Aplicar el mensaje para el evento RESERVA
-        mensajeEsperado = "un inmueble Apartamento el inmueble fue reservado";
+        mensajeEsperado = "un inmueble Departamento el inmueble fue reservado";
         mensajeAplicado = evento.aplicarMensaje(inmuebleMock);
 
-        // Verificar que el mensaje aplicado sea el esperado
         assertEquals(mensajeEsperado, mensajeAplicado);
     }
 }

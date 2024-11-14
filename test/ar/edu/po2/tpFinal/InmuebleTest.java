@@ -130,13 +130,9 @@ class InmuebleTest {
     
     @Test
     void testAgregarComentario() {
-    	String comentario = "Muy buen lugar, limpio y cómodo.";
-    	
-    	inmueble.agregarComentario(comentario);
-    	List<String> comentarios = inmueble.getComentarios();
-    	
-    	assertEquals(1, comentarios.size());
-    	assertTrue(comentarios.contains(comentario));
+        inmueble.agregarComentario("Excelente lugar");
+
+        assertTrue(inmueble.getComentarios().contains("Excelente lugar"));
     }
     
 	@Test

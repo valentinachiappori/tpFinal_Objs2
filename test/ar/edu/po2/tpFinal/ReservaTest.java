@@ -87,10 +87,10 @@ class ReservaTest {
 	    when(inmueble.getPoliticaDeCancelacion()).thenReturn(politica);
 	    when(inmueble.toString()).thenReturn("Departamento");
 	    when(reserva.calcularPrecioEstadia()).thenReturn(300d);
-	    String expected = "Reserva{Inmueble=Departamento, Fecha de entrada=2024-09-11, Fecha de salida=2024-12-11, Política de cancelación= Gratuita, Precio total= $300.0}";
+	    String esperado = "Reserva{Inmueble=Departamento, Fecha de entrada=2024-09-11, Fecha de salida=2024-12-11, Política de cancelación= Gratuita, Precio total= $300.0}";
 
 
-	    assertEquals(expected, reserva.toString());
+	    assertEquals(esperado, reserva.toString());
 	}
 
 
